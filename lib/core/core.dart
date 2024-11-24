@@ -14,4 +14,4 @@ export 'domain/entities/user.dart';
 // Presentation - Screens
 export 'presentation/screens/screens.dart';
 // Error
-export 'error/failures.dart';
+export 'error/error.dart';
