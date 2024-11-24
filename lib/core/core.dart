@@ -9,6 +9,9 @@ export 'services/supabase.service.dart';
 export 'widgets/selected_gender.dart';
 
 // Domain
+export 'domain/entities/user.dart';
 // Data
 // Presentation - Screens
 export 'presentation/screens/screens.dart';
+// Error
+export 'error/failures.dart';
