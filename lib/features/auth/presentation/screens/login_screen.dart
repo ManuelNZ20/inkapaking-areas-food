@@ -81,25 +81,8 @@ class _LoginForm extends StatelessWidget {
         ),
         // Colocar los botones al final y se ajusten al tamaño de cualquier pantalla
         SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-        const ButtonsLogin(),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
-}
-
-class ButtonsLogin extends StatelessWidget {
-  const ButtonsLogin({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        // Botón "Iniciar Sesión"
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: FilledButton(
+        ContentButtonAuth(
+          primaryButton: FilledButton(
             onPressed: () {
               // Acción para iniciar sesión
             },
@@ -108,12 +91,7 @@ class ButtonsLogin extends StatelessWidget {
             ),
             child: const Text('Iniciar Sesión'),
           ),
-        ),
-        const SizedBox(height: 10),
-        // Botón "Solicitar Registro"
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: OutlinedButton(
+          secondaryButton: OutlinedButton(
             onPressed: () => context.pushNamed(RegisterScreen.routeName),
             style: OutlinedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
@@ -121,6 +99,7 @@ class ButtonsLogin extends StatelessWidget {
             child: const Text('Solicitar Registro'),
           ),
         ),
+        const SizedBox(height: 20),
       ],
     );
   }

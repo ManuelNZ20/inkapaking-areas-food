@@ -29,16 +29,16 @@ class ConfirmRegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ImgAuth(), // Encabezado con imagen
-        SizedBox(height: 20),
-        TitleAuth(
+        const ImgAuth(), // Encabezado con imagen
+        const SizedBox(height: 20),
+        const TitleAuth(
           text: 'Confirmar Correo Electrónico',
         ), // Título de la pantalla
-        SizedBox(height: 30),
-        Padding(
+        const SizedBox(height: 30),
+        const Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 18.0,
           ),
@@ -48,29 +48,14 @@ class ConfirmRegisterForm extends StatelessWidget {
             keyboardType: TextInputType.emailAddress,
           ),
         ), // Campo de entrada de correo
-        SizedBox(height: 30),
-        DescriptionTextAuth(
+        const SizedBox(height: 30),
+        const DescriptionTextAuth(
           description:
               'Hola, en este punto tu información será usada para confirmar tu registro en nuestro sistema, en cuento se confirme tu identidad se te enviará un correo con la contraseña.',
         ), // Descripción debajo del campo
-        SizedBox(height: 40),
-        _ActionButtons(), // Botones de acción
-        SizedBox(height: 20),
-      ],
-    );
-  }
-}
-
-class _ActionButtons extends StatelessWidget {
-  const _ActionButtons({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-      child: Column(
-        children: [
-          FilledButton(
+        const SizedBox(height: 40),
+        ContentButtonAuth(
+          primaryButton: FilledButton(
             onPressed: () {
               // Acción al solicitar registro
             },
@@ -79,12 +64,12 @@ class _ActionButtons extends StatelessWidget {
             ),
             child: const Text('Solicitar Registro'),
           ),
-          const SizedBox(height: 14),
-          const BackButtonAuth(
+          secondaryButton: const BackButtonAuth(
             textButton: 'Volver',
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 20),
+      ],
     );
   }
 }

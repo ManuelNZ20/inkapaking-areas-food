@@ -38,6 +38,9 @@ final outlinedButtonTheme = OutlinedButtonThemeData(
       foregroundColor: const MaterialStatePropertyAll(
         mainColors,
       ),
+      textStyle: MaterialStatePropertyAll(
+        GoogleFonts.nunito(),
+      ),
       shape: MaterialStatePropertyAll(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(6),

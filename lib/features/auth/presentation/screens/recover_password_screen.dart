@@ -53,23 +53,17 @@ class _RecoverPasswordForm extends StatelessWidget {
               'Proporcionanos tu correo electrónico, para enviarte una nueva contraseña.',
         ),
         const SizedBox(height: 30),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-          child: FilledButton(
-            onPressed: () {
-              // Acción al solicitar registro
-            },
+        ContentButtonAuth(
+          primaryButton: FilledButton(
+            onPressed: () {},
             style: ElevatedButton.styleFrom(
               minimumSize: const Size.fromHeight(50),
             ),
             child: const Text('Enviar'),
           ),
+          secondaryButton: const BackButtonAuth(textButton: 'Volver'),
         ),
-        const SizedBox(height: 14),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
-          child: BackButtonAuth(textButton: 'Volver'),
-        ),
+
         const SizedBox(height: 25),
       ],
     );
