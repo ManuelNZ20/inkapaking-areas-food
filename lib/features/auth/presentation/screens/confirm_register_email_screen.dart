@@ -8,12 +8,11 @@ class ConfirmRegisterEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context)
-              .unfocus(), // Ocultar teclado al hacer tap afuera
-          child: const SingleChildScrollView(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: const Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
             child: ConfirmRegisterForm(),
           ),
         ),
