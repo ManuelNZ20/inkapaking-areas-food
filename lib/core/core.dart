@@ -5,6 +5,10 @@ export 'constants/colors_constants.dart';
 export 'env/env.dart';
 // services
 export 'services/supabase.service.dart';
-// usecases
 // widgets
 export 'widgets/selected_gender.dart';
+
+// Domain
+// Data
+// Presentation - Screens
+export 'presentation/screens/screens.dart';

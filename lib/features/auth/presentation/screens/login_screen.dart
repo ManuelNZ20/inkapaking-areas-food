@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/core.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
 
@@ -85,6 +86,7 @@ class _LoginForm extends StatelessWidget {
           primaryButton: FilledButton(
             onPressed: () {
               // Acción para iniciar sesión
+              context.pushNamed(HomeScreen.routeName);
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
