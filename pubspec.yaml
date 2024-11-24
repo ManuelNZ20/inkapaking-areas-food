@@ -41,7 +41,8 @@ dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  isar_generator: *isar_version
+  isar_generator: 3.1.0
+  mockito: ^5.4.4
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.

@@ -1,5 +1,7 @@
 // Class: User, para el manejo de los datos de usuario
-class User {
+import 'package:equatable/equatable.dart';
+
+class User extends Equatable {
   final int userId;
   final String name;
   final String lastName;
@@ -14,7 +16,7 @@ class User {
   final List<Token>? tokens;
   final List<ImgUser>? imgsUser;
 
-  User({
+  const User({
     required this.userId,
     required this.name,
     required this.lastName,
@@ -29,6 +31,9 @@ class User {
     required this.tokens,
     required this.imgsUser,
   });
+
+  @override
+  List<Object?> get props => throw UnimplementedError();
 }
 
 // Class: Token, para el manejo de los datos de token
