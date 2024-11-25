@@ -11,7 +11,7 @@ export 'widgets/selected_gender.dart';
 // Domain
 export 'domain/entities/user.dart';
 // Data
-export 'data/models/user.module.dart';
+export 'data/data.dart';
 // Presentation - Screens
 export 'presentation/screens/screens.dart';
 // Error
