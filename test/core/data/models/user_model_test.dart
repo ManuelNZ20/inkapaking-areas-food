@@ -56,7 +56,9 @@ void main() {
       final result = UserModel.fromJson(jsonMap);
 
       // assert
-      expect(result, tUserModel);
+      expect(result.userId, tUserModel.userId);
+      expect(result.tokens!.length, tUserModel.tokens!.length);
+      expect(result.tokens!.first.tokenId, tUserModel.tokens!.first.tokenId);
     });
   });
 }

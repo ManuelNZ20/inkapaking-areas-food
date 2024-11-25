@@ -38,6 +38,42 @@ class UserModel extends User {
           .toList(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': userId,
+      'name': name,
+      'last_name': lastName,
+      'phone': phone,
+      'direction': direction,
+      'state_account': stateAccount,
+      'email': email,
+      'password': password,
+      'created_at': createdAt.toIso8601String(),
+      'type_user': <String, dynamic>{
+        'id': typeUser.id,
+        'type_name': typeUser.typeName,
+        'description': typeUser.description,
+      },
+      'tokens': tokens!.map((e) {
+        return <String, dynamic>{
+          'id': e.tokenId,
+          'token_auth': e.tokenAuth,
+          'token_access': e.tokenAccces,
+          'state': e.state,
+          'created_at': e.createdAt.toIso8601String(),
+        };
+      }).toList(),
+      'img_user': imgsUser!.map((e) {
+        return <String, dynamic>{
+          'id': e.imgUserId,
+          'url': e.url,
+          'created_at': e.createdAt.toIso8601String(),
+        };
+      }).toList(),
+    };
+  }
+
   @override
   List<Object?> get props => [
         userId,
@@ -62,6 +98,7 @@ class TypeUserModel extends TypeUser {
     required super.typeName,
     required super.description,
   });
+
   factory TypeUserModel.fromJson(Map<String, dynamic> json) {
     return TypeUserModel(
       id: json['id'] ?? 0,
@@ -69,6 +106,15 @@ class TypeUserModel extends TypeUser {
       description: json['description'] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type_name': typeName,
+      'description': description,
+    };
+  }
+
   @override
   List<Object?> get props => [
         id,
@@ -85,6 +131,7 @@ class TokenModel extends Token {
     required super.state,
     required super.createdAt,
   });
+
   factory TokenModel.fromJson(Map<String, dynamic> json) {
     return TokenModel(
       tokenId: json['id_token'] ?? 0,
@@ -94,6 +141,17 @@ class TokenModel extends Token {
       createdAt: DateTime.parse(json['created_at'] ?? ''),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id_token': tokenId,
+      'token_auth': tokenAuth,
+      'token_access': tokenAccces,
+      'state': state,
+      'created_at': createdAt.toIso8601String(),
+    };
+  }
+
   @override
   List<Object?> get props => [
         tokenId,
@@ -110,6 +168,7 @@ class ImgUserModel extends ImgUser {
     required super.url,
     required super.createdAt,
   });
+
   factory ImgUserModel.fromJson(Map<String, dynamic> json) {
     return ImgUserModel(
       imgUserId: json['id'] ?? 0,
@@ -117,6 +176,15 @@ class ImgUserModel extends ImgUser {
       createdAt: DateTime.parse(json['created_at'] ?? ''),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': imgUserId,
+      'url': url,
+      'created_at': createdAt.toIso8601String(),
+    };
+  }
+
   @override
   List<Object?> get props => [
         imgUserId,
