@@ -1,0 +1,33 @@
+{
+  "id": 1,
+  "name": "Test Name",
+  "last_name": "Test Last Name",
+  "gender": true,
+  "phone": "1234567890",
+  "direction": "Test Direction",
+  "state_account": true,
+  "email": "test@example.com",
+  "password": "test123",
+  "created_at": "2024-01-01T00:00:00.000Z",
+  "type_user": {
+    "id": 1,
+    "type_name": "Test Type User",
+    "description": "Test Description"
+  },
+  "tokens": [
+    {
+      "id_token": 1,
+      "token_auth": "Test Token Auth",
+      "token_access": "Test Token Access",
+      "state": true,
+      "created_at": "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  "img_user": [
+    {
+      "id": 1,
+      "url": "Test URL",
+      "created_at": "2024-01-01T00:00:00.000Z"
+    }
+  ]
+}

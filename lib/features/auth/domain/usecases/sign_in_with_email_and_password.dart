@@ -3,18 +3,27 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/core.dart';
 import '../repositories/auth_repository.dart';
 
-class SignInWithEmailAndPassword {
+class SignInWithEmailAndPassword
+    implements AuthUseCase<User, SignInWithEmailAndPasswordParams> {
   final AuthRepository authRepository;
 
   SignInWithEmailAndPassword(this.authRepository);
 
-  Future<Either<Failure, User>> execute({
-    required String email,
-    required String password,
-  }) async {
-    return await authRepository.signInWithEmailAndPassword(
-      email,
-      password,
+  @override
+  Future<Either<Failure, User>> call(SignInWithEmailAndPasswordParams params) {
+    return authRepository.signInWithEmailAndPassword(
+      params.email,
+      params.password,
     );
   }
+}
+
+class SignInWithEmailAndPasswordParams {
+  final String email;
+  final String password;
+
+  SignInWithEmailAndPasswordParams({
+    required this.email,
+    required this.password,
+  });
 }

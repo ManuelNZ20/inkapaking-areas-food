@@ -69,7 +69,7 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
       ) as _i4.Future<_i2.Either<_i5.Failure, _i5.User>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i5.User>> signUpWithEmailAndPassword(
+  _i4.Future<_i2.Either<_i5.Failure, _i5.User>> signUpWithDataUser(
     String? name,
     String? lastName,
     bool? gender,
@@ -80,7 +80,7 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
   ) =>
       (super.noSuchMethod(
         Invocation.method(
-          #signUpWithEmailAndPassword,
+          #signUpWithDataUser,
           [
             name,
             lastName,
@@ -95,7 +95,7 @@ class MockAuthRepository extends _i1.Mock implements _i3.AuthRepository {
             _FakeEither_0<_i5.Failure, _i5.User>(
           this,
           Invocation.method(
-            #signUpWithEmailAndPassword,
+            #signUpWithDataUser,
             [
               name,
               lastName,

@@ -33,48 +33,81 @@ class User extends Equatable {
   });
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [
+        userId,
+        name,
+        lastName,
+        gender,
+        phone,
+        direction,
+        stateAccount,
+        email,
+        password,
+        createdAt,
+        typeUser,
+        tokens,
+        imgsUser,
+      ];
 }
 
 // Class: Token, para el manejo de los datos de token
-class Token {
+class Token extends Equatable {
   final int tokenId;
   final String tokenAuth;
   final String tokenAccces;
   final bool state;
   final DateTime createdAt;
 
-  Token({
+  const Token({
     required this.tokenId,
     required this.tokenAuth,
     required this.tokenAccces,
     required this.state,
     required this.createdAt,
   });
+
+  @override
+  List<Object?> get props => [
+        tokenId,
+        tokenAuth,
+        tokenAccces,
+        state,
+        createdAt,
+      ];
 }
 
 // Class: ImgUser, para el manejo de los datos de imagen de usuario
-class ImgUser {
+class ImgUser extends Equatable {
   final int imgUserId;
   final String url;
   final DateTime createdAt;
 
-  ImgUser({
+  const ImgUser({
     required this.imgUserId,
     required this.url,
     required this.createdAt,
   });
+
+  @override
+  List<Object?> get props => [
+        imgUserId,
+        url,
+        createdAt,
+      ];
 }
 
 // Class: TypeUser, para el manejo de los datos de tipo de usuario
-class TypeUser {
+class TypeUser extends Equatable {
   final int id;
   final String typeName;
   final String description;
 
-  TypeUser({
+  const TypeUser({
     required this.id,
     required this.typeName,
     required this.description,
   });
+
+  @override
+  List<Object?> get props => [id, typeName, description];
 }

@@ -9,7 +9,7 @@ abstract class AuthRepository {
   );
 
   // Sign up with email and password
-  Future<Either<Failure, User>> signUpWithEmailAndPassword(
+  Future<Either<Failure, User>> signUpWithDataUser(
     String name,
     String lastName,
     bool gender,

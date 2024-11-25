@@ -11,7 +11,10 @@ export 'widgets/selected_gender.dart';
 // Domain
 export 'domain/entities/user.dart';
 // Data
+export 'data/models/user.module.dart';
 // Presentation - Screens
 export 'presentation/screens/screens.dart';
 // Error
 export 'error/error.dart';
+// UseCases
+export 'usecases/auth_usecase.dart';
