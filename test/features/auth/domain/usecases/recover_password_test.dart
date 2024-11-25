@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inkapaking/features/auth/domain/domain.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks.mocks.dart';
+import '../../../../core/mocks/mocks.mocks.dart';
 
 void main() {
   late RecoverPassword usecase;

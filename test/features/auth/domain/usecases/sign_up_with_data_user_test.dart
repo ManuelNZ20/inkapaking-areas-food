@@ -3,7 +3,8 @@ import 'package:inkapaking/features/auth/domain/domain.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
 import 'package:inkapaking/core/core.dart';
-import 'mocks.mocks.dart';
+
+import '../../../../core/mocks/mocks.mocks.dart';
 
 void main() {
   late SignUpWithDataUser usecase;
@@ -25,7 +26,7 @@ void main() {
     email: "jane.doe@gmail.com",
     password: "securePassword123",
     createdAt: DateTime.now(),
-    typeUser: TypeUser(
+    typeUser: const TypeUser(
       id: 1,
       typeName: 'UserArea',
       description: 'Usuario de área',

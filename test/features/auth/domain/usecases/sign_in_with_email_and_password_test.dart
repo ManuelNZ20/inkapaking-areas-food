@@ -3,7 +3,8 @@ import 'package:inkapaking/features/auth/domain/domain.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'mocks.mocks.dart';
+
+import '../../../../core/mocks/mocks.mocks.dart';
 
 void main() {
   late SignInWithEmailAndPassword usecase;
@@ -27,7 +28,7 @@ void main() {
     email: tEmail,
     password: tPassword,
     createdAt: DateTime.now(),
-    typeUser: TypeUser(
+    typeUser: const TypeUser(
       id: 1,
       typeName: 'UserArea',
       description: 'Usuario de área',

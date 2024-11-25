@@ -4,7 +4,7 @@ import 'package:inkapaking/core/core.dart';
 import 'package:inkapaking/features/auth/domain/domain.dart';
 import 'package:mockito/mockito.dart';
 
-import 'mocks.mocks.dart';
+import '../../../../core/mocks/mocks.mocks.dart';
 
 void main() {
   late GetCurrentUser usecase;
@@ -26,7 +26,7 @@ void main() {
     email: tEmail,
     password: 'test123',
     createdAt: DateTime.now(),
-    typeUser: TypeUser(
+    typeUser: const TypeUser(
       id: 1,
       typeName: 'Admin',
       description: 'Administrator',
