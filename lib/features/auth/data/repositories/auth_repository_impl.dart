@@ -37,9 +37,17 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>>? recoverPassword(String email) {
-    // TODO: implement recoverPassword
-    throw UnimplementedError();
+  Future<Either<Failure, bool>>? recoverPassword(String email) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteUser = await supabaseDataSource.recoverPassword(email);
+        return Right(remoteUser);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(ServerFailure());
+    }
   }
 
   @override
@@ -60,9 +68,18 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>>? signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<Either<Failure, User>>? signOut() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteUser = await supabaseDataSource.signOut();
+        localDataSource.deleteCurrentUser();
+        return Right(remoteUser);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(ServerFailure());
+    }
   }
 
   @override
@@ -73,8 +90,25 @@ class AuthRepositoryImpl extends AuthRepository {
       String phone,
       String direction,
       bool stateAccount,
-      String email) {
-    // TODO: implement signUpWithDataUser
-    throw UnimplementedError();
+      String email) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteUser = await supabaseDataSource.signUpWithDataUser(
+          name,
+          lastName,
+          gender,
+          phone,
+          direction,
+          stateAccount,
+          email,
+        );
+        localDataSource.saveCurrentUser(remoteUser);
+        return Right(remoteUser);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(ServerFailure());
+    }
   }
 }

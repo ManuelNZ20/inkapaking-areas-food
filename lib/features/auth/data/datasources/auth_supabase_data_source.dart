@@ -33,7 +33,7 @@ abstract class AuthSupabaseDataSource {
   /// Puede lanzar las siguientes excepciones:
   /// - [AuthException] si el correo no está registrado.
   /// - [NetworkException] si hay problemas de conexión.
-  Future<UserModel> recoverPassword(
+  Future<bool> recoverPassword(
     String email,
   );
 
