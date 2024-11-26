@@ -9,6 +9,6 @@ class SignOut implements AuthUseCase<User, NoParams> {
 
   @override
   Future<Either<Failure, User>> call(NoParams params) async {
-    return await authRepository.signOut();
+    return await authRepository.signOut()!;
   }
 }

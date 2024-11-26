@@ -15,26 +15,42 @@ class AuthRepositoryImpl extends AuthRepository {
   });
 
   @override
-  Future<Either<Failure, User>> getCurrentUser(String email) {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
+  Future<Either<Failure, User>>? getCurrentUser(
+    String email,
+  ) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteUser = await supabaseDataSource.getCurrentUser(email);
+        localDataSource.saveCurrentUser(remoteUser);
+        return Right(remoteUser);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localUser = await localDataSource.getCurrentUser();
+        return Right(localUser!);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
   }
 
   @override
-  Future<Either<Failure, bool>> recoverPassword(String email) {
+  Future<Either<Failure, bool>>? recoverPassword(String email) {
     // TODO: implement recoverPassword
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, User>> signInWithEmailAndPassword(
+  Future<Either<Failure, User>>? signInWithEmailAndPassword(
       String email, String password) {
     // TODO: implement signInWithEmailAndPassword
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, User>> signOut() {
+  Future<Either<Failure, User>>? signOut() {
     // TODO: implement signOut
     throw UnimplementedError();
   }

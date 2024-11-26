@@ -3,13 +3,13 @@ import '../../../../core/core.dart';
 
 abstract class AuthRepository {
   // Sign in with email and password
-  Future<Either<Failure, User>> signInWithEmailAndPassword(
+  Future<Either<Failure, User>>? signInWithEmailAndPassword(
     String email,
     String password,
   );
 
   // Sign up with email and password
-  Future<Either<Failure, User>> signUpWithDataUser(
+  Future<Either<Failure, User>>? signUpWithDataUser(
     String name,
     String lastName,
     bool gender,
@@ -19,13 +19,13 @@ abstract class AuthRepository {
     String email,
   );
   // Sign out
-  Future<Either<Failure, User>> signOut();
+  Future<Either<Failure, User>>? signOut();
   // Get the current user
-  Future<Either<Failure, User>> getCurrentUser(
+  Future<Either<Failure, User>>? getCurrentUser(
     String email,
   );
   // Recover the password by sending a recovery token to the email.
-  Future<Either<Failure, bool>> recoverPassword(
+  Future<Either<Failure, bool>>? recoverPassword(
     String email,
   );
 }

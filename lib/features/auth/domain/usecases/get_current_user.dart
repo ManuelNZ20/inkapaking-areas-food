@@ -12,7 +12,7 @@ class GetCurrentUser implements AuthUseCase<User, GetCurrentUserParams> {
   Future<Either<Failure, User>> call(GetCurrentUserParams params) async {
     return await authRepository.getCurrentUser(
       params.email,
-    );
+    )!;
   }
 }
 

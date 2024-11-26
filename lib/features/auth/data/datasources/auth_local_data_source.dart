@@ -74,4 +74,22 @@ abstract class AuthLocalDataSource {
   ///
   /// Throws a [DatabaseException] if there is an error during the retrieval operation.
   Future<dynamic> getUserState(String key);
+
+  /// Deletes a locally stored user state.
+  ///
+  /// [key] The key identifying the state.
+  ///
+  /// Returns a [Future] that completes when the operation is done.
+  ///
+  /// Throws a [DatabaseException] if there is an error during the delete operation.
+  Future<void> deleteUserState(String key);
+
+  /// Caches a user locally.
+  ///
+  /// [user] The user model to be cached.
+  ///
+  /// Returns a [Future] that completes when the operation is done.
+  ///
+  /// Throws a [DatabaseException] if there is an error during the cache operation.
+  Future<void> cacheUser(UserModel user);
 }

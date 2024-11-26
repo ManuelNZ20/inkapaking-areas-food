@@ -11,7 +11,7 @@ class RecoverPassword implements AuthUseCase<bool, RecoverPasswordParams> {
   Future<Either<Failure, bool>> call(RecoverPasswordParams params) async {
     return await authRepository.recoverPassword(
       params.email,
-    );
+    )!;
   }
 }
 

@@ -14,7 +14,7 @@ class SignInWithEmailAndPassword
     return authRepository.signInWithEmailAndPassword(
       params.email,
       params.password,
-    );
+    )!;
   }
 }
 

@@ -19,7 +19,7 @@ class SignUpWithDataUser
       params.direction,
       params.stateAccount,
       params.email,
-    );
+    )!;
   }
 }
 
