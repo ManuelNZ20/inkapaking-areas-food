@@ -188,4 +188,175 @@ void main() {
       );
     },
   );
+
+  group(
+    'login',
+    () {
+      const tEmail = 'test@gmail.com';
+      const tPassword = 'test123';
+      final tUserModel = UserModel(
+        userId: 1,
+        name: 'Test Name',
+        lastName: 'Test Last Name',
+        gender: true,
+        phone: '1234567890',
+        direction: 'Test Direction',
+        stateAccount: true,
+        email: tEmail,
+        password: tPassword,
+        createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+        typeUser: const TypeUserModel(
+          id: 1,
+          typeName: 'Test Type User',
+          description: 'Test Description',
+        ),
+        tokens: [
+          TokenModel(
+            tokenId: 1,
+            tokenAuth: 'Test Token Auth',
+            tokenAccces: 'Test Token Access',
+            state: true,
+            createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+          ),
+        ],
+        imgsUser: [
+          ImgUserModel(
+            imgUserId: 1,
+            url: 'Test URL',
+            createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+          ),
+        ],
+      );
+      final User tUser = tUserModel;
+
+      test(
+        'should check if the device is online',
+        () async {
+          when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+          when(mockSupabaseDataSource.signInWithEmailAndPassword(any, any))
+              .thenAnswer(
+            (_) async => tUserModel,
+          );
+          await authRepositoryImpl.signInWithEmailAndPassword(
+              tEmail, tPassword);
+          verify(mockNetworkInfo.isConnected);
+        },
+      );
+
+      runTestsOnline(
+        () {
+          setUp(() {
+            when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+          });
+
+          test(
+            'should return remote data when the call to remote data source is successful',
+            () async {
+              when(mockSupabaseDataSource.signInWithEmailAndPassword(any, any))
+                  .thenAnswer(
+                (_) async => tUserModel,
+              );
+              final result = await authRepositoryImpl
+                  .signInWithEmailAndPassword(tEmail, tPassword);
+
+              verify(mockSupabaseDataSource.signInWithEmailAndPassword(
+                tEmail,
+                tPassword,
+              ));
+              expect(result, equals(Right(tUser)));
+            },
+          );
+
+          test(
+            'should save the user locally when the call to remote data source is successful',
+            () async {
+              when(mockSupabaseDataSource.signInWithEmailAndPassword(any, any))
+                  .thenAnswer(
+                (_) async => tUserModel,
+              );
+              await authRepositoryImpl.signInWithEmailAndPassword(
+                  tEmail, tPassword);
+              verify(mockLocalDataSource.saveCurrentUser(tUserModel));
+            },
+          );
+
+          test(
+            'should return server failure when the call to remote data source is unsuccessful',
+            () async {
+              when(mockSupabaseDataSource.signInWithEmailAndPassword(any, any))
+                  .thenThrow(
+                ServerException(),
+              );
+              final result = await authRepositoryImpl
+                  .signInWithEmailAndPassword(tEmail, tPassword);
+              verify(mockSupabaseDataSource.signInWithEmailAndPassword(
+                tEmail,
+                tPassword,
+              ));
+              verifyNoMoreInteractions(mockLocalDataSource);
+              expect(result, equals(Left(ServerFailure())));
+            },
+          );
+        },
+      );
+
+      runTestsOffline(
+        () {
+          setUp(() {
+            when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+          });
+
+          test(
+            'should return server failure when the device is offline',
+            () async {
+              final result = await authRepositoryImpl
+                  .signInWithEmailAndPassword(tEmail, tPassword);
+              verifyZeroInteractions(mockSupabaseDataSource);
+              verifyZeroInteractions(mockLocalDataSource);
+              expect(result, equals(Left(ServerFailure())));
+            },
+          );
+        },
+      );
+    },
+  );
+
+  group('recoverPassword', () {
+    const tEmail = 'test@example.com';
+    const tPassword = 'test123';
+    final tUserModel = UserModel(
+      userId: 1,
+      name: 'Test Name',
+      lastName: 'Test Last Name',
+      gender: true,
+      phone: '1234567890',
+      direction: 'Test Direction',
+      stateAccount: true,
+      email: tEmail,
+      password: tPassword,
+      createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+      typeUser: const TypeUserModel(
+        id: 1,
+        typeName: 'Test Type User',
+        description: 'Test Description',
+      ),
+      tokens: [
+        TokenModel(
+          tokenId: 1,
+          tokenAuth: 'Test Token Auth',
+          tokenAccces: 'Test Token Access',
+          state: true,
+          createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+        ),
+      ],
+      imgsUser: [
+        ImgUserModel(
+          imgUserId: 1,
+          url: 'Test URL',
+          createdAt: DateTime.parse('2024-01-01T00:00:00.000Z'),
+        ),
+      ],
+    );
+    final User tUser = tUserModel;
+  });
 }

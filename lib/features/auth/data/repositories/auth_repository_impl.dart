@@ -44,9 +44,19 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Either<Failure, User>>? signInWithEmailAndPassword(
-      String email, String password) {
-    // TODO: implement signInWithEmailAndPassword
-    throw UnimplementedError();
+      String email, String password) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteUser = await supabaseDataSource.signInWithEmailAndPassword(
+            email, password);
+        localDataSource.saveCurrentUser(remoteUser);
+        return Right(remoteUser);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      return Left(ServerFailure());
+    }
   }
 
   @override
