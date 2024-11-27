@@ -19,4 +19,4 @@ export 'error/error.dart';
 // UseCases
 export 'usecases/auth_usecase.dart';
 // platform
-export 'platform/network_info_supabase.dart';
+export 'network/network_info_supabase.dart';
