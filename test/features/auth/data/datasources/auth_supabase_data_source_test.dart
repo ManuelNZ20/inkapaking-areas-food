@@ -8,9 +8,11 @@ import '../../../../core/mocks/mocks.mocks.dart';
 void main() {
   late AuthSupabaseDataSourceImpl dataSource;
   late MockSupabaseClient mockSupabaseClient;
+  late MockPostgrestFilterBuilder<PostgrestList> mockFilterBuilder;
 
   setUp(() {
     mockSupabaseClient = MockSupabaseClient();
+    mockFilterBuilder = MockPostgrestFilterBuilder<PostgrestList>();
     dataSource = AuthSupabaseDataSourceImpl(
       client: mockSupabaseClient,
     );
@@ -19,47 +21,50 @@ void main() {
   group(
     'getCurrentUser',
     () {
+      // El test debe ser asíncrono. Y realizar las siguientes acciones:
+      // Arrange: Configurar los mocks y las respuestas esperadas.
+      // Act: Llamar al método que se desea probar.
+      // Assert: Verificar que el resultado es el esperado.
+      // El test hace lo siguiente:
+      // 1. Configura los mocks para devolver el builder y la respuesta esperada.
+      // 2. Llama al método que se desea probar.
+      // 3. Verifica que el resultado es el esperado.
+
       test(
         'should fetch data from Supabase',
         () async {
-          // Arrange: Preparar los datos que el mock debe devolver
-          const mockResponse = PostgrestResponse(
-            data: [
-              {
-                'id': 1,
-                'name': 'Test Name',
-                'email': 'test@example.com',
-                'last_name': 'Test Last Name',
-                'phone': '123456789',
-                'direction': 'Test Direction',
-                'state_account': true,
-                'password': 'Test123',
-              }
-            ],
-            count: 0,
-          );
+          // Arrange
+          const mockResponse = {
+            'id': 1,
+            'name': 'Test',
+            'last_name': 'Last Test Name',
+            'email': 'test@example.com',
+            'password': 'Test123',
+            'phone': '123456789',
+            'gender': true,
+            'direction': 'Test Direction',
+            'state_account': false,
+          };
 
-          // Mock: Indicamos que cuando se llame al método `select` del cliente de Supabase, devuelva el mockResponse
-          when(mockSupabaseClient
-                  .from('user')
-                  .select()
-                  .eq('email', 'test@example.com')
-                  .single() as Future<PostgrestResponse>)
-              .thenAnswer(
-            (_) async => mockResponse,
-          );
-
-          // Assert: Verificamos que el resultado es el que esperamos
+          // Configurar los mocks para devolver el builder y la respuesta esperada.
+          when(mockSupabaseClient.from('user').select())
+              .thenReturn(mockFilterBuilder);
+          when(mockFilterBuilder.select()).thenReturn(mockFilterBuilder);
+          when(mockFilterBuilder.eq('email', 'test@example.com'))
+              .thenReturn(mockFilterBuilder);
+          when(mockFilterBuilder.single() as Map<String, dynamic>)
+              .thenAnswer((_) => mockResponse);
+          // Act
           final result = await dataSource.getCurrentUser('test@example.com');
-          expect(result, mockResponse.data);
-          // Verify: Verificamos que el método `select` del cliente de Supabase fue llamado
-          verify(mockSupabaseClient
-                  .from('user')
-                  .select()
-                  .eq('email', 'test@example.com')
-                  .single())
-              .called(1);
-          // Verify: Verificamos que no se llamó a otros métodos del cliente de Supabase
+
+          // Assert
+          expect(result, mockResponse);
+
+          // Verify
+          verify(mockSupabaseClient.from('user')).called(1);
+          verify(mockFilterBuilder.select()).called(1);
+          verify(mockFilterBuilder.eq('email', 'test@example.com')).called(1);
+          verify(mockFilterBuilder.single()).called(1);
           verifyNoMoreInteractions(mockSupabaseClient);
         },
       );

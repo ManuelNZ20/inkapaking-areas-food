@@ -13,6 +13,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
   InternetConnectionChecker,
   SharedPreferences,
   SupabaseClient,
-  PostgrestResponse,
+  PostgrestFilterBuilder,
 ])
 void main() {}

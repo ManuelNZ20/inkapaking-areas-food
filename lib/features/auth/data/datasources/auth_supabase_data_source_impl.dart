@@ -11,19 +11,37 @@ class AuthSupabaseDataSourceImpl implements AuthSupabaseDataSource {
 
   @override
   Future<UserModel>? getCurrentUser(String email) async {
-    final response =
-        await client.from(tableName).select().eq('email', email).single();
+    final response = await client
+        .from(tableName)
+        .select()
+        .eq('email', email)
+        .limit(1)
+        .single();
     return UserModel.fromJson(response);
   }
 
   @override
-  Future<bool>? recoverPassword(String email) {
-    return null;
+  Future<bool>? recoverPassword(String email) async {
+    final response = await client
+        .from(tableName)
+        .select()
+        .eq('email', email)
+        .limit(1)
+        .single();
+    return response.isEmpty;
   }
 
   @override
-  Future<UserModel>? signInWithEmailAndPassword(String email, String password) {
-    return null;
+  Future<UserModel>? signInWithEmailAndPassword(
+      String email, String password) async {
+    final response = await client
+        .from(tableName)
+        .select()
+        .eq('email', email)
+        .eq('password', password)
+        .limit(1)
+        .single();
+    return UserModel.fromJson(response);
   }
 
   @override
@@ -33,22 +51,30 @@ class AuthSupabaseDataSourceImpl implements AuthSupabaseDataSource {
 
   @override
   Future<UserModel>? signUpWithDataUser(
-      String name,
-      String lastName,
-      bool gender,
-      String phone,
-      String direction,
-      bool stateAccount,
-      String email) {
-    return null;
-    // final response = await client.from(tableName).insert({
-    //   'name': name,
-    //   'last_name': lastName,
-    //   'gender': gender,
-    //   'phone': phone,
-    //   'direction': direction,
-    //   'state_account': stateAccount,
-    //   'email': email,
-    // }).select();
+    String name,
+    String lastName,
+    bool gender,
+    String phone,
+    String direction,
+    bool stateAccount,
+    String email,
+  ) async {
+    final response = await client
+        .from(tableName)
+        .insert(
+          {
+            'name': name,
+            'last_name': lastName,
+            'gender': gender,
+            'phone': phone,
+            'direction': direction,
+            'state_account': stateAccount,
+            'email': email,
+          },
+        )
+        .select()
+        .limit(1)
+        .single();
+    return UserModel.fromJson(response);
   }
 }
