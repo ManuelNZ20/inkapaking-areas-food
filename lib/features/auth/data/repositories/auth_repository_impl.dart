@@ -102,7 +102,7 @@ class AuthRepositoryImpl extends AuthRepository {
           stateAccount,
           email,
         );
-        localDataSource.saveCurrentUser(remoteUser);
+        // localDataSource.saveCurrentUser(remoteUser);
         return Right(remoteUser);
       } on ServerException {
         return Left(ServerFailure());

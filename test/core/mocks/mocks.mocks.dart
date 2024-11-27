@@ -7,9 +7,9 @@ import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i6;
 import 'package:inkapaking/core/core.dart' as _i2;
-import 'package:inkapaking/features/auth/data/datasources/auth_local_data_source.dart'
+import 'package:inkapaking/features/auth/domain/datasources/auth_local_data_source.dart'
     as _i8;
-import 'package:inkapaking/features/auth/data/datasources/auth_supabase_data_source.dart'
+import 'package:inkapaking/features/auth/domain/datasources/auth_supabase_data_source.dart'
     as _i7;
 import 'package:inkapaking/features/auth/domain/repositories/auth_repository.dart'
     as _i4;
