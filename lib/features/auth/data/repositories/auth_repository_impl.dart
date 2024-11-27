@@ -20,7 +20,7 @@ class AuthRepositoryImpl extends AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteUser = await supabaseDataSource.getCurrentUser(email);
-        localDataSource.saveCurrentUser(remoteUser);
+        localDataSource.saveCurrentUser(remoteUser!);
         return Right(remoteUser);
       } on ServerException {
         return Left(ServerFailure());
@@ -40,7 +40,7 @@ class AuthRepositoryImpl extends AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteUser = await supabaseDataSource.recoverPassword(email);
-        return Right(remoteUser);
+        return Right(remoteUser ?? false);
       } on ServerException {
         return Left(ServerFailure());
       }
@@ -56,7 +56,7 @@ class AuthRepositoryImpl extends AuthRepository {
       try {
         final remoteUser = await supabaseDataSource.signInWithEmailAndPassword(
             email, password);
-        localDataSource.saveCurrentUser(remoteUser);
+        localDataSource.saveCurrentUser(remoteUser!);
         return Right(remoteUser);
       } on ServerException {
         return Left(ServerFailure());
@@ -72,7 +72,7 @@ class AuthRepositoryImpl extends AuthRepository {
       try {
         final remoteUser = await supabaseDataSource.signOut();
         localDataSource.deleteCurrentUser();
-        return Right(remoteUser);
+        return Right(remoteUser!);
       } on ServerException {
         return Left(ServerFailure());
       }
@@ -102,7 +102,7 @@ class AuthRepositoryImpl extends AuthRepository {
           email,
         );
         // localDataSource.saveCurrentUser(remoteUser);
-        return Right(remoteUser);
+        return Right(remoteUser!);
       } on ServerException {
         return Left(ServerFailure());
       }

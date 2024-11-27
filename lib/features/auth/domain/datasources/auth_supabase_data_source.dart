@@ -8,7 +8,7 @@ abstract class AuthSupabaseDataSource {
   /// Puede lanzar las siguientes excepciones:
   /// - [AuthException] si las credenciales son incorrectas.
   /// - [NetworkException] si hay problemas de conexión.
-  Future<UserModel> signInWithEmailAndPassword(
+  Future<UserModel>? signInWithEmailAndPassword(
     String email,
     String password,
   );
@@ -18,7 +18,7 @@ abstract class AuthSupabaseDataSource {
   /// Puede lanzar las siguientes excepciones:
   /// - [AuthException] si el correo ya está en uso.
   /// - [NetworkException] si hay problemas de conexión.
-  Future<UserModel> signUpWithDataUser(
+  Future<UserModel>? signUpWithDataUser(
     String name,
     String lastName,
     bool gender,
@@ -33,7 +33,7 @@ abstract class AuthSupabaseDataSource {
   /// Puede lanzar las siguientes excepciones:
   /// - [AuthException] si el correo no está registrado.
   /// - [NetworkException] si hay problemas de conexión.
-  Future<bool> recoverPassword(
+  Future<bool>? recoverPassword(
     String email,
   );
 
@@ -42,7 +42,7 @@ abstract class AuthSupabaseDataSource {
   /// Puede lanzar las siguientes excepciones:
   /// - [AuthException] si el usuario no está autenticado.
   /// - [NetworkException] si hay problemas de conexión.
-  Future<UserModel> getCurrentUser(
+  Future<UserModel>? getCurrentUser(
     String email,
   );
 
@@ -51,5 +51,5 @@ abstract class AuthSupabaseDataSource {
   /// Puede lanzar las siguientes excepciones:
   /// - [AuthException] si el usuario no está autenticado.
   /// - [NetworkException] si hay problemas de conexión.
-  Future<UserModel> signOut();
+  Future<UserModel>? signOut();
 }
