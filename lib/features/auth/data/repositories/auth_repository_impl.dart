@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/core.dart';
 import '../../domain/domain.dart';
-import '../data.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthSupabaseDataSource supabaseDataSource;
