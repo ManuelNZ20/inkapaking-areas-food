@@ -29,8 +29,10 @@ class InputEmail extends FormzInput<String, EmailError> {
   /// Override validator to handle validating a given input value.
   @override
   EmailError? validator(String value) {
-    if (value.isEmpty || value.trim().isEmpty) return EmailError.empty;
-    if (!emailRegExp.hasMatch(value)) return EmailError.format;
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) return EmailError.empty;
+    // if (value.isEmpty || value.trim().isEmpty) return EmailError.empty;
+    if (!emailRegExp.hasMatch(trimmed)) return EmailError.format;
 
     return null;
   }

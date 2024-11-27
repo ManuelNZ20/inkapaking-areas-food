@@ -30,9 +30,12 @@ class InputPassword extends FormzInput<String, PasswordError> {
   // Override validator to handle validating a given input value.
   @override
   PasswordError? validator(String value) {
-    if (value.isEmpty || value.trim().isEmpty) return PasswordError.empty;
-    if (value.length < 6) return PasswordError.length;
-    if (!passwordRegExp.hasMatch(value)) return PasswordError.format;
+    final trimmedValue = value.trim(); // Eliminar espacios antes y después
+
+    // Si el valor está vacío después de eliminar los espacios
+    if (trimmedValue.isEmpty) return PasswordError.empty;
+    if (trimmedValue.length < 6) return PasswordError.length;
+    if (!passwordRegExp.hasMatch(trimmedValue)) return PasswordError.format;
 
     return null;
   }
