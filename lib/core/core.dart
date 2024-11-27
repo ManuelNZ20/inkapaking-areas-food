@@ -20,3 +20,5 @@ export 'error/error.dart';
 export 'usecases/auth_usecase.dart';
 // platform
 export 'network/network_info_supabase.dart';
+// Utils
+export 'utils/utils.dart';

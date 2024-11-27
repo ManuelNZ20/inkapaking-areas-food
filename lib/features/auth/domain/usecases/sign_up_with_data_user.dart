@@ -11,6 +11,14 @@ class SignUpWithDataUser
 
   @override
   Future<Either<Failure, User>> call(SignUpWithDataUserParams params) async {
+    final email = InputEmail.dirty(params.email);
+    if (!email.isValid) {
+      return Left(
+        AuthenticationFailure(
+          'Email no válido',
+        ),
+      );
+    }
     return repository.signUpWithDataUser(
       params.name,
       params.lastName,

@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-
 import '../../../../core/core.dart';
 import '../repositories/auth_repository.dart';
 
@@ -10,11 +9,23 @@ class SignInWithEmailAndPassword
   SignInWithEmailAndPassword(this.authRepository);
 
   @override
-  Future<Either<Failure, User>> call(SignInWithEmailAndPasswordParams params) {
-    return authRepository.signInWithEmailAndPassword(
-      params.email,
-      params.password,
-    )!;
+  Future<Either<Failure, User>> call(
+    SignInWithEmailAndPasswordParams params,
+  ) async {
+    final email = InputEmail.dirty(params.email);
+    final password = InputPassword.dirty(params.password);
+    if (email.isValid && password.isValid) {
+      return authRepository.signInWithEmailAndPassword(
+        params.email,
+        params.password,
+      )!;
+    } else {
+      return Left(
+        AuthenticationFailure(
+          'Email o contraseña incorrectos',
+        ),
+      );
+    }
   }
 }
 

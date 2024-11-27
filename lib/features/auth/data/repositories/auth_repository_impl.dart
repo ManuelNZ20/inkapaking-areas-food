@@ -13,72 +13,59 @@ class AuthRepositoryImpl extends AuthRepository {
     required this.networkInfo,
   });
 
-  @override
-  Future<Either<Failure, User>>? getCurrentUser(
-    String email,
-  ) async {
+  Future<Either<Failure, T>> _handleNetworkRequest<T>(
+      Future<T> Function() request) async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteUser = await supabaseDataSource.getCurrentUser(email);
-        localDataSource.saveCurrentUser(remoteUser!);
-        return Right(remoteUser);
-      } on ServerException {
-        return Left(ServerFailure());
+        final result = await request();
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message)); // Mensaje más descriptivo
+      } catch (e) {
+        return Left(
+            CustomFailure(e.toString())); // Para capturar errores generales
       }
     } else {
-      try {
-        final localUser = await localDataSource.getCurrentUser();
-        return Right(localUser!);
-      } on CacheException {
-        return Left(CacheFailure());
-      }
+      return Left(ServerFailure("No hay conexión a Internet"));
     }
   }
 
   @override
+  Future<Either<Failure, User>>? getCurrentUser(
+    String email,
+  ) async {
+    return _handleNetworkRequest(() async {
+      final remoteUser = await supabaseDataSource.getCurrentUser(email);
+      localDataSource.saveCurrentUser(remoteUser!);
+      return remoteUser;
+    });
+  }
+
+  @override
   Future<Either<Failure, bool>>? recoverPassword(String email) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteUser = await supabaseDataSource.recoverPassword(email);
-        return Right(remoteUser ?? false);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(ServerFailure());
-    }
+    return _handleNetworkRequest(() async {
+      return await supabaseDataSource.recoverPassword(email) ?? false;
+    });
   }
 
   @override
   Future<Either<Failure, User>>? signInWithEmailAndPassword(
       String email, String password) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteUser = await supabaseDataSource.signInWithEmailAndPassword(
-            email, password);
-        localDataSource.saveCurrentUser(remoteUser!);
-        return Right(remoteUser);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(ServerFailure());
-    }
+    return _handleNetworkRequest(() async {
+      final remoteUser =
+          await supabaseDataSource.signInWithEmailAndPassword(email, password);
+      localDataSource.saveCurrentUser(remoteUser!);
+      return remoteUser;
+    });
   }
 
   @override
   Future<Either<Failure, User>>? signOut() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteUser = await supabaseDataSource.signOut();
-        localDataSource.deleteCurrentUser();
-        return Right(remoteUser!);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(ServerFailure());
-    }
+    return _handleNetworkRequest(() async {
+      final remoteUser = await supabaseDataSource.signOut();
+      localDataSource.deleteCurrentUser();
+      return remoteUser!;
+    });
   }
 
   @override
@@ -90,24 +77,9 @@ class AuthRepositoryImpl extends AuthRepository {
       String direction,
       bool stateAccount,
       String email) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteUser = await supabaseDataSource.signUpWithDataUser(
-          name,
-          lastName,
-          gender,
-          phone,
-          direction,
-          stateAccount,
-          email,
-        );
-        // localDataSource.saveCurrentUser(remoteUser);
-        return Right(remoteUser!);
-      } on ServerException {
-        return Left(ServerFailure());
-      }
-    } else {
-      return Left(ServerFailure());
-    }
+    return _handleNetworkRequest(() async {
+      return await supabaseDataSource.signUpWithDataUser(
+          name, lastName, gender, phone, direction, stateAccount, email)!;
+    });
   }
 }
