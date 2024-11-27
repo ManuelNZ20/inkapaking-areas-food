@@ -23,6 +23,7 @@ void main() {
     'getCurrentUser',
     () {
       final tUserModel = UserModel.fromJson(json.decode(fixture('user.json')));
+      // El test realiza una comparación entre el objeto `UserModel` que se obtiene del archivo `user.json` y el objeto `UserModel` que se obtiene del método `getCurrentUser` del `AuthLocalDataSourceImpl`.
       test(
         'should return UserModel from SharedPreferences when there is one in the cache',
         () async {

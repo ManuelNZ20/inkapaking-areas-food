@@ -2,7 +2,7 @@ import 'package:inkapaking/core/data/models/user.module.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/domain.dart';
 
-const tableName = 'users';
+const tableName = 'user';
 
 class AuthSupabaseDataSourceImpl implements AuthSupabaseDataSource {
   final SupabaseClient client;
@@ -10,8 +10,10 @@ class AuthSupabaseDataSourceImpl implements AuthSupabaseDataSource {
   AuthSupabaseDataSourceImpl({required this.client});
 
   @override
-  Future<UserModel>? getCurrentUser(String email) {
-    return null;
+  Future<UserModel>? getCurrentUser(String email) async {
+    final response =
+        await client.from(tableName).select().eq('email', email).single();
+    return UserModel.fromJson(response);
   }
 
   @override

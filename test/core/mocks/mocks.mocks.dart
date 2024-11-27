@@ -6,17 +6,19 @@
 import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i6;
-import 'package:inkapaking/core/core.dart' as _i2;
+import 'package:inkapaking/core/core.dart' as _i7;
 import 'package:inkapaking/features/auth/domain/datasources/auth_local_data_source.dart'
-    as _i8;
+    as _i9;
 import 'package:inkapaking/features/auth/domain/datasources/auth_supabase_data_source.dart'
-    as _i7;
+    as _i8;
 import 'package:inkapaking/features/auth/domain/repositories/auth_repository.dart'
     as _i4;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
-    as _i3;
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:shared_preferences/shared_preferences.dart' as _i9;
+import 'package:mockito/src/dummies.dart' as _i11;
+import 'package:shared_preferences/shared_preferences.dart' as _i10;
+import 'package:supabase/supabase.dart' as _i3;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -31,8 +33,8 @@ import 'package:shared_preferences/shared_preferences.dart' as _i9;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeUserModel_0 extends _i1.SmartFake implements _i2.UserModel {
-  _FakeUserModel_0(
+class _FakeDuration_0 extends _i1.SmartFake implements Duration {
+  _FakeDuration_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -41,8 +43,9 @@ class _FakeUserModel_0 extends _i1.SmartFake implements _i2.UserModel {
         );
 }
 
-class _FakeDuration_1 extends _i1.SmartFake implements Duration {
-  _FakeDuration_1(
+class _FakeAddressCheckResult_1 extends _i1.SmartFake
+    implements _i2.AddressCheckResult {
+  _FakeAddressCheckResult_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -51,9 +54,96 @@ class _FakeDuration_1 extends _i1.SmartFake implements Duration {
         );
 }
 
-class _FakeAddressCheckResult_2 extends _i1.SmartFake
-    implements _i3.AddressCheckResult {
-  _FakeAddressCheckResult_2(
+class _FakeFunctionsClient_2 extends _i1.SmartFake
+    implements _i3.FunctionsClient {
+  _FakeFunctionsClient_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeSupabaseStorageClient_3 extends _i1.SmartFake
+    implements _i3.SupabaseStorageClient {
+  _FakeSupabaseStorageClient_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeRealtimeClient_4 extends _i1.SmartFake
+    implements _i3.RealtimeClient {
+  _FakeRealtimeClient_4(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePostgrestClient_5 extends _i1.SmartFake
+    implements _i3.PostgrestClient {
+  _FakePostgrestClient_5(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeGoTrueClient_6 extends _i1.SmartFake implements _i3.GoTrueClient {
+  _FakeGoTrueClient_6(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeSupabaseQueryBuilder_7 extends _i1.SmartFake
+    implements _i3.SupabaseQueryBuilder {
+  _FakeSupabaseQueryBuilder_7(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeSupabaseQuerySchema_8 extends _i1.SmartFake
+    implements _i3.SupabaseQuerySchema {
+  _FakeSupabaseQuerySchema_8(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePostgrestFilterBuilder_9<T1> extends _i1.SmartFake
+    implements _i3.PostgrestFilterBuilder<T1> {
+  _FakePostgrestFilterBuilder_9(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeRealtimeChannel_10 extends _i1.SmartFake
+    implements _i3.RealtimeChannel {
+  _FakeRealtimeChannel_10(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -71,7 +161,7 @@ class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
   }
 
   @override
-  _i5.Future<_i6.Either<_i2.Failure, _i2.User>>? signInWithEmailAndPassword(
+  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? signInWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
@@ -81,10 +171,10 @@ class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
           email,
           password,
         ],
-      )) as _i5.Future<_i6.Either<_i2.Failure, _i2.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
 
   @override
-  _i5.Future<_i6.Either<_i2.Failure, _i2.User>>? signUpWithDataUser(
+  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? signUpWithDataUser(
     String? name,
     String? lastName,
     bool? gender,
@@ -104,60 +194,48 @@ class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
           stateAccount,
           email,
         ],
-      )) as _i5.Future<_i6.Either<_i2.Failure, _i2.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
 
   @override
-  _i5.Future<_i6.Either<_i2.Failure, _i2.User>>? getCurrentUser(
+  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? getCurrentUser(
           String? email) =>
       (super.noSuchMethod(Invocation.method(
         #getCurrentUser,
         [email],
-      )) as _i5.Future<_i6.Either<_i2.Failure, _i2.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
 
   @override
-  _i5.Future<_i6.Either<_i2.Failure, bool>>? recoverPassword(String? email) =>
+  _i5.Future<_i6.Either<_i7.Failure, bool>>? recoverPassword(String? email) =>
       (super.noSuchMethod(Invocation.method(
         #recoverPassword,
         [email],
-      )) as _i5.Future<_i6.Either<_i2.Failure, bool>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, bool>>?);
 }
 
 /// A class which mocks [AuthSupabaseDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthSupabaseDataSource extends _i1.Mock
-    implements _i7.AuthSupabaseDataSource {
+    implements _i8.AuthSupabaseDataSource {
   MockAuthSupabaseDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.UserModel> signInWithEmailAndPassword(
+  _i5.Future<_i7.UserModel>? signInWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #signInWithEmailAndPassword,
-          [
-            email,
-            password,
-          ],
-        ),
-        returnValue: _i5.Future<_i2.UserModel>.value(_FakeUserModel_0(
-          this,
-          Invocation.method(
-            #signInWithEmailAndPassword,
-            [
-              email,
-              password,
-            ],
-          ),
-        )),
-      ) as _i5.Future<_i2.UserModel>);
+      (super.noSuchMethod(Invocation.method(
+        #signInWithEmailAndPassword,
+        [
+          email,
+          password,
+        ],
+      )) as _i5.Future<_i7.UserModel>?);
 
   @override
-  _i5.Future<_i2.UserModel> signUpWithDataUser(
+  _i5.Future<_i7.UserModel>? signUpWithDataUser(
     String? name,
     String? lastName,
     bool? gender,
@@ -166,88 +244,45 @@ class MockAuthSupabaseDataSource extends _i1.Mock
     bool? stateAccount,
     String? email,
   ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #signUpWithDataUser,
-          [
-            name,
-            lastName,
-            gender,
-            phone,
-            direction,
-            stateAccount,
-            email,
-          ],
-        ),
-        returnValue: _i5.Future<_i2.UserModel>.value(_FakeUserModel_0(
-          this,
-          Invocation.method(
-            #signUpWithDataUser,
-            [
-              name,
-              lastName,
-              gender,
-              phone,
-              direction,
-              stateAccount,
-              email,
-            ],
-          ),
-        )),
-      ) as _i5.Future<_i2.UserModel>);
+      (super.noSuchMethod(Invocation.method(
+        #signUpWithDataUser,
+        [
+          name,
+          lastName,
+          gender,
+          phone,
+          direction,
+          stateAccount,
+          email,
+        ],
+      )) as _i5.Future<_i7.UserModel>?);
 
   @override
-  _i5.Future<bool> recoverPassword(String? email) => (super.noSuchMethod(
-        Invocation.method(
-          #recoverPassword,
-          [email],
-        ),
-        returnValue: _i5.Future<bool>.value(false),
-      ) as _i5.Future<bool>);
+  _i5.Future<bool>? recoverPassword(String? email) =>
+      (super.noSuchMethod(Invocation.method(
+        #recoverPassword,
+        [email],
+      )) as _i5.Future<bool>?);
 
   @override
-  _i5.Future<_i2.UserModel> getCurrentUser(String? email) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getCurrentUser,
-          [email],
-        ),
-        returnValue: _i5.Future<_i2.UserModel>.value(_FakeUserModel_0(
-          this,
-          Invocation.method(
-            #getCurrentUser,
-            [email],
-          ),
-        )),
-      ) as _i5.Future<_i2.UserModel>);
-
-  @override
-  _i5.Future<_i2.UserModel> signOut() => (super.noSuchMethod(
-        Invocation.method(
-          #signOut,
-          [],
-        ),
-        returnValue: _i5.Future<_i2.UserModel>.value(_FakeUserModel_0(
-          this,
-          Invocation.method(
-            #signOut,
-            [],
-          ),
-        )),
-      ) as _i5.Future<_i2.UserModel>);
+  _i5.Future<_i7.UserModel>? getCurrentUser(String? email) =>
+      (super.noSuchMethod(Invocation.method(
+        #getCurrentUser,
+        [email],
+      )) as _i5.Future<_i7.UserModel>?);
 }
 
 /// A class which mocks [AuthLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthLocalDataSource extends _i1.Mock
-    implements _i8.AuthLocalDataSource {
+    implements _i9.AuthLocalDataSource {
   MockAuthLocalDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<void> saveCurrentUser(_i2.UserModel? user) => (super.noSuchMethod(
+  _i5.Future<void> saveCurrentUser(_i7.UserModel? user) => (super.noSuchMethod(
         Invocation.method(
           #saveCurrentUser,
           [user],
@@ -257,13 +292,13 @@ class MockAuthLocalDataSource extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<_i2.UserModel?> getCurrentUser() => (super.noSuchMethod(
+  _i5.Future<_i7.UserModel?> getCurrentUser() => (super.noSuchMethod(
         Invocation.method(
           #getCurrentUser,
           [],
         ),
-        returnValue: _i5.Future<_i2.UserModel?>.value(),
-      ) as _i5.Future<_i2.UserModel?>);
+        returnValue: _i5.Future<_i7.UserModel?>.value(),
+      ) as _i5.Future<_i7.UserModel?>);
 
   @override
   _i5.Future<void> deleteCurrentUser() => (super.noSuchMethod(
@@ -350,7 +385,7 @@ class MockAuthLocalDataSource extends _i1.Mock
       ) as _i5.Future<void>);
 
   @override
-  _i5.Future<void> cacheUser(_i2.UserModel? user) => (super.noSuchMethod(
+  _i5.Future<void> cacheUser(_i7.UserModel? user) => (super.noSuchMethod(
         Invocation.method(
           #cacheUser,
           [user],
@@ -363,7 +398,7 @@ class MockAuthLocalDataSource extends _i1.Mock
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i2.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
   MockNetworkInfo() {
     _i1.throwOnMissingStub(this);
   }
@@ -385,7 +420,7 @@ class MockNetworkInfo extends _i1.Mock implements _i2.NetworkInfo {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockInternetConnectionChecker extends _i1.Mock
-    implements _i3.InternetConnectionChecker {
+    implements _i2.InternetConnectionChecker {
   MockInternetConnectionChecker() {
     _i1.throwOnMissingStub(this);
   }
@@ -393,7 +428,7 @@ class MockInternetConnectionChecker extends _i1.Mock
   @override
   Duration get checkInterval => (super.noSuchMethod(
         Invocation.getter(#checkInterval),
-        returnValue: _FakeDuration_1(
+        returnValue: _FakeDuration_0(
           this,
           Invocation.getter(#checkInterval),
         ),
@@ -402,20 +437,20 @@ class MockInternetConnectionChecker extends _i1.Mock
   @override
   Duration get checkTimeout => (super.noSuchMethod(
         Invocation.getter(#checkTimeout),
-        returnValue: _FakeDuration_1(
+        returnValue: _FakeDuration_0(
           this,
           Invocation.getter(#checkTimeout),
         ),
       ) as Duration);
 
   @override
-  List<_i3.AddressCheckOptions> get addresses => (super.noSuchMethod(
+  List<_i2.AddressCheckOptions> get addresses => (super.noSuchMethod(
         Invocation.getter(#addresses),
-        returnValue: <_i3.AddressCheckOptions>[],
-      ) as List<_i3.AddressCheckOptions>);
+        returnValue: <_i2.AddressCheckOptions>[],
+      ) as List<_i2.AddressCheckOptions>);
 
   @override
-  set addresses(List<_i3.AddressCheckOptions>? value) => super.noSuchMethod(
+  set addresses(List<_i2.AddressCheckOptions>? value) => super.noSuchMethod(
         Invocation.setter(
           #addresses,
           value,
@@ -430,19 +465,19 @@ class MockInternetConnectionChecker extends _i1.Mock
       ) as _i5.Future<bool>);
 
   @override
-  _i5.Future<_i3.InternetConnectionStatus> get connectionStatus =>
+  _i5.Future<_i2.InternetConnectionStatus> get connectionStatus =>
       (super.noSuchMethod(
         Invocation.getter(#connectionStatus),
-        returnValue: _i5.Future<_i3.InternetConnectionStatus>.value(
-            _i3.InternetConnectionStatus.connected),
-      ) as _i5.Future<_i3.InternetConnectionStatus>);
+        returnValue: _i5.Future<_i2.InternetConnectionStatus>.value(
+            _i2.InternetConnectionStatus.connected),
+      ) as _i5.Future<_i2.InternetConnectionStatus>);
 
   @override
-  _i5.Stream<_i3.InternetConnectionStatus> get onStatusChange =>
+  _i5.Stream<_i2.InternetConnectionStatus> get onStatusChange =>
       (super.noSuchMethod(
         Invocation.getter(#onStatusChange),
-        returnValue: _i5.Stream<_i3.InternetConnectionStatus>.empty(),
-      ) as _i5.Stream<_i3.InternetConnectionStatus>);
+        returnValue: _i5.Stream<_i2.InternetConnectionStatus>.empty(),
+      ) as _i5.Stream<_i2.InternetConnectionStatus>);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -457,28 +492,28 @@ class MockInternetConnectionChecker extends _i1.Mock
       ) as bool);
 
   @override
-  _i5.Future<_i3.AddressCheckResult> isHostReachable(
-          _i3.AddressCheckOptions? options) =>
+  _i5.Future<_i2.AddressCheckResult> isHostReachable(
+          _i2.AddressCheckOptions? options) =>
       (super.noSuchMethod(
         Invocation.method(
           #isHostReachable,
           [options],
         ),
         returnValue:
-            _i5.Future<_i3.AddressCheckResult>.value(_FakeAddressCheckResult_2(
+            _i5.Future<_i2.AddressCheckResult>.value(_FakeAddressCheckResult_1(
           this,
           Invocation.method(
             #isHostReachable,
             [options],
           ),
         )),
-      ) as _i5.Future<_i3.AddressCheckResult>);
+      ) as _i5.Future<_i2.AddressCheckResult>);
 }
 
 /// A class which mocks [SharedPreferences].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSharedPreferences extends _i1.Mock implements _i9.SharedPreferences {
+class MockSharedPreferences extends _i1.Mock implements _i10.SharedPreferences {
   MockSharedPreferences() {
     _i1.throwOnMissingStub(this);
   }
@@ -654,4 +689,266 @@ class MockSharedPreferences extends _i1.Mock implements _i9.SharedPreferences {
         returnValue: _i5.Future<void>.value(),
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
+}
+
+/// A class which mocks [SupabaseClient].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockSupabaseClient extends _i1.Mock implements _i3.SupabaseClient {
+  MockSupabaseClient() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.FunctionsClient get functions => (super.noSuchMethod(
+        Invocation.getter(#functions),
+        returnValue: _FakeFunctionsClient_2(
+          this,
+          Invocation.getter(#functions),
+        ),
+      ) as _i3.FunctionsClient);
+
+  @override
+  set functions(_i3.FunctionsClient? _functions) => super.noSuchMethod(
+        Invocation.setter(
+          #functions,
+          _functions,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i3.SupabaseStorageClient get storage => (super.noSuchMethod(
+        Invocation.getter(#storage),
+        returnValue: _FakeSupabaseStorageClient_3(
+          this,
+          Invocation.getter(#storage),
+        ),
+      ) as _i3.SupabaseStorageClient);
+
+  @override
+  set storage(_i3.SupabaseStorageClient? _storage) => super.noSuchMethod(
+        Invocation.setter(
+          #storage,
+          _storage,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i3.RealtimeClient get realtime => (super.noSuchMethod(
+        Invocation.getter(#realtime),
+        returnValue: _FakeRealtimeClient_4(
+          this,
+          Invocation.getter(#realtime),
+        ),
+      ) as _i3.RealtimeClient);
+
+  @override
+  set realtime(_i3.RealtimeClient? _realtime) => super.noSuchMethod(
+        Invocation.setter(
+          #realtime,
+          _realtime,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i3.PostgrestClient get rest => (super.noSuchMethod(
+        Invocation.getter(#rest),
+        returnValue: _FakePostgrestClient_5(
+          this,
+          Invocation.getter(#rest),
+        ),
+      ) as _i3.PostgrestClient);
+
+  @override
+  set rest(_i3.PostgrestClient? _rest) => super.noSuchMethod(
+        Invocation.setter(
+          #rest,
+          _rest,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  Map<String, String> get headers => (super.noSuchMethod(
+        Invocation.getter(#headers),
+        returnValue: <String, String>{},
+      ) as Map<String, String>);
+
+  @override
+  set headers(Map<String, String>? headers) => super.noSuchMethod(
+        Invocation.setter(
+          #headers,
+          headers,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i3.GoTrueClient get auth => (super.noSuchMethod(
+        Invocation.getter(#auth),
+        returnValue: _FakeGoTrueClient_6(
+          this,
+          Invocation.getter(#auth),
+        ),
+      ) as _i3.GoTrueClient);
+
+  @override
+  _i3.SupabaseQueryBuilder from(String? table) => (super.noSuchMethod(
+        Invocation.method(
+          #from,
+          [table],
+        ),
+        returnValue: _FakeSupabaseQueryBuilder_7(
+          this,
+          Invocation.method(
+            #from,
+            [table],
+          ),
+        ),
+      ) as _i3.SupabaseQueryBuilder);
+
+  @override
+  _i3.SupabaseQuerySchema schema(String? schema) => (super.noSuchMethod(
+        Invocation.method(
+          #schema,
+          [schema],
+        ),
+        returnValue: _FakeSupabaseQuerySchema_8(
+          this,
+          Invocation.method(
+            #schema,
+            [schema],
+          ),
+        ),
+      ) as _i3.SupabaseQuerySchema);
+
+  @override
+  _i3.PostgrestFilterBuilder<T> rpc<T>(
+    String? fn, {
+    Map<String, dynamic>? params,
+    dynamic get = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #rpc,
+          [fn],
+          {
+            #params: params,
+            #get: get,
+          },
+        ),
+        returnValue: _FakePostgrestFilterBuilder_9<T>(
+          this,
+          Invocation.method(
+            #rpc,
+            [fn],
+            {
+              #params: params,
+              #get: get,
+            },
+          ),
+        ),
+      ) as _i3.PostgrestFilterBuilder<T>);
+
+  @override
+  _i3.RealtimeChannel channel(
+    String? name, {
+    _i3.RealtimeChannelConfig? opts = const _i3.RealtimeChannelConfig(),
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #channel,
+          [name],
+          {#opts: opts},
+        ),
+        returnValue: _FakeRealtimeChannel_10(
+          this,
+          Invocation.method(
+            #channel,
+            [name],
+            {#opts: opts},
+          ),
+        ),
+      ) as _i3.RealtimeChannel);
+
+  @override
+  List<_i3.RealtimeChannel> getChannels() => (super.noSuchMethod(
+        Invocation.method(
+          #getChannels,
+          [],
+        ),
+        returnValue: <_i3.RealtimeChannel>[],
+      ) as List<_i3.RealtimeChannel>);
+
+  @override
+  _i5.Future<String> removeChannel(_i3.RealtimeChannel? channel) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeChannel,
+          [channel],
+        ),
+        returnValue: _i5.Future<String>.value(_i11.dummyValue<String>(
+          this,
+          Invocation.method(
+            #removeChannel,
+            [channel],
+          ),
+        )),
+      ) as _i5.Future<String>);
+
+  @override
+  _i5.Future<List<String>> removeAllChannels() => (super.noSuchMethod(
+        Invocation.method(
+          #removeAllChannels,
+          [],
+        ),
+        returnValue: _i5.Future<List<String>>.value(<String>[]),
+      ) as _i5.Future<List<String>>);
+
+  @override
+  _i5.Future<void> dispose() => (super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+}
+
+/// A class which mocks [PostgrestResponse].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockPostgrestResponse<T> extends _i1.Mock
+    implements _i3.PostgrestResponse<T> {
+  MockPostgrestResponse() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  T get data => (super.noSuchMethod(
+        Invocation.getter(#data),
+        returnValue: _i11.dummyValue<T>(
+          this,
+          Invocation.getter(#data),
+        ),
+      ) as T);
+
+  @override
+  int get count => (super.noSuchMethod(
+        Invocation.getter(#count),
+        returnValue: 0,
+      ) as int);
+
+  @override
+  Map<String, dynamic> toJson() => (super.noSuchMethod(
+        Invocation.method(
+          #toJson,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+      ) as Map<String, dynamic>);
 }
