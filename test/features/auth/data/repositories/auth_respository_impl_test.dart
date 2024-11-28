@@ -8,17 +8,17 @@ import '../../../../core/mocks/mocks.mocks.dart';
 
 void main() {
   late AuthRepositoryImpl authRepositoryImpl;
-  late MockAuthSupabaseDataSource mockSupabaseDataSource;
+  late MockAuthRemoteDataSource mockSupabaseDataSource;
   late MockAuthLocalDataSource mockLocalDataSource;
   late MockNetworkInfo mockNetworkInfo;
 
   setUp(
     () {
-      mockSupabaseDataSource = MockAuthSupabaseDataSource();
+      mockSupabaseDataSource = MockAuthRemoteDataSource();
       mockLocalDataSource = MockAuthLocalDataSource();
       mockNetworkInfo = MockNetworkInfo();
       authRepositoryImpl = AuthRepositoryImpl(
-        supabaseDataSource: mockSupabaseDataSource,
+        remoteDataSource: mockSupabaseDataSource,
         localDataSource: mockLocalDataSource,
         networkInfo: mockNetworkInfo,
       );

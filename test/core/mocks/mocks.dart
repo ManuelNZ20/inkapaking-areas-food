@@ -7,7 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 @GenerateMocks([
   AuthRepository,
-  AuthSupabaseDataSource,
+  AuthRemoteDataSource,
   AuthLocalDataSource,
   NetworkInfo,
   InternetConnectionChecker,

@@ -6,14 +6,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/mocks/mocks.mocks.dart';
 
 void main() {
-  late AuthSupabaseDataSourceImpl dataSource;
+  late AuthRemoteDataSourceImpl dataSource;
   late MockSupabaseClient mockSupabaseClient;
   late MockPostgrestFilterBuilder<PostgrestList> mockFilterBuilder;
 
   setUp(() {
     mockSupabaseClient = MockSupabaseClient();
     mockFilterBuilder = MockPostgrestFilterBuilder<PostgrestList>();
-    dataSource = AuthSupabaseDataSourceImpl(
+    dataSource = AuthRemoteDataSourceImpl(
       client: mockSupabaseClient,
     );
   });

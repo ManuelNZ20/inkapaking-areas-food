@@ -14,9 +14,7 @@ void main() {
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
-    dataSource = AuthLocalDataSourceImpl(
-      sharedPreferences: mockSharedPreferences,
-    );
+    dataSource = AuthLocalDataSourceImpl();
   });
 
   group(
@@ -89,7 +87,6 @@ void main() {
           ),
         ],
       );
-
       test(
         'should call SharedPreferences to cache the data',
         () async {

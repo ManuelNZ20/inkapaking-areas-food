@@ -2,7 +2,7 @@ import '../../../../core/core.dart';
 
 /// Interfaz para la fuente de datos de autenticación.
 /// Conecta con Supabase para realizar las operaciones de autenticación.
-abstract class AuthSupabaseDataSource {
+abstract class AuthRemoteDataSource {
   /// Inicia sesión con correo electrónico y contraseña.
   ///
   /// Puede lanzar las siguientes excepciones:

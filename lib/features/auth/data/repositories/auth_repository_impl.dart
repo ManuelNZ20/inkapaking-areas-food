@@ -3,12 +3,12 @@ import '../../../../core/core.dart';
 import '../../domain/domain.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
-  final AuthSupabaseDataSource supabaseDataSource;
+  final AuthRemoteDataSource remoteDataSource;
   final AuthLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
   AuthRepositoryImpl({
-    required this.supabaseDataSource,
+    required this.remoteDataSource,
     required this.localDataSource,
     required this.networkInfo,
   });
@@ -35,7 +35,7 @@ class AuthRepositoryImpl extends AuthRepository {
     String email,
   ) async {
     return _handleNetworkRequest(() async {
-      final remoteUser = await supabaseDataSource.getCurrentUser(email);
+      final remoteUser = await remoteDataSource.getCurrentUser(email);
       localDataSource.saveCurrentUser(remoteUser!);
       return remoteUser;
     });
@@ -44,7 +44,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, bool>>? recoverPassword(String email) async {
     return _handleNetworkRequest(() async {
-      return await supabaseDataSource.recoverPassword(email) ?? false;
+      return await remoteDataSource.recoverPassword(email) ?? false;
     });
   }
 
@@ -53,7 +53,7 @@ class AuthRepositoryImpl extends AuthRepository {
       String email, String password) async {
     return _handleNetworkRequest(() async {
       final remoteUser =
-          await supabaseDataSource.signInWithEmailAndPassword(email, password);
+          await remoteDataSource.signInWithEmailAndPassword(email, password);
       localDataSource.saveCurrentUser(remoteUser!);
       return remoteUser;
     });
@@ -62,7 +62,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, User>>? signOut() async {
     return _handleNetworkRequest(() async {
-      final remoteUser = await supabaseDataSource.signOut();
+      final remoteUser = await remoteDataSource.signOut();
       localDataSource.deleteCurrentUser();
       return remoteUser!;
     });
@@ -78,7 +78,7 @@ class AuthRepositoryImpl extends AuthRepository {
       bool stateAccount,
       String email) async {
     return _handleNetworkRequest(() async {
-      return await supabaseDataSource.signUpWithDataUser(
+      return await remoteDataSource.signUpWithDataUser(
           name, lastName, gender, phone, direction, stateAccount, email)!;
     });
   }

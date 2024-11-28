@@ -4,10 +4,10 @@ import '../../domain/domain.dart';
 
 const tableName = 'user';
 
-class AuthSupabaseDataSourceImpl implements AuthSupabaseDataSource {
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final SupabaseClient client;
 
-  AuthSupabaseDataSourceImpl({required this.client});
+  AuthRemoteDataSourceImpl({required this.client});
 
   @override
   Future<UserModel>? getCurrentUser(String email) async {

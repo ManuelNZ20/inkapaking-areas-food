@@ -265,12 +265,12 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
       )) as _i4.Future<_i6.Either<_i7.Failure, bool>>?);
 }
 
-/// A class which mocks [AuthSupabaseDataSource].
+/// A class which mocks [AuthRemoteDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthSupabaseDataSource extends _i1.Mock
-    implements _i8.AuthSupabaseDataSource {
-  MockAuthSupabaseDataSource() {
+class MockAuthRemoteDataSource extends _i1.Mock
+    implements _i8.AuthRemoteDataSource {
+  MockAuthRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
 

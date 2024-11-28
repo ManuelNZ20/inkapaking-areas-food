@@ -5,24 +5,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../domain/domain.dart';
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
-  final SharedPreferences sharedPreferences;
+  AuthLocalDataSourceImpl();
 
-  AuthLocalDataSourceImpl({required this.sharedPreferences});
+  Future<SharedPreferences> getSharedPrefs() async {
+    return await SharedPreferences.getInstance();
+  }
 
   @override
   Future<void> cacheUser(UserModel user) async {
-    await sharedPreferences.setString(
-        'current_user', json.encode(user.toJson()));
+    final prefs = await getSharedPrefs();
+    await prefs.setString('current_user', json.encode(user.toJson()));
   }
 
   @override
   Future<void> deleteAuthToken() async {
-    await sharedPreferences.remove('auth_token');
+    final prefs = await getSharedPrefs();
+    await prefs.remove('auth_token');
   }
 
   @override
   Future<void> deleteCurrentUser() async {
-    await sharedPreferences.remove('current_user');
+    final prefs = await getSharedPrefs();
+    await prefs.remove('current_user');
   }
 
   @override
@@ -32,12 +36,14 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<String?> getAuthToken() async {
-    return sharedPreferences.getString('auth_token');
+    final prefs = await getSharedPrefs();
+    return prefs.getString('auth_token');
   }
 
   @override
   Future<UserModel?> getCurrentUser() async {
-    final userJson = sharedPreferences.getString('current_user');
+    final prefs = await getSharedPrefs();
+    final userJson = prefs.getString('current_user');
     if (userJson != null) {
       return Future.value(UserModel.fromJson(json.decode(userJson)));
     } else {
@@ -52,18 +58,20 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<bool> hasUser() async {
-    return sharedPreferences.containsKey('current_user');
+    final prefs = await getSharedPrefs();
+    return prefs.containsKey('current_user');
   }
 
   @override
   Future<void> saveAuthToken(String token) async {
-    await sharedPreferences.setString('auth_token', token);
+    final prefs = await getSharedPrefs();
+    await prefs.setString('auth_token', token);
   }
 
   @override
   Future<void> saveCurrentUser(UserModel user) async {
-    await sharedPreferences.setString(
-        'current_user', json.encode(user.toJson()));
+    final prefs = await getSharedPrefs();
+    await prefs.setString('current_user', json.encode(user.toJson()));
   }
 
   @override

@@ -47,6 +47,7 @@ dev_dependencies:
     sdk: flutter
   isar_generator: 3.1.0
   mockito: ^5.4.4
+  riverpod_test: ^0.1.6
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
