@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import '../../../../core/core.dart';
-import '../repositories/auth_repository.dart';
+import '../domain.dart';
 
 class SignInWithEmailAndPassword
     implements AuthUseCase<User, SignInWithEmailAndPasswordParams> {

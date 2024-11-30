@@ -1,4 +1,4 @@
-import '../../../../core/core.dart';
+import '../../data/data.dart';
 
 /// Interface for the local authentication data source.
 /// Handles operations related to local data storage using Isar.

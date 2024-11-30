@@ -1,4 +1,5 @@
 // Entities
+export 'entities/user.dart';
 // Repositories
 export 'repositories/auth_repository.dart';
 // Use cases

@@ -1,4 +1,4 @@
-import '../../../../core/core.dart';
+import '../../data/data.dart';
 
 /// Interfaz para la fuente de datos de autenticación.
 /// Conecta con Supabase para realizar las operaciones de autenticación.

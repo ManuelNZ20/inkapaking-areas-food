@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkapaking/core/core.dart';
+import 'package:inkapaking/features/auth/data/data.dart';
 import 'package:inkapaking/features/auth/presentation/providers/providers.dart';
 import 'package:mockito/mockito.dart';
 import '../../../../core/mocks/mocks.mocks.dart';

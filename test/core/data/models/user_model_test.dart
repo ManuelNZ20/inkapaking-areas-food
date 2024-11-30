@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:inkapaking/core/core.dart';
+import 'package:inkapaking/features/auth/data/data.dart';
+import 'package:inkapaking/features/auth/domain/domain.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 void main() {

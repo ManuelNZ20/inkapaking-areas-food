@@ -7,10 +7,8 @@ import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i6;
 import 'package:inkapaking/core/core.dart' as _i7;
-import 'package:inkapaking/features/auth/domain/datasources/auth_supabase_data_source.dart'
-    as _i8;
-import 'package:inkapaking/features/auth/domain/repositories/auth_repository.dart'
-    as _i4;
+import 'package:inkapaking/features/auth/data/data.dart' as _i8;
+import 'package:inkapaking/features/auth/domain/domain.dart' as _i4;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -158,7 +156,7 @@ class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
   }
 
   @override
-  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? signInWithEmailAndPassword(
+  _i5.Future<_i6.Either<_i7.Failure, _i4.User>>? signInWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
@@ -168,10 +166,10 @@ class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
           email,
           password,
         ],
-      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i4.User>>?);
 
   @override
-  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? signUpWithDataUser(
+  _i5.Future<_i6.Either<_i7.Failure, _i4.User>>? signUpWithDataUser(
     String? name,
     String? lastName,
     bool? gender,
@@ -191,15 +189,15 @@ class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
           stateAccount,
           email,
         ],
-      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i4.User>>?);
 
   @override
-  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? getCurrentUser(
+  _i5.Future<_i6.Either<_i7.Failure, _i4.User>>? getCurrentUser(
           String? email) =>
       (super.noSuchMethod(Invocation.method(
         #getCurrentUser,
         [email],
-      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i4.User>>?);
 
   @override
   _i5.Future<_i6.Either<_i7.Failure, bool>>? recoverPassword(String? email) =>
@@ -213,13 +211,13 @@ class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthRemoteDataSource extends _i1.Mock
-    implements _i8.AuthRemoteDataSource {
+    implements _i4.AuthRemoteDataSource {
   MockAuthRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i7.UserModel>? signInWithEmailAndPassword(
+  _i5.Future<_i8.UserModel>? signInWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
@@ -229,10 +227,10 @@ class MockAuthRemoteDataSource extends _i1.Mock
           email,
           password,
         ],
-      )) as _i5.Future<_i7.UserModel>?);
+      )) as _i5.Future<_i8.UserModel>?);
 
   @override
-  _i5.Future<_i7.UserModel>? signUpWithDataUser(
+  _i5.Future<_i8.UserModel>? signUpWithDataUser(
     String? name,
     String? lastName,
     bool? gender,
@@ -252,7 +250,7 @@ class MockAuthRemoteDataSource extends _i1.Mock
           stateAccount,
           email,
         ],
-      )) as _i5.Future<_i7.UserModel>?);
+      )) as _i5.Future<_i8.UserModel>?);
 
   @override
   _i5.Future<bool>? recoverPassword(String? email) =>
@@ -262,11 +260,11 @@ class MockAuthRemoteDataSource extends _i1.Mock
       )) as _i5.Future<bool>?);
 
   @override
-  _i5.Future<_i7.UserModel>? getCurrentUser(String? email) =>
+  _i5.Future<_i8.UserModel>? getCurrentUser(String? email) =>
       (super.noSuchMethod(Invocation.method(
         #getCurrentUser,
         [email],
-      )) as _i5.Future<_i7.UserModel>?);
+      )) as _i5.Future<_i8.UserModel>?);
 }
 
 /// A class which mocks [NetworkInfo].

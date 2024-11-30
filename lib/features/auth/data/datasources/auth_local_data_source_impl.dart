@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:inkapaking/core/core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../domain/domain.dart';
+import '../data.dart';
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   AuthLocalDataSourceImpl();

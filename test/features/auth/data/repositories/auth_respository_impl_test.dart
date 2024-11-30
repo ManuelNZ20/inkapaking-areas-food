@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:inkapaking/core/core.dart';
+import 'package:inkapaking/features/auth/domain/domain.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:inkapaking/features/auth/data/data.dart';

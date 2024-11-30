@@ -1,4 +1,4 @@
-import 'package:inkapaking/core/data/models/user.module.dart';
+import 'package:inkapaking/features/auth/data/models/user.module.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/domain.dart';
 

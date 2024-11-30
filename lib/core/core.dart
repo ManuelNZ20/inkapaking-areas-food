@@ -9,9 +9,7 @@ export 'services/supabase.service.dart';
 export 'widgets/selected_gender.dart';
 
 // Domain
-export 'domain/entities/user.dart';
 // Data
-export 'data/data.dart';
 // Presentation - Screens
 export 'presentation/screens/screens.dart';
 // Error

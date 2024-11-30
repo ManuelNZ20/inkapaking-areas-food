@@ -1,4 +1,5 @@
 import '../../../../../core/core.dart';
+import '../../../domain/domain.dart';
 
 enum AuthStatus {
   unknown, // Estado inicial
