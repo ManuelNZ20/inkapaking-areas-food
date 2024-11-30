@@ -4,12 +4,10 @@ import '../../domain/domain.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
-  final AuthLocalDataSource localDataSource;
   final NetworkInfo networkInfo;
 
   AuthRepositoryImpl({
     required this.remoteDataSource,
-    required this.localDataSource,
     required this.networkInfo,
   });
 
@@ -36,8 +34,7 @@ class AuthRepositoryImpl extends AuthRepository {
   ) async {
     return _handleNetworkRequest(() async {
       final remoteUser = await remoteDataSource.getCurrentUser(email);
-      localDataSource.saveCurrentUser(remoteUser!);
-      return remoteUser;
+      return remoteUser!;
     });
   }
 
@@ -54,8 +51,7 @@ class AuthRepositoryImpl extends AuthRepository {
     return _handleNetworkRequest(() async {
       final remoteUser =
           await remoteDataSource.signInWithEmailAndPassword(email, password);
-      localDataSource.saveCurrentUser(remoteUser!);
-      return remoteUser;
+      return remoteUser!;
     });
   }
 
@@ -63,7 +59,6 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, User>>? signOut() async {
     return _handleNetworkRequest(() async {
       final remoteUser = await remoteDataSource.signOut();
-      localDataSource.deleteCurrentUser();
       return remoteUser!;
     });
   }

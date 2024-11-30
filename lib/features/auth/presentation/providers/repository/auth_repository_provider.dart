@@ -22,11 +22,9 @@ final networkInfoProvider = Provider<NetworkInfo>((ref) {
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final remoteDataSource = ref.watch(authRemoteDataSourceProvider);
-  final localDataSource = ref.watch(authLocalDataSourceProvider);
   final networkInfo = ref.watch(networkInfoProvider);
   return AuthRepositoryImpl(
     remoteDataSource: remoteDataSource,
-    localDataSource: localDataSource,
     networkInfo: networkInfo,
   );
 });

@@ -80,15 +80,38 @@ fvm flutter run
 ## **Estructura del proyecto**
 
 ```plaintext
-inkapacking_app/
+inkapacking/
 ├── lib/
-│   ├── main.dart            # Archivo principal
-│   ├── screens/             # Pantallas de la app
-│   ├── models/              # Modelos de datos
-│   ├── services/            # Lógica de negocio y comunicación con APIs
-│   └── widgets/             # Componentes reutilizables
-├── pubspec.yaml             # Configuración del proyecto
-└── README.md                # Este archivo
+│   ├── main.dart            # Archivo principal de la app
+│   ├── core/                # Lógica base y utilitaria (para toda la app)
+│   │   ├── errors/          # Manejo de errores
+│   │   ├── network/         # Conexión y servicios de red
+│   │   └── utils/           # Utilidades generales
+│   ├── features/            # Funcionalidades específicas de la app (por ejemplo: gestión de pedidos)
+│   │   ├── feature_one/     # Primera funcionalidad (modulo)
+│   │   │   ├── domain/      # Lógica de dominio (use cases, entidades)
+│   │   │   │   ├── entities/            # Entidades del dominio (modelos de negocio)
+│   │   │   │   ├── repositories/        # Interfaces de los repositorios
+│   │   │   │   └── use_cases/           # Casos de uso que encapsulan la lógica de negocio
+│   │   │   ├── data/        # Implementación de acceso a datos
+│   │   │   │   ├── datasources/         # Fuentes de datos (remotas o locales)
+│   │   │   │   ├── models/              # Modelos específicos para el manejo de datos
+│   │   │   │   └── repositories/        # Implementaciones de los repositorios
+│   │   │   └── presentation/ # UI (pantallas, widgets, controladores de estado)
+│   │   │       ├── screens/             # Pantallas (Widgets) que contienen la UI
+│   │   │       ├── controllers/         # Controladores de estado (Riverpod Providers)
+│   │   │       └── widgets/             # Componentes UI reutilizables
+│   │   ├── feature_two/     # Segunda funcionalidad
+│   │   └── ...              # Otras funcionalidades
+│   ├── services/            # Lógica de negocio (para cada feature)
+│   ├── models/              # Modelos de datos globales
+│   ├── providers/           # Definición de providers de Riverpod
+│   └── widgets/             # Componentes reutilizables (botones, campos de texto, etc.)
+├── pubspec.yaml             # Configuración del proyecto (dependencias)
+├── README.md                # Documentación del proyecto
+└── assets/                  # Recursos estáticos (imágenes, fuentes, etc.)
+    ├── images/              # Imágenes
+    └── fonts/               # Fuentes
 ```
 
 ---

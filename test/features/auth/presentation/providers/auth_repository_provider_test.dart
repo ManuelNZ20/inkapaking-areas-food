@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -11,20 +10,17 @@ import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   late MockAuthRemoteDataSource mockAuthRemoteDataSource;
-  late MockAuthLocalDataSource mockAuthLocalDataSource;
   late MockNetworkInfo mockNetworkInfo;
   late ProviderContainer container;
 
   setUp(() {
     mockAuthRemoteDataSource = MockAuthRemoteDataSource();
-    mockAuthLocalDataSource = MockAuthLocalDataSource();
     mockNetworkInfo = MockNetworkInfo();
     container = ProviderContainer(
       overrides: [
         // Sobreescribimos los proveedores con los mocks
         authRemoteDataSourceProvider
             .overrideWithValue(mockAuthRemoteDataSource),
-        authLocalDataSourceProvider.overrideWithValue(mockAuthLocalDataSource),
         networkInfoProvider.overrideWithValue(mockNetworkInfo),
       ],
     );

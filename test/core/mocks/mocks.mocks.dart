@@ -3,21 +3,18 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i6;
 import 'package:inkapaking/core/core.dart' as _i7;
-import 'package:inkapaking/features/auth/domain/datasources/auth_local_data_source.dart'
-    as _i9;
 import 'package:inkapaking/features/auth/domain/datasources/auth_supabase_data_source.dart'
     as _i8;
 import 'package:inkapaking/features/auth/domain/repositories/auth_repository.dart'
-    as _i5;
+    as _i4;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i11;
-import 'package:shared_preferences/shared_preferences.dart' as _i10;
+import 'package:mockito/src/dummies.dart' as _i9;
 import 'package:supabase/supabase.dart' as _i3;
 
 // ignore_for_file: type=lint
@@ -152,69 +149,16 @@ class _FakeRealtimeChannel_10 extends _i1.SmartFake
         );
 }
 
-class _FakePostgrestTransformBuilder_11<T1> extends _i1.SmartFake
-    implements _i3.PostgrestTransformBuilder<T1> {
-  _FakePostgrestTransformBuilder_11(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeResponsePostgrestBuilder_12<T1, S, R> extends _i1.SmartFake
-    implements _i3.ResponsePostgrestBuilder<T1, S, R> {
-  _FakeResponsePostgrestBuilder_12(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakePostgrestBuilder_13<T1, S, R> extends _i1.SmartFake
-    implements _i3.PostgrestBuilder<T1, S, R> {
-  _FakePostgrestBuilder_13(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeUri_14 extends _i1.SmartFake implements Uri {
-  _FakeUri_14(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeFuture_15<T1> extends _i1.SmartFake implements _i4.Future<T1> {
-  _FakeFuture_15(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [AuthRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
+class MockAuthRepository extends _i1.Mock implements _i4.AuthRepository {
   MockAuthRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<_i6.Either<_i7.Failure, _i7.User>>? signInWithEmailAndPassword(
+  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? signInWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
@@ -224,10 +168,10 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
           email,
           password,
         ],
-      )) as _i4.Future<_i6.Either<_i7.Failure, _i7.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
 
   @override
-  _i4.Future<_i6.Either<_i7.Failure, _i7.User>>? signUpWithDataUser(
+  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? signUpWithDataUser(
     String? name,
     String? lastName,
     bool? gender,
@@ -247,22 +191,22 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
           stateAccount,
           email,
         ],
-      )) as _i4.Future<_i6.Either<_i7.Failure, _i7.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
 
   @override
-  _i4.Future<_i6.Either<_i7.Failure, _i7.User>>? getCurrentUser(
+  _i5.Future<_i6.Either<_i7.Failure, _i7.User>>? getCurrentUser(
           String? email) =>
       (super.noSuchMethod(Invocation.method(
         #getCurrentUser,
         [email],
-      )) as _i4.Future<_i6.Either<_i7.Failure, _i7.User>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, _i7.User>>?);
 
   @override
-  _i4.Future<_i6.Either<_i7.Failure, bool>>? recoverPassword(String? email) =>
+  _i5.Future<_i6.Either<_i7.Failure, bool>>? recoverPassword(String? email) =>
       (super.noSuchMethod(Invocation.method(
         #recoverPassword,
         [email],
-      )) as _i4.Future<_i6.Either<_i7.Failure, bool>>?);
+      )) as _i5.Future<_i6.Either<_i7.Failure, bool>>?);
 }
 
 /// A class which mocks [AuthRemoteDataSource].
@@ -275,7 +219,7 @@ class MockAuthRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i7.UserModel>? signInWithEmailAndPassword(
+  _i5.Future<_i7.UserModel>? signInWithEmailAndPassword(
     String? email,
     String? password,
   ) =>
@@ -285,10 +229,10 @@ class MockAuthRemoteDataSource extends _i1.Mock
           email,
           password,
         ],
-      )) as _i4.Future<_i7.UserModel>?);
+      )) as _i5.Future<_i7.UserModel>?);
 
   @override
-  _i4.Future<_i7.UserModel>? signUpWithDataUser(
+  _i5.Future<_i7.UserModel>? signUpWithDataUser(
     String? name,
     String? lastName,
     bool? gender,
@@ -308,144 +252,21 @@ class MockAuthRemoteDataSource extends _i1.Mock
           stateAccount,
           email,
         ],
-      )) as _i4.Future<_i7.UserModel>?);
+      )) as _i5.Future<_i7.UserModel>?);
 
   @override
-  _i4.Future<bool>? recoverPassword(String? email) =>
+  _i5.Future<bool>? recoverPassword(String? email) =>
       (super.noSuchMethod(Invocation.method(
         #recoverPassword,
         [email],
-      )) as _i4.Future<bool>?);
+      )) as _i5.Future<bool>?);
 
   @override
-  _i4.Future<_i7.UserModel>? getCurrentUser(String? email) =>
+  _i5.Future<_i7.UserModel>? getCurrentUser(String? email) =>
       (super.noSuchMethod(Invocation.method(
         #getCurrentUser,
         [email],
-      )) as _i4.Future<_i7.UserModel>?);
-}
-
-/// A class which mocks [AuthLocalDataSource].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockAuthLocalDataSource extends _i1.Mock
-    implements _i9.AuthLocalDataSource {
-  MockAuthLocalDataSource() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i4.Future<void> saveCurrentUser(_i7.UserModel? user) => (super.noSuchMethod(
-        Invocation.method(
-          #saveCurrentUser,
-          [user],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<_i7.UserModel?> getCurrentUser() => (super.noSuchMethod(
-        Invocation.method(
-          #getCurrentUser,
-          [],
-        ),
-        returnValue: _i4.Future<_i7.UserModel?>.value(),
-      ) as _i4.Future<_i7.UserModel?>);
-
-  @override
-  _i4.Future<void> deleteCurrentUser() => (super.noSuchMethod(
-        Invocation.method(
-          #deleteCurrentUser,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<bool> hasUser() => (super.noSuchMethod(
-        Invocation.method(
-          #hasUser,
-          [],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<void> saveAuthToken(String? token) => (super.noSuchMethod(
-        Invocation.method(
-          #saveAuthToken,
-          [token],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<String?> getAuthToken() => (super.noSuchMethod(
-        Invocation.method(
-          #getAuthToken,
-          [],
-        ),
-        returnValue: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
-
-  @override
-  _i4.Future<void> deleteAuthToken() => (super.noSuchMethod(
-        Invocation.method(
-          #deleteAuthToken,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<void> saveUserState(
-    String? key,
-    dynamic value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #saveUserState,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<dynamic> getUserState(String? key) => (super.noSuchMethod(
-        Invocation.method(
-          #getUserState,
-          [key],
-        ),
-        returnValue: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
-
-  @override
-  _i4.Future<void> deleteUserState(String? key) => (super.noSuchMethod(
-        Invocation.method(
-          #deleteUserState,
-          [key],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-
-  @override
-  _i4.Future<void> cacheUser(_i7.UserModel? user) => (super.noSuchMethod(
-        Invocation.method(
-          #cacheUser,
-          [user],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+      )) as _i5.Future<_i7.UserModel>?);
 }
 
 /// A class which mocks [NetworkInfo].
@@ -457,16 +278,16 @@ class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
   }
 
   @override
-  _i4.Future<bool> get isConnected => (super.noSuchMethod(
+  _i5.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i4.Future<bool> get isSupabaseConnected => (super.noSuchMethod(
+  _i5.Future<bool> get isSupabaseConnected => (super.noSuchMethod(
         Invocation.getter(#isSupabaseConnected),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 }
 
 /// A class which mocks [InternetConnectionChecker].
@@ -512,25 +333,25 @@ class MockInternetConnectionChecker extends _i1.Mock
       );
 
   @override
-  _i4.Future<bool> get hasConnection => (super.noSuchMethod(
+  _i5.Future<bool> get hasConnection => (super.noSuchMethod(
         Invocation.getter(#hasConnection),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i4.Future<_i2.InternetConnectionStatus> get connectionStatus =>
+  _i5.Future<_i2.InternetConnectionStatus> get connectionStatus =>
       (super.noSuchMethod(
         Invocation.getter(#connectionStatus),
-        returnValue: _i4.Future<_i2.InternetConnectionStatus>.value(
+        returnValue: _i5.Future<_i2.InternetConnectionStatus>.value(
             _i2.InternetConnectionStatus.connected),
-      ) as _i4.Future<_i2.InternetConnectionStatus>);
+      ) as _i5.Future<_i2.InternetConnectionStatus>);
 
   @override
-  _i4.Stream<_i2.InternetConnectionStatus> get onStatusChange =>
+  _i5.Stream<_i2.InternetConnectionStatus> get onStatusChange =>
       (super.noSuchMethod(
         Invocation.getter(#onStatusChange),
-        returnValue: _i4.Stream<_i2.InternetConnectionStatus>.empty(),
-      ) as _i4.Stream<_i2.InternetConnectionStatus>);
+        returnValue: _i5.Stream<_i2.InternetConnectionStatus>.empty(),
+      ) as _i5.Stream<_i2.InternetConnectionStatus>);
 
   @override
   bool get hasListeners => (super.noSuchMethod(
@@ -545,7 +366,7 @@ class MockInternetConnectionChecker extends _i1.Mock
       ) as bool);
 
   @override
-  _i4.Future<_i2.AddressCheckResult> isHostReachable(
+  _i5.Future<_i2.AddressCheckResult> isHostReachable(
           _i2.AddressCheckOptions? options) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -553,195 +374,14 @@ class MockInternetConnectionChecker extends _i1.Mock
           [options],
         ),
         returnValue:
-            _i4.Future<_i2.AddressCheckResult>.value(_FakeAddressCheckResult_1(
+            _i5.Future<_i2.AddressCheckResult>.value(_FakeAddressCheckResult_1(
           this,
           Invocation.method(
             #isHostReachable,
             [options],
           ),
         )),
-      ) as _i4.Future<_i2.AddressCheckResult>);
-}
-
-/// A class which mocks [SharedPreferences].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockSharedPreferences extends _i1.Mock implements _i10.SharedPreferences {
-  MockSharedPreferences() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  Set<String> getKeys() => (super.noSuchMethod(
-        Invocation.method(
-          #getKeys,
-          [],
-        ),
-        returnValue: <String>{},
-      ) as Set<String>);
-
-  @override
-  Object? get(String? key) => (super.noSuchMethod(Invocation.method(
-        #get,
-        [key],
-      )) as Object?);
-
-  @override
-  bool? getBool(String? key) => (super.noSuchMethod(Invocation.method(
-        #getBool,
-        [key],
-      )) as bool?);
-
-  @override
-  int? getInt(String? key) => (super.noSuchMethod(Invocation.method(
-        #getInt,
-        [key],
-      )) as int?);
-
-  @override
-  double? getDouble(String? key) => (super.noSuchMethod(Invocation.method(
-        #getDouble,
-        [key],
-      )) as double?);
-
-  @override
-  String? getString(String? key) => (super.noSuchMethod(Invocation.method(
-        #getString,
-        [key],
-      )) as String?);
-
-  @override
-  bool containsKey(String? key) => (super.noSuchMethod(
-        Invocation.method(
-          #containsKey,
-          [key],
-        ),
-        returnValue: false,
-      ) as bool);
-
-  @override
-  List<String>? getStringList(String? key) =>
-      (super.noSuchMethod(Invocation.method(
-        #getStringList,
-        [key],
-      )) as List<String>?);
-
-  @override
-  _i4.Future<bool> setBool(
-    String? key,
-    bool? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #setBool,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> setInt(
-    String? key,
-    int? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #setInt,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> setDouble(
-    String? key,
-    double? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #setDouble,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> setString(
-    String? key,
-    String? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #setString,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> setStringList(
-    String? key,
-    List<String>? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #setStringList,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> remove(String? key) => (super.noSuchMethod(
-        Invocation.method(
-          #remove,
-          [key],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> commit() => (super.noSuchMethod(
-        Invocation.method(
-          #commit,
-          [],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<bool> clear() => (super.noSuchMethod(
-        Invocation.method(
-          #clear,
-          [],
-        ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
-
-  @override
-  _i4.Future<void> reload() => (super.noSuchMethod(
-        Invocation.method(
-          #reload,
-          [],
-        ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+      ) as _i5.Future<_i2.AddressCheckResult>);
 }
 
 /// A class which mocks [SupabaseClient].
@@ -937,1199 +577,37 @@ class MockSupabaseClient extends _i1.Mock implements _i3.SupabaseClient {
       ) as List<_i3.RealtimeChannel>);
 
   @override
-  _i4.Future<String> removeChannel(_i3.RealtimeChannel? channel) =>
+  _i5.Future<String> removeChannel(_i3.RealtimeChannel? channel) =>
       (super.noSuchMethod(
         Invocation.method(
           #removeChannel,
           [channel],
         ),
-        returnValue: _i4.Future<String>.value(_i11.dummyValue<String>(
+        returnValue: _i5.Future<String>.value(_i9.dummyValue<String>(
           this,
           Invocation.method(
             #removeChannel,
             [channel],
           ),
         )),
-      ) as _i4.Future<String>);
+      ) as _i5.Future<String>);
 
   @override
-  _i4.Future<List<String>> removeAllChannels() => (super.noSuchMethod(
+  _i5.Future<List<String>> removeAllChannels() => (super.noSuchMethod(
         Invocation.method(
           #removeAllChannels,
           [],
         ),
-        returnValue: _i4.Future<List<String>>.value(<String>[]),
-      ) as _i4.Future<List<String>>);
+        returnValue: _i5.Future<List<String>>.value(<String>[]),
+      ) as _i5.Future<List<String>>);
 
   @override
-  _i4.Future<void> dispose() => (super.noSuchMethod(
+  _i5.Future<void> dispose() => (super.noSuchMethod(
         Invocation.method(
           #dispose,
           [],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
-}
-
-/// A class which mocks [PostgrestFilterBuilder].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockPostgrestFilterBuilder<T> extends _i1.Mock
-    implements _i3.PostgrestFilterBuilder<T> {
-  MockPostgrestFilterBuilder() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i3.PostgrestFilterBuilder<T> copyWithUrl(Uri? url) => (super.noSuchMethod(
-        Invocation.method(
-          #copyWithUrl,
-          [url],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #copyWithUrl,
-            [url],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> not(
-    String? column,
-    String? operator,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #not,
-          [
-            column,
-            operator,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #not,
-            [
-              column,
-              operator,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> or(
-    String? filters, {
-    String? referencedTable,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #or,
-          [filters],
-          {#referencedTable: referencedTable},
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #or,
-            [filters],
-            {#referencedTable: referencedTable},
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> eq(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #eq,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #eq,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> neq(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #neq,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #neq,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> gt(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #gt,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #gt,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> gte(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #gte,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #gte,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> lt(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #lt,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #lt,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> lte(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #lte,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #lte,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> like(
-    String? column,
-    String? pattern,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #like,
-          [
-            column,
-            pattern,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #like,
-            [
-              column,
-              pattern,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<dynamic> likeAllOf(
-    String? column,
-    List<String>? patterns,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #likeAllOf,
-          [
-            column,
-            patterns,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<dynamic>(
-          this,
-          Invocation.method(
-            #likeAllOf,
-            [
-              column,
-              patterns,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<dynamic>);
-
-  @override
-  _i3.PostgrestFilterBuilder<dynamic> likeAnyOf(
-    String? column,
-    List<String>? patterns,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #likeAnyOf,
-          [
-            column,
-            patterns,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<dynamic>(
-          this,
-          Invocation.method(
-            #likeAnyOf,
-            [
-              column,
-              patterns,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<dynamic>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> ilike(
-    String? column,
-    String? pattern,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #ilike,
-          [
-            column,
-            pattern,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #ilike,
-            [
-              column,
-              pattern,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<dynamic> ilikeAllOf(
-    String? column,
-    List<String>? patterns,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #ilikeAllOf,
-          [
-            column,
-            patterns,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<dynamic>(
-          this,
-          Invocation.method(
-            #ilikeAllOf,
-            [
-              column,
-              patterns,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<dynamic>);
-
-  @override
-  _i3.PostgrestFilterBuilder<dynamic> ilikeAnyOf(
-    String? column,
-    List<String>? patterns,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #ilikeAnyOf,
-          [
-            column,
-            patterns,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<dynamic>(
-          this,
-          Invocation.method(
-            #ilikeAnyOf,
-            [
-              column,
-              patterns,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<dynamic>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> isFilter(
-    String? column,
-    bool? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #isFilter,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #isFilter,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> inFilter(
-    String? column,
-    List<dynamic>? values,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #inFilter,
-          [
-            column,
-            values,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #inFilter,
-            [
-              column,
-              values,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> contains(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #contains,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #contains,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> containedBy(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #containedBy,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #containedBy,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> rangeLt(
-    String? column,
-    String? range,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #rangeLt,
-          [
-            column,
-            range,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #rangeLt,
-            [
-              column,
-              range,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> rangeGt(
-    String? column,
-    String? range,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #rangeGt,
-          [
-            column,
-            range,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #rangeGt,
-            [
-              column,
-              range,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> rangeGte(
-    String? column,
-    String? range,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #rangeGte,
-          [
-            column,
-            range,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #rangeGte,
-            [
-              column,
-              range,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> rangeLte(
-    String? column,
-    String? range,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #rangeLte,
-          [
-            column,
-            range,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #rangeLte,
-            [
-              column,
-              range,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> rangeAdjacent(
-    String? column,
-    String? range,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #rangeAdjacent,
-          [
-            column,
-            range,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #rangeAdjacent,
-            [
-              column,
-              range,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> overlaps(
-    String? column,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #overlaps,
-          [
-            column,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #overlaps,
-            [
-              column,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> textSearch(
-    String? column,
-    String? query, {
-    String? config,
-    _i3.TextSearchType? type,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #textSearch,
-          [
-            column,
-            query,
-          ],
-          {
-            #config: config,
-            #type: type,
-          },
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #textSearch,
-            [
-              column,
-              query,
-            ],
-            {
-              #config: config,
-              #type: type,
-            },
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> filter(
-    String? column,
-    String? operator,
-    Object? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #filter,
-          [
-            column,
-            operator,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #filter,
-            [
-              column,
-              operator,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> match(Map<String, Object>? query) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #match,
-          [query],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #match,
-            [query],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestFilterBuilder<T> setHeader(
-    String? key,
-    String? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #setHeader,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _FakePostgrestFilterBuilder_9<T>(
-          this,
-          Invocation.method(
-            #setHeader,
-            [
-              key,
-              value,
-            ],
-          ),
-        ),
-      ) as _i3.PostgrestFilterBuilder<T>);
-
-  @override
-  _i3.PostgrestTransformBuilder<List<Map<String, dynamic>>> select(
-          [String? columns = r'*']) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #select,
-          [columns],
-        ),
-        returnValue:
-            _FakePostgrestTransformBuilder_11<List<Map<String, dynamic>>>(
-          this,
-          Invocation.method(
-            #select,
-            [columns],
-          ),
-        ),
-      ) as _i3.PostgrestTransformBuilder<List<Map<String, dynamic>>>);
-
-  @override
-  _i3.PostgrestTransformBuilder<T> order(
-    String? column, {
-    bool? ascending = false,
-    bool? nullsFirst = false,
-    String? referencedTable,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #order,
-          [column],
-          {
-            #ascending: ascending,
-            #nullsFirst: nullsFirst,
-            #referencedTable: referencedTable,
-          },
-        ),
-        returnValue: _FakePostgrestTransformBuilder_11<T>(
-          this,
-          Invocation.method(
-            #order,
-            [column],
-            {
-              #ascending: ascending,
-              #nullsFirst: nullsFirst,
-              #referencedTable: referencedTable,
-            },
-          ),
-        ),
-      ) as _i3.PostgrestTransformBuilder<T>);
-
-  @override
-  _i3.PostgrestTransformBuilder<T> limit(
-    int? count, {
-    String? referencedTable,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #limit,
-          [count],
-          {#referencedTable: referencedTable},
-        ),
-        returnValue: _FakePostgrestTransformBuilder_11<T>(
-          this,
-          Invocation.method(
-            #limit,
-            [count],
-            {#referencedTable: referencedTable},
-          ),
-        ),
-      ) as _i3.PostgrestTransformBuilder<T>);
-
-  @override
-  _i3.PostgrestTransformBuilder<T> range(
-    int? from,
-    int? to, {
-    String? referencedTable,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #range,
-          [
-            from,
-            to,
-          ],
-          {#referencedTable: referencedTable},
-        ),
-        returnValue: _FakePostgrestTransformBuilder_11<T>(
-          this,
-          Invocation.method(
-            #range,
-            [
-              from,
-              to,
-            ],
-            {#referencedTable: referencedTable},
-          ),
-        ),
-      ) as _i3.PostgrestTransformBuilder<T>);
-
-  @override
-  _i3.PostgrestTransformBuilder<Map<String, dynamic>> single() =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #single,
-          [],
-        ),
-        returnValue: _FakePostgrestTransformBuilder_11<Map<String, dynamic>>(
-          this,
-          Invocation.method(
-            #single,
-            [],
-          ),
-        ),
-      ) as _i3.PostgrestTransformBuilder<Map<String, dynamic>>);
-
-  @override
-  _i3.PostgrestTransformBuilder<Map<String, dynamic>?> maybeSingle() =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #maybeSingle,
-          [],
-        ),
-        returnValue: _FakePostgrestTransformBuilder_11<Map<String, dynamic>?>(
-          this,
-          Invocation.method(
-            #maybeSingle,
-            [],
-          ),
-        ),
-      ) as _i3.PostgrestTransformBuilder<Map<String, dynamic>?>);
-
-  @override
-  _i3.PostgrestTransformBuilder<String> csv() => (super.noSuchMethod(
-        Invocation.method(
-          #csv,
-          [],
-        ),
-        returnValue: _FakePostgrestTransformBuilder_11<String>(
-          this,
-          Invocation.method(
-            #csv,
-            [],
-          ),
-        ),
-      ) as _i3.PostgrestTransformBuilder<String>);
-
-  @override
-  _i3.ResponsePostgrestBuilder<_i3.PostgrestResponse<T>, T, T> count(
-          [_i3.CountOption? count = _i3.CountOption.exact]) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #count,
-          [count],
-        ),
-        returnValue:
-            _FakeResponsePostgrestBuilder_12<_i3.PostgrestResponse<T>, T, T>(
-          this,
-          Invocation.method(
-            #count,
-            [count],
-          ),
-        ),
-      ) as _i3.ResponsePostgrestBuilder<_i3.PostgrestResponse<T>, T, T>);
-
-  @override
-  _i3.PostgrestBuilder<void, void, void> head() => (super.noSuchMethod(
-        Invocation.method(
-          #head,
-          [],
-        ),
-        returnValue: _FakePostgrestBuilder_13<void, void, void>(
-          this,
-          Invocation.method(
-            #head,
-            [],
-          ),
-        ),
-      ) as _i3.PostgrestBuilder<void, void, void>);
-
-  @override
-  _i3.ResponsePostgrestBuilder<Map<String, dynamic>,
-          Map<String, dynamic>, Map<String, dynamic>>
-      geojson() => (super.noSuchMethod(
-            Invocation.method(
-              #geojson,
-              [],
-            ),
-            returnValue: _FakeResponsePostgrestBuilder_12<Map<String, dynamic>,
-                Map<String, dynamic>, Map<String, dynamic>>(
-              this,
-              Invocation.method(
-                #geojson,
-                [],
-              ),
-            ),
-          ) as _i3.ResponsePostgrestBuilder<Map<String, dynamic>,
-              Map<String, dynamic>, Map<String, dynamic>>);
-
-  @override
-  _i3.PostgrestBuilder<String, String, String> explain({
-    bool? analyze = false,
-    bool? verbose = false,
-    bool? settings = false,
-    bool? buffers = false,
-    bool? wal = false,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #explain,
-          [],
-          {
-            #analyze: analyze,
-            #verbose: verbose,
-            #settings: settings,
-            #buffers: buffers,
-            #wal: wal,
-          },
-        ),
-        returnValue: _FakePostgrestBuilder_13<String, String, String>(
-          this,
-          Invocation.method(
-            #explain,
-            [],
-            {
-              #analyze: analyze,
-              #verbose: verbose,
-              #settings: settings,
-              #buffers: buffers,
-              #wal: wal,
-            },
-          ),
-        ),
-      ) as _i3.PostgrestBuilder<String, String, String>);
-
-  @override
-  _i3.PostgrestBuilder<U, U, T> withConverter<U>(
-          _i3.PostgrestConverter<U, T>? converter) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #withConverter,
-          [converter],
-        ),
-        returnValue: _FakePostgrestBuilder_13<U, U, T>(
-          this,
-          Invocation.method(
-            #withConverter,
-            [converter],
-          ),
-        ),
-      ) as _i3.PostgrestBuilder<U, U, T>);
-
-  @override
-  Uri appendSearchParams(
-    String? key,
-    String? value, [
-    Uri? url,
-  ]) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #appendSearchParams,
-          [
-            key,
-            value,
-            url,
-          ],
-        ),
-        returnValue: _FakeUri_14(
-          this,
-          Invocation.method(
-            #appendSearchParams,
-            [
-              key,
-              value,
-              url,
-            ],
-          ),
-        ),
-      ) as Uri);
-
-  @override
-  Uri overrideSearchParams(
-    String? key,
-    String? value,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #overrideSearchParams,
-          [
-            key,
-            value,
-          ],
-        ),
-        returnValue: _FakeUri_14(
-          this,
-          Invocation.method(
-            #overrideSearchParams,
-            [
-              key,
-              value,
-            ],
-          ),
-        ),
-      ) as Uri);
-
-  @override
-  _i4.Stream<T> asStream() => (super.noSuchMethod(
-        Invocation.method(
-          #asStream,
-          [],
-        ),
-        returnValue: _i4.Stream<T>.empty(),
-      ) as _i4.Stream<T>);
-
-  @override
-  _i4.Future<T> catchError(
-    Function? onError, {
-    bool Function(Object)? test,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #catchError,
-          [onError],
-          {#test: test},
-        ),
-        returnValue: _i11.ifNotNull(
-              _i11.dummyValueOrNull<T>(
-                this,
-                Invocation.method(
-                  #catchError,
-                  [onError],
-                  {#test: test},
-                ),
-              ),
-              (T v) => _i4.Future<T>.value(v),
-            ) ??
-            _FakeFuture_15<T>(
-              this,
-              Invocation.method(
-                #catchError,
-                [onError],
-                {#test: test},
-              ),
-            ),
-      ) as _i4.Future<T>);
-
-  @override
-  _i4.Future<U> then<U>(
-    _i4.FutureOr<U> Function(T)? onValue, {
-    Function? onError,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #then,
-          [onValue],
-          {#onError: onError},
-        ),
-        returnValue: _i11.ifNotNull(
-              _i11.dummyValueOrNull<U>(
-                this,
-                Invocation.method(
-                  #then,
-                  [onValue],
-                  {#onError: onError},
-                ),
-              ),
-              (U v) => _i4.Future<U>.value(v),
-            ) ??
-            _FakeFuture_15<U>(
-              this,
-              Invocation.method(
-                #then,
-                [onValue],
-                {#onError: onError},
-              ),
-            ),
-      ) as _i4.Future<U>);
-
-  @override
-  _i4.Future<T> timeout(
-    Duration? timeLimit, {
-    _i4.FutureOr<T> Function()? onTimeout,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #timeout,
-          [timeLimit],
-          {#onTimeout: onTimeout},
-        ),
-        returnValue: _i11.ifNotNull(
-              _i11.dummyValueOrNull<T>(
-                this,
-                Invocation.method(
-                  #timeout,
-                  [timeLimit],
-                  {#onTimeout: onTimeout},
-                ),
-              ),
-              (T v) => _i4.Future<T>.value(v),
-            ) ??
-            _FakeFuture_15<T>(
-              this,
-              Invocation.method(
-                #timeout,
-                [timeLimit],
-                {#onTimeout: onTimeout},
-              ),
-            ),
-      ) as _i4.Future<T>);
-
-  @override
-  _i4.Future<T> whenComplete(_i4.FutureOr<void> Function()? action) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #whenComplete,
-          [action],
-        ),
-        returnValue: _i11.ifNotNull(
-              _i11.dummyValueOrNull<T>(
-                this,
-                Invocation.method(
-                  #whenComplete,
-                  [action],
-                ),
-              ),
-              (T v) => _i4.Future<T>.value(v),
-            ) ??
-            _FakeFuture_15<T>(
-              this,
-              Invocation.method(
-                #whenComplete,
-                [action],
-              ),
-            ),
-      ) as _i4.Future<T>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }

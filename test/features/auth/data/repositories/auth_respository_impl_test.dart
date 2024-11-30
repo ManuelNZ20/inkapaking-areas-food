@@ -9,17 +9,14 @@ import '../../../../core/mocks/mocks.mocks.dart';
 void main() {
   late AuthRepositoryImpl authRepositoryImpl;
   late MockAuthRemoteDataSource mockSupabaseDataSource;
-  late MockAuthLocalDataSource mockLocalDataSource;
   late MockNetworkInfo mockNetworkInfo;
 
   setUp(
     () {
       mockSupabaseDataSource = MockAuthRemoteDataSource();
-      mockLocalDataSource = MockAuthLocalDataSource();
       mockNetworkInfo = MockNetworkInfo();
       authRepositoryImpl = AuthRepositoryImpl(
         remoteDataSource: mockSupabaseDataSource,
-        localDataSource: mockLocalDataSource,
         networkInfo: mockNetworkInfo,
       );
     },
@@ -134,7 +131,6 @@ void main() {
             (_) async => tUserModel,
           );
           await authRepositoryImpl.getCurrentUser(tEmail);
-          verify(mockLocalDataSource.saveCurrentUser(tUserModel));
         },
       );
       test(
@@ -146,7 +142,6 @@ void main() {
           );
           final result = await authRepositoryImpl.getCurrentUser(tEmail);
           verify(mockSupabaseDataSource.getCurrentUser(tEmail));
-          verifyNoMoreInteractions(mockLocalDataSource);
           expect(result, equals(Left(ServerFailure())));
         },
       );
@@ -160,12 +155,8 @@ void main() {
           test(
             'should return last locally cached data when the cached data is present',
             () async {
-              when(mockLocalDataSource.getCurrentUser()).thenAnswer(
-                (_) async => tUserModel,
-              );
               final result = await authRepositoryImpl.getCurrentUser(tEmail);
               verifyZeroInteractions(mockSupabaseDataSource);
-              verify(mockLocalDataSource.getCurrentUser());
               expect(result, equals(Right(tUser)));
             },
           );
@@ -175,12 +166,8 @@ void main() {
         'should return CacheFailure when there is no cached data present',
         () async {
           when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
-          when(mockLocalDataSource.getCurrentUser()).thenThrow(
-            CacheException(),
-          );
           final result = await authRepositoryImpl.getCurrentUser(tEmail);
           verifyZeroInteractions(mockSupabaseDataSource);
-          verify(mockLocalDataSource.getCurrentUser());
           expect(result, equals(Left(CacheFailure())));
         },
       );
@@ -274,7 +261,6 @@ void main() {
               );
               await authRepositoryImpl.signInWithEmailAndPassword(
                   tEmail, tPassword);
-              verify(mockLocalDataSource.saveCurrentUser(tUserModel));
             },
           );
 
@@ -291,7 +277,6 @@ void main() {
                 tEmail,
                 tPassword,
               ));
-              verifyNoMoreInteractions(mockLocalDataSource);
               expect(result, equals(Left(ServerFailure())));
             },
           );
@@ -310,7 +295,6 @@ void main() {
               final result = await authRepositoryImpl
                   .signInWithEmailAndPassword(tEmail, tPassword);
               verifyZeroInteractions(mockSupabaseDataSource);
-              verifyZeroInteractions(mockLocalDataSource);
               expect(result, equals(Left(ServerFailure())));
             },
           );
@@ -632,7 +616,6 @@ void main() {
                 true,
                 tEmail,
               );
-              verify(mockLocalDataSource.saveCurrentUser(tUserModel));
             },
           );
           // El test verifica si el dispositivo esta conectado a internet y si el usuario no se encuentra en la base de datos y se produce un error
@@ -668,7 +651,6 @@ void main() {
                 true,
                 tEmail,
               ));
-              verifyNoMoreInteractions(mockLocalDataSource);
               expect(result, equals(Left(ServerFailure())));
             },
           );
@@ -696,7 +678,6 @@ void main() {
                 tEmail,
               );
               verifyZeroInteractions(mockSupabaseDataSource);
-              verifyZeroInteractions(mockLocalDataSource);
               expect(result, equals(Left(ServerFailure())));
             },
           );
