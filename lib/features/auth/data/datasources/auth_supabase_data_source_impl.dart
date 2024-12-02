@@ -79,4 +79,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .single();
     return UserModel.fromJson(response);
   }
+
+  @override
+  Future<UserModel>? getCurrentUserByToken(String token) {
+    throw UnimplementedError();
+  }
 }
