@@ -9,8 +9,8 @@ export 'widgets/selected_gender.dart';
 
 // Domain
 // Data
-// Presentation - Screens
-export 'presentation/screens/screens.dart';
+// Presentation - Screens - Providers
+export 'presentation/presentation.dart';
 // Error
 export 'error/error.dart';
 // UseCases

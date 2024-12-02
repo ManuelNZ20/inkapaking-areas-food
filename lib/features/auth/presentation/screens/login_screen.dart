@@ -58,7 +58,7 @@ class _LoginForm extends ConsumerWidget {
             );
           },
         );
-      } else if (next.hasUser) {
+      } /* else if (next.hasUser) {
         // Mostrar pantalla de loading
         showDialog(
           context: context,
@@ -74,7 +74,7 @@ class _LoginForm extends ConsumerWidget {
             ],
           ),
         );
-      }
+      } */
     });
     final loginFormState = ref.watch(loginFormProvider);
 

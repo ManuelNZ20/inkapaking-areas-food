@@ -35,11 +35,13 @@ class SignInWithEmailAndPassword
     if (tokenValue != null) {
       final user = await authRepository.getCurrentUser(tokenValue);
       if (user != null) {
-        return (user);
+        return user;
       }
     }
     return Left(
-      AuthenticationFailure('Usuario no autenticado'),
+      AuthenticationFailure(
+        'No se ha iniciado sesión',
+      ),
     );
   }
 }

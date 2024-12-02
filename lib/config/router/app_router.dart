@@ -1,12 +1,27 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../features/auth/presentation/screens/screens.dart';
 import '../../core/core.dart';
+import '../../features/auth/presentation/providers/providers.dart';
+import '../../features/auth/presentation/screens/screens.dart';
+import 'auth_router_notifier.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
+  final goRouterNotifier = ref.watch(goRouterProvider);
   return GoRouter(
     initialLocation: '/login',
+    refreshListenable: goRouterNotifier,
     routes: [
+      /// Splash screen para verificar el estado de autenticación
+      /// y redirigir al usuario a la pantalla correcta.
+      GoRoute(
+        path: '/splash',
+        name: CheckAuthStatusScreen.routeName,
+        builder: (context, state) {
+          return const CheckAuthStatusScreen();
+        },
+      ),
+
+      /// Rutas de autenticación
       GoRoute(
         path: '/login',
         name: LoginScreen.routeName,
@@ -47,5 +62,32 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         },
       ),
     ],
+    redirect: (context, state) async {
+      // Presenta la ruta en la que se encuentra el usuario
+      final isGoingTo = state.matchedLocation;
+      final authStatus = goRouterNotifier.authStatus;
+      final keyValue = ref.read(keyValueStorageProvider);
+      if (isGoingTo == '/splash' && authStatus == AuthStatus.checking) {
+        return null;
+      }
+      if (authStatus == AuthStatus.unauthenticated) {
+        if (isGoingTo == '/login' || isGoingTo == '/register') {
+          return null;
+        }
+        final isOnBoarding =
+            await keyValue.getValue<bool>('onBoarding') ?? false;
+        if (!isOnBoarding) {
+          return '/onboarding';
+        }
+        return '/login';
+      }
+      if (authStatus == AuthStatus.authenticated) {
+        if (isGoingTo == '/home') {
+          return null;
+        }
+        return '/home';
+      }
+      return null;
+    },
   );
 });

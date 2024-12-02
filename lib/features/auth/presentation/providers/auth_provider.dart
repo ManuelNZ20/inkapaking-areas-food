@@ -6,10 +6,13 @@ import '../../domain/domain.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {
   final SignInWithEmailAndPassword signUpUseCase;
-
+  final KeyValueStorageService keyValueStorageService;
   AuthNotifier({
     required this.signUpUseCase,
-  }) : super(AuthState());
+    required this.keyValueStorageService,
+  }) : super(AuthState()) {
+    _checkAuthStatus();
+  }
 
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
     // Simular carga
@@ -75,8 +78,37 @@ class AuthNotifier extends StateNotifier<AuthState> {
       hasUser: false,
     );
   }
+
+  /// Verificar si el usuario ya esta autenticado
+  /// y cargar los datos del usuario
+  /// en caso de que ya este autenticado
+  Future<void> _checkAuthStatus() async {
+    final checkAuthentication =
+        await signUpUseCase.checkAuthentication(keyValueStorageService);
+    checkAuthentication.fold(
+      (failure) {
+        state = state.copyWith(
+          status: AuthStatus.unauthenticated,
+          hasUser: false,
+        );
+      },
+      (user) {
+        state = state.copyWith(
+          user: user,
+          status: AuthStatus.authenticated,
+          hasUser: true,
+        );
+      },
+    );
+  }
 }
 
-final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthState>(
-  (ref) => AuthNotifier(signUpUseCase: ref.read(loginProvider)),
-);
+final authNotifierProvider =
+    StateNotifierProvider<AuthNotifier, AuthState>((ref) {
+  final signUpUseCase = ref.read(loginProvider);
+  final keyValueStorageService = ref.read(keyValueStorageProvider);
+  return AuthNotifier(
+    signUpUseCase: signUpUseCase,
+    keyValueStorageService: keyValueStorageService,
+  );
+});

@@ -25,6 +25,7 @@ void main() {
     email: "jane.doe@gmail.com",
     password: "securePassword123",
     createdAt: DateTime.now(),
+    typeUserId: 1,
     typeUser: const TypeUser(
       id: 1,
       typeName: 'UserArea',

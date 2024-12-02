@@ -24,6 +24,7 @@ void main() {
     email: 'test@example.com',
     password: 'test123',
     createdAt: DateTime.now(),
+    typeUserId: 1,
     typeUser: const TypeUser(
       id: 1,
       typeName: 'Admin',

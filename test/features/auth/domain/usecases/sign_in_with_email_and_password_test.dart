@@ -28,6 +28,7 @@ void main() {
     email: tEmail,
     password: tPassword,
     createdAt: DateTime.now(),
+    typeUserId: 1,
     typeUser: const TypeUser(
       id: 1,
       typeName: 'UserArea',
