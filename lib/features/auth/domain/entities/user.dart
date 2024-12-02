@@ -15,6 +15,7 @@ class User extends Equatable {
   final TypeUser typeUser;
   final List<Token>? tokens;
   final List<ImgUser>? imgsUser;
+  final int typeUserId;
 
   const User({
     required this.userId,
@@ -30,6 +31,7 @@ class User extends Equatable {
     required this.typeUser,
     required this.tokens,
     required this.imgsUser,
+    required this.typeUserId,
   });
 
   @override
@@ -47,6 +49,7 @@ class User extends Equatable {
         typeUser,
         tokens,
         imgsUser,
+        typeUserId,
       ];
 }
 

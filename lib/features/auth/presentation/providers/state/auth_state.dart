@@ -1,4 +1,3 @@
-import '../../../../../core/core.dart';
 import '../../../domain/domain.dart';
 
 enum AuthStatus {
@@ -27,8 +26,8 @@ class AuthState {
 
   AuthState({
     this.status = AuthStatus.unknown,
-    required this.user,
-    required this.errorMessage,
+    this.user,
+    this.errorMessage,
     this.hasError = false,
     this.hasFailure = false,
     this.hasUser = false,

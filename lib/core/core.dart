@@ -1,6 +1,5 @@
 // contants
-export 'constants/app_constants.dart';
-export 'constants/colors_constants.dart';
+export 'constants/constants.dart';
 // env
 export 'env/env.dart';
 // services

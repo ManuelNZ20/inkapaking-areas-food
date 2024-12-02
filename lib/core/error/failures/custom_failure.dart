@@ -8,4 +8,7 @@ class CustomFailure extends Failure {
 
   @override
   List<Object> get props => [code ?? -1];
+
+  @override
+  String toString() => 'Error inesperado: $code';
 }

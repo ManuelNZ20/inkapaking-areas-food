@@ -5,6 +5,8 @@ class AuthenticationFailure extends Failure {
       : super([message]);
 
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
+
+  @override
+  String toString() => 'Fallo de autenticación credenciales inválidas';
 }

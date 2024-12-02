@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:inkapaking/features/auth/domain/domain.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dartz/dartz.dart';
-import 'package:inkapaking/core/core.dart';
 
 import '../../../../core/mocks/mocks.mocks.dart';
 

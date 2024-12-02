@@ -58,12 +58,18 @@ class CustomTextField extends StatelessWidget {
         hintText: hint,
         errorText: errorMessage,
         enabled: enable ?? true,
-        suffixIcon: obscureText && onPressed != null
+        suffixIcon: onPressed != null
             ? IconButton(
                 onPressed: onPressed,
                 icon: obscureText
-                    ? const Icon(Icons.visibility_outlined)
-                    : const Icon(Icons.visibility_off_outlined),
+                    ? Icon(
+                        Icons.visibility_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
+                    : Icon(
+                        Icons.visibility_off_outlined,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
               )
             : null,
       ),

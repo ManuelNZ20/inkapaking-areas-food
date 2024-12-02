@@ -1,8 +1,7 @@
-import 'package:inkapaking/features/auth/data/models/user.module.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:inkapaking/core/core.dart';
 import '../../domain/domain.dart';
-
-const tableName = 'user';
+import '../data.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final SupabaseClient client;
@@ -12,8 +11,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel>? getCurrentUser(String email) async {
     final response = await client
-        .from(tableName)
-        .select()
+        .from(tableNameAuth)
+        .select(queryFieldsFromAuth)
         .eq('email', email)
         .limit(1)
         .single();
@@ -23,8 +22,8 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<bool>? recoverPassword(String email) async {
     final response = await client
-        .from(tableName)
-        .select()
+        .from(tableNameAuth)
+        .select(queryFieldsFromAuth)
         .eq('email', email)
         .limit(1)
         .single();
@@ -35,13 +34,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<UserModel>? signInWithEmailAndPassword(
       String email, String password) async {
     final response = await client
-        .from(tableName)
-        .select()
+        .from(tableNameAuth)
+        .select('''*,type_user(*),tokens(*),img_user(*)''')
         .eq('email', email)
         .eq('password', password)
-        .limit(1)
-        .single();
-    return UserModel.fromJson(response);
+        .limit(1);
+    if (response.isEmpty) {
+      throw UnauthorizedException('Usuario o contraseña incorrecta');
+    }
+    final user = UserModel.fromJson(response.first);
+    return user;
   }
 
   @override
@@ -60,7 +62,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     String email,
   ) async {
     final response = await client
-        .from(tableName)
+        .from(tableNameAuth)
         .insert(
           {
             'name': name,

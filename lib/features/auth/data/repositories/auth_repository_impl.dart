@@ -17,9 +17,11 @@ class AuthRepositoryImpl extends AuthRepository {
       try {
         final result = await request();
         return Right(result);
+      } on UnauthorizedException catch (e) {
+        return Left(AuthenticationFailure(e.message));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message)); // Mensaje más descriptivo
-      } catch (e) {
+      } on GenericException catch (e) {
         return Left(
             CustomFailure(e.toString())); // Para capturar errores generales
       }

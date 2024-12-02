@@ -15,6 +15,7 @@ class UserModel extends User {
     required super.typeUser,
     required super.tokens,
     required super.imgsUser,
+    required super.typeUserId,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +30,7 @@ class UserModel extends User {
       email: json['email'] ?? '',
       password: json['password'] ?? '',
       createdAt: DateTime.parse(json['created_at'] ?? ''),
+      typeUserId: json['type_user_id'] ?? 0,
       typeUser: TypeUserModel.fromJson(json['type_user'] ?? {}),
       tokens: (json['tokens'] ?? [])
           .map<TokenModel>((e) => TokenModel.fromJson(e))

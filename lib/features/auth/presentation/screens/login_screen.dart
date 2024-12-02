@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inkapaking/core/core.dart';
 
-import '../../../../core/core.dart';
+import '../../domain/domain.dart';
+import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
 
@@ -25,11 +28,44 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class _LoginForm extends StatelessWidget {
+class _LoginForm extends ConsumerWidget {
   const _LoginForm();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    int count = 0;
+    ref.listen<AsyncValue<User?>>(authNotifierProvider, (next, previous) {
+      ++count;
+      print('$count');
+      next!.when(
+        data: (data) {
+          print('Usuario logueado: ${data!.email}');
+          context.push(HomeScreen.routeName);
+        },
+        error: (error, stackTrace) {
+          print('Error: $error');
+
+          String errorMessage = error.toString();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(errorMessage),
+              backgroundColor: Colors.red,
+            ),
+          );
+        },
+        loading: () {
+          print('Cargando...');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Cargando...'),
+              backgroundColor: Colors.blue,
+            ),
+          );
+        },
+      );
+    });
+    final loginFormState = ref.watch(loginFormProvider);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -44,11 +80,18 @@ class _LoginForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 40),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: CustomTextField(
             label: 'Correo',
             hint: 'Ingrese su correo electrónico',
+            errorMessage: loginFormState.isFormPosted
+                ? loginFormState.email.errorMessage
+                : null,
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (value) {
+              ref.read(loginFormProvider.notifier).onEmailChange(value);
+            },
           ),
         ),
         const SizedBox(height: 30),
@@ -58,12 +101,16 @@ class _LoginForm extends StatelessWidget {
           child: CustomTextField(
             label: 'Contraseña',
             hint: 'Ingrese su contraseña',
-            obscureText: true,
-            onPressed: () {},
+            keyboardType: TextInputType.visiblePassword,
+            obscureText: loginFormState.obscureText,
+            onPressed: ref.read(loginFormProvider.notifier).onViewPassword,
+            errorMessage: loginFormState.isFormPosted
+                ? loginFormState.password.errorMessage
+                : null,
+            onChanged: ref.read(loginFormProvider.notifier).onPasswordChange,
           ),
         ),
         const SizedBox(height: 20),
-        // Enlace de "Olvidaste tu contraseña"
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: Row(
@@ -84,9 +131,13 @@ class _LoginForm extends StatelessWidget {
         SizedBox(height: MediaQuery.of(context).size.height * 0.1),
         ContentButtonAuth(
           primaryButton: FilledButton(
-            onPressed: () {
-              // Acción para iniciar sesión
-              context.pushNamed(HomeScreen.routeName);
+            onPressed: () async {
+              ref.read(loginFormProvider.notifier).onFormSubmit();
+              final notifier = ref.read(authNotifierProvider.notifier);
+              await notifier.signUpWithEmailAndPassword(
+                loginFormState.email.value,
+                loginFormState.password.value,
+              );
             },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
