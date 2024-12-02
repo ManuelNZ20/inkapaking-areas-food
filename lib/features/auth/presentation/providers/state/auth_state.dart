@@ -1,27 +1,63 @@
 import '../../../domain/domain.dart';
 
 enum AuthStatus {
-  unknown, // Estado inicial
-  authenticated, // Usuario autenticado
-  unauthenticated, // Usuario no autenticado
-  verifying, // Verificando autenticación
-  checking, // Verificando conexión
+  /// Estado inicial
+  unknown,
+
+  /// Usuario autenticado
+  authenticated,
+
+  /// Usuario no autenticado
+  unauthenticated,
+
+  /// Verificando autenticación
+  verifying,
+
+  /// Verificando conexión
+  checking,
 }
 
 class AuthState {
-  final AuthStatus status; // Estado de autenticación
-  final User? user; // Usuario autenticado
-  final String? errorMessage; // Mensaje de error
-  final bool hasError; // Si hay un error
-  final bool hasFailure; // Si hay un fallo
-  final bool hasUser; // Si hay un usuario
-  final bool hasToken; // Si hay un token
-  final bool hasConnection; // Si hay conexión a Internet
-  final bool isRecoveringPassword; // Si se está recuperando la contraseña
-  final bool isSigningIn; // Si se está iniciando sesión
-  final bool isSigningOut; // Si se está cerrando sesión
-  final bool isSigningUp; // Si se está registrando
-  final bool isVerifying; // Si se está verificando
+  /// Estado de autenticación
+  final AuthStatus status;
+
+  /// Usuario autenticado
+  final User? user;
+
+  /// Mensaje de error
+  final String? errorMessage;
+
+  /// Si hay un error
+  final bool hasError;
+
+  /// Si hay un fallo
+  final bool hasFailure;
+
+  /// Si hay un usuario
+  final bool hasUser;
+
+  /// Si hay un token
+  final bool hasToken;
+
+  /// Si hay conexión a Internet
+  final bool hasConnection;
+
+  /// Si se está recuperando la contraseña
+  final bool isRecoveringPassword;
+
+  /// Si se está iniciando sesión
+  final bool isSigningIn;
+
+  /// Si se está cerrando sesión
+  final bool isSigningOut;
+
+  /// Si se está registrando
+  final bool isSigningUp;
+
+  /// Si se está verificando
+  final bool isVerifying;
+
+  /// Token de autenticación
   final String? token;
 
   AuthState({
@@ -32,7 +68,7 @@ class AuthState {
     this.hasFailure = false,
     this.hasUser = false,
     this.hasToken = false,
-    this.hasConnection = false,
+    this.hasConnection = true,
     this.isRecoveringPassword = false,
     this.isSigningIn = false,
     this.isSigningOut = false,
@@ -42,19 +78,46 @@ class AuthState {
   });
 
   AuthState copyWith({
+    /// Estado de autenticación
     AuthStatus? status,
+
+    /// Usuario autenticado
     User? user,
+
+    /// Mensaje de error
     String? errorMessage,
+
+    /// Si hay un error
     bool? hasError,
+
+    /// Si hay un fallo
     bool? hasFailure,
+
+    /// Si hay un usuario
     bool? hasUser,
+
+    /// Si hay un token
     bool? hasToken,
+
+    /// Si hay conexión a Internet
     bool? hasConnection,
+
+    /// Si se está recuperando la contraseña
     bool? isRecoveringPassword,
+
+    /// Si se está iniciando sesión
     bool? isSigningIn,
+
+    /// Si se está cerrando sesión
     bool? isSigningOut,
+
+    /// Si se está registrando
     bool? isSigningUp,
+
+    /// Si se está verificando
     bool? isVerifying,
+
+    /// Token de autenticación
     String? token,
   }) {
     return AuthState(

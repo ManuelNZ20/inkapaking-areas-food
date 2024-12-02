@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkapaking/core/core.dart';
 
-import '../../domain/domain.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
@@ -33,36 +32,50 @@ class _LoginForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int count = 0;
-    ref.listen<AsyncValue<User?>>(authNotifierProvider, (next, previous) {
-      ++count;
-      print('$count');
-      next!.when(
-        data: (data) {
-          print('Usuario logueado: ${data!.email}');
-          context.push(HomeScreen.routeName);
-        },
-        error: (error, stackTrace) {
-          print('Error: $error');
+    ref.listen<AuthState>(authNotifierProvider, (next, previous) {
+      if (Navigator.canPop(context)) Navigator.pop(context);
 
-          String errorMessage = error.toString();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(errorMessage),
-              backgroundColor: Colors.red,
-            ),
-          );
-        },
-        loading: () {
-          print('Cargando...');
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Cargando...'),
-              backgroundColor: Colors.blue,
-            ),
-          );
-        },
-      );
+      if (next!.isSigningIn) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => const Center(child: CircularProgressIndicator()),
+        );
+      } else if (next.hasFailure) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content:
+                  Text(next.errorMessage ?? 'Ocurrió un error desconocido'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('Aceptar'),
+                ),
+              ],
+            );
+          },
+        );
+      } else if (next.hasUser) {
+        // Mostrar pantalla de loading
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (_) => AlertDialog(
+            title: const Text('Usuario autenticado'),
+            content: Text('Bienvenido ${next.user!.name}'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('Aceptar'),
+              ),
+            ],
+          ),
+        );
+      }
     });
     final loginFormState = ref.watch(loginFormProvider);
 
@@ -85,9 +98,10 @@ class _LoginForm extends ConsumerWidget {
           child: CustomTextField(
             label: 'Correo',
             hint: 'Ingrese su correo electrónico',
-            errorMessage: loginFormState.isFormPosted
-                ? loginFormState.email.errorMessage
-                : null,
+            errorMessage:
+                !loginFormState.isValid && loginFormState.email.value.isNotEmpty
+                    ? loginFormState.email.errorMessage
+                    : null,
             keyboardType: TextInputType.emailAddress,
             onChanged: (value) {
               ref.read(loginFormProvider.notifier).onEmailChange(value);
@@ -104,7 +118,8 @@ class _LoginForm extends ConsumerWidget {
             keyboardType: TextInputType.visiblePassword,
             obscureText: loginFormState.obscureText,
             onPressed: ref.read(loginFormProvider.notifier).onViewPassword,
-            errorMessage: loginFormState.isFormPosted
+            errorMessage: !loginFormState.isValid &&
+                    loginFormState.password.value.isNotEmpty
                 ? loginFormState.password.errorMessage
                 : null,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordChange,
@@ -131,14 +146,16 @@ class _LoginForm extends ConsumerWidget {
         SizedBox(height: MediaQuery.of(context).size.height * 0.1),
         ContentButtonAuth(
           primaryButton: FilledButton(
-            onPressed: () async {
-              ref.read(loginFormProvider.notifier).onFormSubmit();
-              final notifier = ref.read(authNotifierProvider.notifier);
-              await notifier.signUpWithEmailAndPassword(
-                loginFormState.email.value,
-                loginFormState.password.value,
-              );
-            },
+            onPressed: !loginFormState.isPosting && loginFormState.isValid
+                ? () async {
+                    ref.read(loginFormProvider.notifier).onFormSubmit();
+                    final notifier = ref.read(authNotifierProvider.notifier);
+                    await notifier.signUpWithEmailAndPassword(
+                      loginFormState.email.value,
+                      loginFormState.password.value,
+                    );
+                  }
+                : null,
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
             ),

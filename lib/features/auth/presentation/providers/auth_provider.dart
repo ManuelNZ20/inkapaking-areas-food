@@ -1,17 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inkapaking/features/auth/presentation/providers/login_use_case_provider.dart';
+import 'package:inkapaking/features/auth/presentation/providers/state/auth_state.dart';
 import '../../../../core/core.dart';
 import '../../domain/domain.dart';
 
-class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
+class AuthNotifier extends StateNotifier<AuthState> {
   final SignInWithEmailAndPassword signUpUseCase;
 
   AuthNotifier({
     required this.signUpUseCase,
-  }) : super(const AsyncValue.loading());
+  }) : super(AuthState());
 
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
-    state = const AsyncValue.loading();
+    // Simular carga
+    state = state.copyWith(
+      isSigningIn: true,
+      hasFailure: false,
+      hasError: false,
+      errorMessage: null,
+    );
+    await Future.delayed(const Duration(milliseconds: 500));
     final result = await signUpUseCase.call(
       SignInWithEmailAndPasswordParams(
         email: email,
@@ -19,33 +27,56 @@ class AuthNotifier extends StateNotifier<AsyncValue<User?>> {
       ),
     );
     result.fold(
-      // (failure) => state = AsyncValue.error(failure, StackTrace.current),
-      (failure) {
-        if (failure is AuthenticationFailure) {
-          state =
-              AsyncValue.error('Credenciales incorrectas', StackTrace.current);
-        } else if (failure is ServerFailure) {
-          state = AsyncValue.error(
-              'Problema con el servidor. Inténtelo más tarde.',
-              StackTrace.current);
-        } else if (failure is ServerFailure) {
-          state =
-              AsyncValue.error('Sin conexión a Internet', StackTrace.current);
-        } else {
-          state = AsyncValue.error('Error desconocido', StackTrace.current);
-        }
-      },
+      (failure) => _handleFailure(failure),
       _setLogged,
     );
   }
 
-  void _setLogged(User user) async {
-    print('Usuario logueado: ${user.email}');
-    state = AsyncValue.data(user);
+  void _setLogged(User user) {
+    state = state.copyWith(
+      user: user,
+      status: AuthStatus.authenticated,
+      hasUser: true,
+      errorMessage: null,
+      isSigningIn: false,
+      hasFailure: false,
+      hasError: false,
+    );
+  }
+
+  void _handleFailure(Failure failure) {
+    if (failure is AuthenticationFailure) {
+      _updateStateWithFailure(
+        errorMessage: 'Credenciales incorrectas',
+        hasConnection: true,
+      );
+    } else if (failure is ServerFailure) {
+      _updateStateWithFailure(
+        errorMessage: 'Fallo el servidor',
+        hasConnection: false,
+      );
+    } else {
+      _updateStateWithFailure(
+        errorMessage: 'Error desconocido',
+      );
+    }
+  }
+
+  void _updateStateWithFailure({
+    required String errorMessage,
+    bool hasConnection = true,
+  }) {
+    state = state.copyWith(
+      status: AuthStatus.unauthenticated,
+      errorMessage: errorMessage,
+      isSigningIn: false,
+      hasFailure: true,
+      hasConnection: hasConnection,
+      hasUser: false,
+    );
   }
 }
 
-final authNotifierProvider =
-    StateNotifierProvider<AuthNotifier, AsyncValue<User?>>(
+final authNotifierProvider = StateNotifierProvider<AuthNotifier, AuthState>(
   (ref) => AuthNotifier(signUpUseCase: ref.read(loginProvider)),
 );

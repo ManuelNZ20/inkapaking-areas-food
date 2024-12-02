@@ -8,6 +8,7 @@ class SignInWithEmailAndPassword
 
   SignInWithEmailAndPassword(this.authRepository);
 
+  /// Llama al método [signInWithEmailAndPassword] del repositorio [AuthRepository] y retorna un [Either] con un [Failure] o un [User]
   @override
   Future<Either<Failure, User>> call(
     SignInWithEmailAndPasswordParams params,
@@ -26,6 +27,20 @@ class SignInWithEmailAndPassword
         ),
       );
     }
+  }
+
+  Future<Either<Failure, User>> checkAuthentication(
+      KeyValueStorageService keyValueStorageService) async {
+    final tokenValue = await keyValueStorageService.getValue<String>('token');
+    if (tokenValue != null) {
+      final user = await authRepository.getCurrentUser(tokenValue);
+      if (user != null) {
+        return (user);
+      }
+    }
+    return Left(
+      AuthenticationFailure('Usuario no autenticado'),
+    );
   }
 }
 

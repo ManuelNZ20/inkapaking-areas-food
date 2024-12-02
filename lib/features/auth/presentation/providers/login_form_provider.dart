@@ -6,10 +6,10 @@ import '../../../../core/utils/utils.dart';
 // 3 - Como vamos a construir ese provider - StateNotifierProvider - Como se consume afuera
 final loginFormProvider =
     StateNotifierProvider.autoDispose<LoginFormNotifier, LoginFormState>((ref) {
-  final loginUserCallback =
+  final signUpWithEmailAndPassword =
       ref.watch(authNotifierProvider.notifier).signUpWithEmailAndPassword;
   return LoginFormNotifier(
-    loginUserCallback: loginUserCallback,
+    loginUserCallback: signUpWithEmailAndPassword,
   );
 });
 
@@ -63,12 +63,23 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
 }
 
 class LoginFormState {
-  final bool isPosting; // Si se está enviando la petición
-  final bool isFormPosted; // Si se ha enviado la petición
-  final bool isValid; // Si el formulario es válido
-  final InputEmail email; // InputEmail del usuario
-  final InputPassword password; // Contraseña del usuario
-  final bool obscureText; // Si la contraseña es visible
+  /// Si se está enviando la petición
+  final bool isPosting;
+
+  /// Si se ha enviado la petición
+  final bool isFormPosted;
+
+  /// Si el formulario es válido
+  final bool isValid;
+
+  /// InputEmail del usuario
+  final InputEmail email;
+
+  /// Contraseña del usuario
+  final InputPassword password;
+
+  /// Si la contraseña es visible
+  final bool obscureText;
 
   LoginFormState({
     this.isPosting = false,

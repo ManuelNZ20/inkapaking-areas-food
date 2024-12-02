@@ -19,3 +19,5 @@ export 'usecases/auth_usecase.dart';
 export 'network/network_info_supabase.dart';
 // Utils
 export 'utils/utils.dart';
+// Services
+export 'services/services.dart';
