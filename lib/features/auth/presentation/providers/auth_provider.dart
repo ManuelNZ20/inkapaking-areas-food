@@ -97,6 +97,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
           state = state.copyWith(
             status: AuthStatus.offline,
             hasUser: false,
+            hasConnection: false,
           );
           return;
         }
@@ -114,7 +115,19 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> signOut() async {
-    await keyValueStorageService.removeKey('token');
+    final token = await keyValueStorageService.getValue<int>('token');
+    if (token != null) {
+      state = state.copyWith(
+        isSigningOut: true,
+      );
+      await keyValueStorageService.removeKey('token');
+      _removeToken();
+    } else {
+      _removeToken();
+    }
+  }
+
+  void _removeToken() {
     state = state.copyWith(
       status: AuthStatus.unauthenticated,
       user: null,
@@ -123,7 +136,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       hasUser: false,
       isSigningIn: false,
       hasFailure: false,
-      isSigningOut: true,
+      isSigningOut: false,
       hasToken: false,
     );
   }

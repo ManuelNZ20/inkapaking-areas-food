@@ -1,15 +1,32 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/core.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends ConsumerWidget {
   static const String routeName = 'register_screen';
   const RegisterScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(connectivityProvider, (previous, next) async {
+      next.whenData(
+        (connectivityResult) {
+          if (connectivityResult == ConnectivityResult.none) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Sin conexión a internet")),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Conexión restaurada")),
+            );
+          }
+        },
+      );
+    });
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: const Scaffold(

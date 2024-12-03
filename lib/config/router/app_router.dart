@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/core.dart';
 import '../../features/auth/presentation/providers/providers.dart';
 import '../../features/auth/presentation/screens/screens.dart';
+import '../../features/config/presentation/screens/screens.dart';
 import 'auth_router_notifier.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -60,6 +61,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           return const HomeScreen();
         },
+        routes: [
+          GoRoute(
+            path: 'config_profile',
+            name: ConfigProfileScreen.routeName,
+            builder: (context, state) {
+              return const ConfigProfileScreen();
+            },
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/not_connection',
+        name: NotConnectionScreen.routeName,
+        builder: (context, state) {
+          return const NotConnectionScreen();
+        },
       ),
     ],
     redirect: (context, state) async {
@@ -67,11 +84,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final isGoingTo = state.matchedLocation;
       final authStatus = goRouterNotifier.authStatus;
       final keyValue = ref.read(keyValueStorageProvider);
+      if (/* isGoingTo == '/splash' && */ authStatus == AuthStatus.offline) {
+        return '/not_connection';
+      }
       if (isGoingTo == '/splash' && authStatus == AuthStatus.checking) {
         return null;
-      }
-      if (isGoingTo == '/splash' && authStatus == AuthStatus.offline) {
-        return '/home/not_connection';
       }
       if (authStatus == AuthStatus.unauthenticated) {
         // if (isGoingTo == '/login' || isGoingTo == '/register') {
@@ -85,7 +102,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return '/login';
       }
       if (authStatus == AuthStatus.authenticated) {
-        if (isGoingTo == '/login' || isGoingTo == '/splash') {
+        if (isGoingTo == '/login' ||
+            isGoingTo == '/splash' ||
+            isGoingTo == '/not_connection') {
           return '/home';
         }
       }

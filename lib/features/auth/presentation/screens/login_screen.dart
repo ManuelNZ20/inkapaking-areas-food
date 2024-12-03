@@ -1,18 +1,39 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/core.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends ConsumerWidget {
   static const String routeName = 'login_screen';
 
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(connectivityProvider, (previous, next) async {
+      next.whenData(
+        (connectivityResult) {
+          if (connectivityResult == ConnectivityResult.none ||
+              connectivityResult == ConnectivityResult.wifi ||
+              connectivityResult == ConnectivityResult.mobile ||
+              connectivityResult == ConnectivityResult.ethernet) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Sin conexión a internet")),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Conexión restaurada")),
+            );
+          }
+        },
+      );
+    });
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: const Scaffold(
@@ -33,7 +54,6 @@ class _LoginForm extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<AuthState>(authNotifierProvider, (next, previous) {
       if (Navigator.canPop(context)) Navigator.pop(context);
-
       if (next!.isSigningIn) {
         showDialog(
           context: context,
@@ -58,23 +78,7 @@ class _LoginForm extends ConsumerWidget {
             );
           },
         );
-      } /* else if (next.hasUser) {
-        // Mostrar pantalla de loading
-        showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (_) => AlertDialog(
-            title: const Text('Usuario autenticado'),
-            content: Text('Bienvenido ${next.user!.name}'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Aceptar'),
-              ),
-            ],
-          ),
-        );
-      } */
+      }
     });
     final loginFormState = ref.watch(loginFormProvider);
 

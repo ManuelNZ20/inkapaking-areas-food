@@ -258,6 +258,14 @@ class MockAuthRepository extends _i1.Mock implements _i5.AuthRepository {
         #recoverPassword,
         [email],
       )) as _i4.Future<_i6.Either<_i7.Failure, bool>>?);
+
+  @override
+  _i4.Future<_i6.Either<_i7.Failure, _i5.User>>? getCurrentUserByToken(
+          int? token) =>
+      (super.noSuchMethod(Invocation.method(
+        #getCurrentUserByToken,
+        [token],
+      )) as _i4.Future<_i6.Either<_i7.Failure, _i5.User>>?);
 }
 
 /// A class which mocks [AuthRemoteDataSource].
@@ -320,7 +328,7 @@ class MockAuthRemoteDataSource extends _i1.Mock
       )) as _i4.Future<_i8.UserModel>?);
 
   @override
-  _i4.Future<_i8.UserModel>? getCurrentUserByToken(String? token) =>
+  _i4.Future<_i8.UserModel>? getCurrentUserByToken(int? token) =>
       (super.noSuchMethod(Invocation.method(
         #getCurrentUserByToken,
         [token],

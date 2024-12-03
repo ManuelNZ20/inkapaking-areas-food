@@ -42,7 +42,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (response.isEmpty) {
       throw UnauthorizedException('Usuario o contraseña incorrecta');
     }
-    print(response);
     final user = UserModel.fromJson(response.first);
     return user;
   }

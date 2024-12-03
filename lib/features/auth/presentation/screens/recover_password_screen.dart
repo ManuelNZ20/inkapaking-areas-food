@@ -1,13 +1,34 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/core.dart';
 import '../widgets/widgets.dart';
 
-class RecoverPasswordScreen extends StatelessWidget {
+class RecoverPasswordScreen extends ConsumerWidget {
   static const String routeName = 'recover_password_screen';
   const RecoverPasswordScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(connectivityProvider, (previous, next) async {
+      next.whenData(
+        (connectivityResult) {
+          if (connectivityResult == ConnectivityResult.none ||
+              connectivityResult == ConnectivityResult.wifi ||
+              connectivityResult == ConnectivityResult.mobile ||
+              connectivityResult == ConnectivityResult.ethernet) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Sin conexión a internet")),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Conexión restaurada")),
+            );
+          }
+        },
+      );
+    });
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: const Scaffold(
