@@ -29,4 +29,7 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>>? recoverPassword(
     String email,
   );
+  Future<Either<Failure, User>>? getCurrentUserByToken(
+    int token,
+  );
 }

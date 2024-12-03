@@ -59,6 +59,6 @@ abstract class AuthRemoteDataSource {
   /// - [AuthException] si el usuario no está autenticado.
   /// - [NetworkException] si hay problemas de conexión.
   Future<UserModel>? getCurrentUserByToken(
-    String token,
+    int token,
   );
 }

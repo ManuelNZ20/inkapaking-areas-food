@@ -79,4 +79,12 @@ class AuthRepositoryImpl extends AuthRepository {
           name, lastName, gender, phone, direction, stateAccount, email)!;
     });
   }
+
+  @override
+  Future<Either<Failure, User>>? getCurrentUserByToken(int token) async {
+    return _handleNetworkRequest(() async {
+      final remoteUser = await remoteDataSource.getCurrentUserByToken(token);
+      return remoteUser!;
+    });
+  }
 }

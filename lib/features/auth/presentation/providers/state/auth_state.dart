@@ -15,6 +15,13 @@ enum AuthStatus {
 
   /// Verificando conexión
   checking,
+
+  /// Recuperando contraseña
+  recovering,
+
+  /// Sin conexión
+  /// a Internet
+  offline,
 }
 
 class AuthState {

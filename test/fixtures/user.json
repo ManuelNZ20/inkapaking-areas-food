@@ -1,33 +1,28 @@
 {
   "id": 1,
+  "email": "test@gmail.com",
   "name": "Test Name",
-  "last_name": "Test Last Name",
+  "last_name": "Last Test Name",
   "gender": true,
-  "phone": "1234567890",
+  "phone": "123456789",
   "direction": "Test Direction",
   "state_account": true,
-  "email": "test@example.com",
-  "password": "test123",
-  "created_at": "2024-01-01T00:00:00.000Z",
+  "created_at": "2024-11-27T13:16:42.722681+00:00",
+  "password": "Test123",
+  "user_type_id": 1,
   "type_user": {
     "id": 1,
-    "type_name": "Test Type User",
-    "description": "Test Description"
+    "type_name": "UnLogged",
+    "description": "En espera"
   },
   "tokens": [
     {
-      "id_token": 1,
-      "token_auth": "Test Token Auth",
-      "token_access": "Test Token Access",
       "state": true,
-      "created_at": "2024-01-01T00:00:00.000Z"
+      "id_token": 1,
+      "created_at": "2024-12-02T16:52:10.087265+00:00",
+      "token_auth": "4743692a-1658-4306-b603-86fc52cd54f9",
+      "token_access": "97193d1c-58a0-4dc2-9cd5-69a444e89d5a"
     }
   ],
-  "img_user": [
-    {
-      "id": 1,
-      "url": "Test URL",
-      "created_at": "2024-01-01T00:00:00.000Z"
-    }
-  ]
+  "img_user": []
 }

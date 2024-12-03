@@ -8,7 +8,7 @@ import 'auth_router_notifier.dart';
 final appRouterProvider = Provider<GoRouter>((ref) {
   final goRouterNotifier = ref.watch(goRouterProvider);
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/splash',
     refreshListenable: goRouterNotifier,
     routes: [
       /// Splash screen para verificar el estado de autenticación
@@ -70,22 +70,24 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       if (isGoingTo == '/splash' && authStatus == AuthStatus.checking) {
         return null;
       }
+      if (isGoingTo == '/splash' && authStatus == AuthStatus.offline) {
+        return '/home/not_connection';
+      }
       if (authStatus == AuthStatus.unauthenticated) {
-        if (isGoingTo == '/login' || isGoingTo == '/register') {
-          return null;
-        }
-        final isOnBoarding =
-            await keyValue.getValue<bool>('onBoarding') ?? false;
-        if (!isOnBoarding) {
-          return '/onboarding';
-        }
+        // if (isGoingTo == '/login' || isGoingTo == '/register') {
+        //   return null;
+        // }
+        // final isOnBoarding =
+        //     await keyValue.getValue<bool>('onBoarding') ?? false;
+        // if (!isOnBoarding) {
+        //   return '/onboarding';
+        // }
         return '/login';
       }
       if (authStatus == AuthStatus.authenticated) {
-        if (isGoingTo == '/home') {
-          return null;
+        if (isGoingTo == '/login' || isGoingTo == '/splash') {
+          return '/home';
         }
-        return '/home';
       }
       return null;
     },

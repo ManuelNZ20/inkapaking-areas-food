@@ -31,12 +31,17 @@ class SignInWithEmailAndPassword
 
   Future<Either<Failure, User>> checkAuthentication(
       KeyValueStorageService keyValueStorageService) async {
-    final tokenValue = await keyValueStorageService.getValue<String>('token');
+    final tokenValue = await keyValueStorageService.getValue<int>('token');
     if (tokenValue != null) {
-      final user = await authRepository.getCurrentUser(tokenValue);
+      final user = await authRepository.getCurrentUserByToken(tokenValue);
       if (user != null) {
         return user;
       }
+      return Left(
+        ServerFailure(
+          'Fallo en el servidor',
+        ),
+      );
     }
     return Left(
       AuthenticationFailure(

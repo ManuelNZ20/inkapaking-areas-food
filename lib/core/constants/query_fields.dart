@@ -1,15 +1,6 @@
 const tableNameAuth = 'users';
 const queryFieldsFromAuth = '''
-  id,
-  name,
-  last_name,
-  gender,
-  phone,
-  direction,
-  state_account,
-  email,
-  password,
-  created_at,
+  *,
   type_user_id(
     id,
     type_name,
@@ -21,5 +12,9 @@ const queryFieldsFromAuth = '''
     state,
     created_at
   ),
-  img_user(id,url,created_at)
+  img_user(
+  id,
+  url,
+  created_at
+  )
 ''';

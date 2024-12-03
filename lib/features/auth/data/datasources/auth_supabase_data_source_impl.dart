@@ -42,6 +42,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (response.isEmpty) {
       throw UnauthorizedException('Usuario o contraseña incorrecta');
     }
+    print(response);
     final user = UserModel.fromJson(response.first);
     return user;
   }
@@ -81,7 +82,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserModel>? getCurrentUserByToken(String token) {
-    throw UnimplementedError();
+  Future<UserModel>? getCurrentUserByToken(int tokenId) async {
+    final responseToken = await client
+        .from('user_tokens_data')
+        .select()
+        .eq('token_id', tokenId)
+        .limit(1)
+        .single();
+
+    final response = await client
+        .from(tableNameAuth)
+        .select('''*,type_user(*),tokens(*),img_user(*)''')
+        .eq('id', responseToken['user_id'])
+        .limit(1)
+        .single();
+
+    return UserModel.fromJson(response);
   }
 }

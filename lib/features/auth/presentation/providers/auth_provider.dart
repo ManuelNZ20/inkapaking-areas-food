@@ -11,7 +11,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required this.signUpUseCase,
     required this.keyValueStorageService,
   }) : super(AuthState()) {
-    _checkAuthStatus();
+    checkAuthStatus();
   }
 
   Future<void> signUpWithEmailAndPassword(String email, String password) async {
@@ -35,7 +35,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     );
   }
 
-  void _setLogged(User user) {
+  void _setLogged(User user) async {
+    final token = user.tokens!.firstWhere((token) => token.state == true);
     state = state.copyWith(
       user: user,
       status: AuthStatus.authenticated,
@@ -44,6 +45,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
       isSigningIn: false,
       hasFailure: false,
       hasError: false,
+      token: token.tokenId.toString(),
+    );
+    await keyValueStorageService.setKeyValue<int>(
+      'token',
+      int.parse(state.token!),
     );
   }
 
@@ -82,15 +88,19 @@ class AuthNotifier extends StateNotifier<AuthState> {
   /// Verificar si el usuario ya esta autenticado
   /// y cargar los datos del usuario
   /// en caso de que ya este autenticado
-  Future<void> _checkAuthStatus() async {
+  Future<void> checkAuthStatus() async {
     final checkAuthentication =
         await signUpUseCase.checkAuthentication(keyValueStorageService);
     checkAuthentication.fold(
       (failure) {
-        state = state.copyWith(
-          status: AuthStatus.unauthenticated,
-          hasUser: false,
-        );
+        if (failure is ServerFailure) {
+          state = state.copyWith(
+            status: AuthStatus.offline,
+            hasUser: false,
+          );
+          return;
+        }
+        _handleFailure(failure);
       },
       (user) {
         state = state.copyWith(
@@ -98,7 +108,23 @@ class AuthNotifier extends StateNotifier<AuthState> {
           status: AuthStatus.authenticated,
           hasUser: true,
         );
+        _setLogged(user);
       },
+    );
+  }
+
+  Future<void> signOut() async {
+    await keyValueStorageService.removeKey('token');
+    state = state.copyWith(
+      status: AuthStatus.unauthenticated,
+      user: null,
+      token: null,
+      errorMessage: '',
+      hasUser: false,
+      isSigningIn: false,
+      hasFailure: false,
+      isSigningOut: true,
+      hasToken: false,
     );
   }
 }

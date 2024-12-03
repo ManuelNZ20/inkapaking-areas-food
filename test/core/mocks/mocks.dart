@@ -10,5 +10,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
   NetworkInfo,
   InternetConnectionChecker,
   SupabaseClient,
+  PostgrestTransformBuilder<Map<String, dynamic>>,
 ])
 void main() {}

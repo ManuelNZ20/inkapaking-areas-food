@@ -1,3 +1,50 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:inkapaking/features/auth/data/data.dart';
+import 'package:mockito/mockito.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../../core/mocks/mocks.mocks.dart';
+import '../../../../fixtures/fixture_reader.dart';
+
+void main() {
+  late MockSupabaseClient mockSupabaseClient;
+  late AuthRemoteDataSourceImpl authRemoteDataSource;
+
+  setUp(() {
+    mockSupabaseClient = MockSupabaseClient();
+    authRemoteDataSource = AuthRemoteDataSourceImpl(client: mockSupabaseClient);
+  });
+
+  test(
+    'etCurrentUser returns a UserModel when successful',
+    () async {
+      final Map<String, dynamic> tUserModel = json.decode(fixture('user.json'));
+      final mockResponse =
+          tUserModel as PostgrestTransformBuilder<Map<String, dynamic>>;
+      const tEmail = 'test@gmail.com';
+      when(mockSupabaseClient
+              .from('users')
+              .select('''*,type_user(*),tokens(*),img_user(*)''')
+              .eq('email', tEmail)
+              .limit(1)
+              .single())
+          .thenAnswer((_) => mockResponse);
+      final result =
+          await authRemoteDataSource.getCurrentUser('test@example.com');
+      print(result);
+      expect(result, isA<UserModel>);
+      expect(result!.email, equals(tEmail));
+      verify(mockSupabaseClient
+          .from('users')
+          .select('''*,type_user(*),tokens(*),img_user(*)''')
+          .eq('email', tEmail)
+          .limit(1)
+          .single());
+    },
+  );
+}
 // import 'package:flutter_test/flutter_test.dart';
 // import 'package:inkapaking/features/auth/data/data.dart';
 // import 'package:mockito/mockito.dart';
