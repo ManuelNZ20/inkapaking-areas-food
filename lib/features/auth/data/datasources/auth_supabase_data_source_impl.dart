@@ -25,8 +25,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .from(tableNameAuth)
         .select(queryFieldsFromAuth)
         .eq('email', email)
-        .limit(1)
-        .single();
+        .limit(1);
+    if (response.isEmpty) {
+      throw UnauthorizedException('Usuario no encontrado');
+    }
+
     return response.isEmpty;
   }
 

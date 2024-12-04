@@ -86,8 +86,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   /// Verificar si el usuario ya esta autenticado
-  /// y cargar los datos del usuario
-  /// en caso de que ya este autenticado
+  /// y cargar los datos del usuario en caso de que ya este autenticado
   Future<void> checkAuthStatus() async {
     final checkAuthentication =
         await signUpUseCase.checkAuthentication(keyValueStorageService);

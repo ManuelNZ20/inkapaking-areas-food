@@ -23,24 +23,58 @@ class ConfigProfileScreen extends ConsumerWidget {
         appBar: AppBar(
           title: const Text('Configuracion de usuario'),
         ),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              FilledButton.tonalIcon(
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-                label: const Text('Editar datos'),
-              ),
-              IconButton(
-                onPressed: ref.read(authNotifierProvider).hasConnection
-                    ? ref.read(authNotifierProvider.notifier).signOut
-                    : null,
-                icon: const Icon(Icons.settings),
-              ),
-            ],
+        body: const _SettingForm(),
+      ),
+    );
+  }
+}
+
+class _SettingForm extends ConsumerWidget {
+  const _SettingForm();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AuthState>(authNotifierProvider, (previous, next) {
+      if (next.isSigningOut) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => const Center(child: CircularProgressIndicator()),
+        );
+      }
+    });
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FilledButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 50),
+            ),
+            // icon: const Icon(Icons.person),
+            child: const Text('Editar datos'),
           ),
-        ),
+          const SizedBox(height: 12),
+          ElevatedButton.icon(
+            onPressed: ref.read(authNotifierProvider).hasConnection
+                ? ref.read(authNotifierProvider.notifier).signOut
+                : null,
+            icon: const Icon(Icons.exit_to_app),
+            label: const Text('Salir'),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 50),
+            )
+                .copyWith(
+                  backgroundColor: const MaterialStatePropertyAll(Colors.red),
+                )
+                .copyWith(
+                  foregroundColor: MaterialStatePropertyAll(
+                      Theme.of(context).colorScheme.onPrimary),
+                ),
+          ),
+        ],
       ),
     );
   }

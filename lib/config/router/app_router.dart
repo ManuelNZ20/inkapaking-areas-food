@@ -84,6 +84,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final isGoingTo = state.matchedLocation;
       final authStatus = goRouterNotifier.authStatus;
       final keyValue = ref.read(keyValueStorageProvider);
+      print(isGoingTo);
+      print(authStatus);
       if (/* isGoingTo == '/splash' && */ authStatus == AuthStatus.offline) {
         return '/not_connection';
       }
@@ -91,9 +93,11 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return null;
       }
       if (authStatus == AuthStatus.unauthenticated) {
-        // if (isGoingTo == '/login' || isGoingTo == '/register') {
-        //   return null;
-        // }
+        if (isGoingTo == '/login' ||
+            isGoingTo == '/register' ||
+            isGoingTo == '/login/recover_password') {
+          return null;
+        }
         // final isOnBoarding =
         //     await keyValue.getValue<bool>('onBoarding') ?? false;
         // if (!isOnBoarding) {
