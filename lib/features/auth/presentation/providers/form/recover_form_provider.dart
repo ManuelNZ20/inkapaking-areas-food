@@ -25,23 +25,63 @@ class RecoverFormNotifier extends StateNotifier<RecoverFormState> {
     state = state.copyWith(
       email: newEmail,
       isValid: Formz.validate([newEmail]),
+      errorMessage: null,
     );
   }
 
   onFormSubmit() async {
     _touchEveryField();
     if (!state.isValid) return;
-    state = state.copyWith(isPosting: true);
+    state = state.copyWith(
+      isPosting: true,
+      hasError: false,
+      errorMessage: null,
+      isFormPosted: false,
+    );
     final result = await recoverPassword(RecoverPasswordParams(
       email: state.email.value,
     ));
+    result.fold(
+      _handleFailure,
+      (r) {
+        Future.delayed(const Duration(milliseconds: 800), () {
+          state = state.copyWith(
+            isPosting: false,
+            isFormPosted: true,
+            hasError: false,
+            errorMessage: null, // Reseteamos cualquier mensaje de error
+          );
+        });
+      },
+    );
+  }
+
+  void _handleFailure(Failure failure) {
+    if (failure is AuthenticationFailure) {
+      _updateStateWithFailure(
+        errorMessage: 'Credenciales incorrectas',
+        hasConnection: true,
+      );
+    } else if (failure is ServerFailure) {
+      _updateStateWithFailure(
+        errorMessage: 'Fallo el servidor',
+        hasConnection: false,
+      );
+    } else {
+      _updateStateWithFailure(
+        errorMessage: 'Error desconocido',
+      );
+    }
+  }
+
+  void _updateStateWithFailure({
+    required String errorMessage,
+    bool hasConnection = true,
+  }) {
     state = state.copyWith(
       isPosting: false,
-      isFormPosted: result.fold(
-        (l) => false,
-        (r) => true,
-      ),
-      hasError: result.isLeft(),
+      hasError: true,
+      errorMessage: errorMessage,
     );
   }
 
@@ -71,6 +111,9 @@ class RecoverFormState {
   // Si hay un error
   final bool hasError;
 
+  // Mensaje de error
+  final String? errorMessage;
+
   // Constructor
   RecoverFormState({
     this.isPosting = false,
@@ -78,6 +121,7 @@ class RecoverFormState {
     this.isValid = false,
     this.email = const InputEmail.pure(),
     this.hasError = false,
+    this.errorMessage = '',
   });
 
   RecoverFormState copyWith({
@@ -86,6 +130,7 @@ class RecoverFormState {
     bool? isValid,
     InputEmail? email,
     bool? hasError,
+    String? errorMessage,
   }) =>
       RecoverFormState(
         isPosting: isPosting ?? this.isPosting,
@@ -93,6 +138,7 @@ class RecoverFormState {
         isValid: isValid ?? this.isValid,
         email: email ?? this.email,
         hasError: hasError ?? this.hasError,
+        errorMessage: errorMessage ?? this.errorMessage,
       );
 
   @override
@@ -104,6 +150,7 @@ class RecoverFormState {
     isValid: $isValid
     email: $email
     hasError: $hasError
+    errorMessage: $errorMessage
           ''';
   }
 }

@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,18 +13,7 @@ class ConfirmRegisterEmailScreen extends ConsumerWidget {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
         (connectivityResult) {
-          if (connectivityResult == ConnectivityResult.none ||
-              connectivityResult == ConnectivityResult.wifi ||
-              connectivityResult == ConnectivityResult.mobile ||
-              connectivityResult == ConnectivityResult.ethernet) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Sin conexión a internet")),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Conexión restaurada")),
-            );
-          }
+          showConnectivitySnackBar(context, connectivityResult);
         },
       );
     });

@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,17 +16,8 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
-        (connectivityResult) {
-          if (connectivityResult == ConnectivityResult.none) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Sin conexión a internet")),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Conexión restaurada")),
-            );
-          }
-        },
+        (connectivityResult) =>
+            showConnectivitySnackBar(context, connectivityResult),
       );
     });
 

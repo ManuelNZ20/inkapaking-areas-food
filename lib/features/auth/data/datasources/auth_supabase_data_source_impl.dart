@@ -22,8 +22,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<bool>? recoverPassword(String email) async {
-    const newPassword =
-        ''; // TODO: implementar funcion para generar nueva contraseña
+    final newPassword = generatePassword();
     final updateResult = await updatePassword(email, newPassword);
     if (updateResult == null || !updateResult) {
       throw ServerException('No se pudo actualizar la contraseña');

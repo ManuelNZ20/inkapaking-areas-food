@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inkapaking/features/auth/presentation/providers/form/recover_form_provider.dart';
@@ -14,17 +13,8 @@ class RecoverPasswordScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
-        (connectivityResult) {
-          if (connectivityResult == ConnectivityResult.none) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Sin conexión a internet")),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Conexión restaurada")),
-            );
-          }
-        },
+        (connectivityResult) =>
+            showConnectivitySnackBar(context, connectivityResult),
       );
     });
     return GestureDetector(
@@ -46,21 +36,20 @@ class _RecoverPasswordForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(recoverFormProvider, (next, previous) {
-      if (next!.isPosting) {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) => const Center(child: CircularProgressIndicator()),
-        );
-        if (Navigator.canPop(context)) Navigator.pop(context);
-      } else if (next.hasError) {
+      if (next!.isPosting && !next.isFormPosted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Error al enviar el correo")),
+          const SnackBar(content: Text('Enviando correo...')),
         );
-      } else if (next.isFormPosted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Correo enviado")),
-        );
+      } else {
+        if (next.hasError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(next.errorMessage ?? 'Error desconocido')),
+          );
+        } else if (next.isFormPosted && !next.isPosting) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Correo enviado")),
+          );
+        }
       }
     });
     final recoverFormState = ref.watch(recoverFormProvider);
