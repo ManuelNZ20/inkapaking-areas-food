@@ -6,6 +6,5 @@ class ConnectionFailure extends Failure {
       : super([message]);
 
   @override
-  // TODO: implement props
   List<Object?> get props => throw UnimplementedError();
 }

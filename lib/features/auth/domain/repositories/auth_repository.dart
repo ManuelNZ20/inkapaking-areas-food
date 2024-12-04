@@ -28,7 +28,21 @@ abstract class AuthRepository {
   // Recover the password by sending a recovery token to the email.
   Future<Either<Failure, bool>>? recoverPassword(
     String email,
+    String newPassword,
   );
+
+  // Actualizar contraseña
+  Future<Either<Failure, bool>>? updatePassword(
+    String email,
+    String newPassword,
+  );
+
+  // Send recovery email
+  Future<Either<Failure, bool>>? sendRecoveryEmail(
+    String email,
+    String newPassword,
+  );
+  // Get the current user by token
   Future<Either<Failure, User>>? getCurrentUserByToken(
     int token,
   );

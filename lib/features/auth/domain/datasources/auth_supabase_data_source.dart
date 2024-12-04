@@ -35,6 +35,27 @@ abstract class AuthRemoteDataSource {
   /// - [NetworkException] si hay problemas de conexión.
   Future<bool>? recoverPassword(
     String email,
+    String newPassword,
+  );
+
+  /// Enviar correo de recuperación de contraseña
+  ///
+  /// Puede lanzar las siguientes excepciones:
+  /// - [AuthException] si el correo no está registrado.
+  /// - [NetworkException] si hay problemas de conexión.
+  Future<bool>? sendRecoveryEmail(
+    String email,
+    String newPassword,
+  );
+
+  /// Actualizar contraseña
+  ///
+  /// Puede lanzar las siguientes excepciones:
+  /// - [AuthException] si el correo no está registrado.
+  /// - [NetworkException] si hay problemas de conexión.
+  Future<bool>? updatePassword(
+    String email,
+    String newPassword,
   );
 
   /// Obtiene el usuario actual basado en el correo electrónico.

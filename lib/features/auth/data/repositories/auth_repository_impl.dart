@@ -41,9 +41,20 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>>? recoverPassword(String email) async {
+  Future<Either<Failure, bool>>? recoverPassword(
+      String email, String newPassword) async {
     return _handleNetworkRequest(() async {
-      return await remoteDataSource.recoverPassword(email) ?? false;
+      return await remoteDataSource.recoverPassword(email, newPassword) ??
+          false;
+    });
+  }
+
+  @override
+  Future<Either<Failure, bool>>? sendRecoveryEmail(
+      String email, String newPassword) async {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.sendRecoveryEmail(email, newPassword) ??
+          false;
     });
   }
 
@@ -85,6 +96,14 @@ class AuthRepositoryImpl extends AuthRepository {
     return _handleNetworkRequest(() async {
       final remoteUser = await remoteDataSource.getCurrentUserByToken(token);
       return remoteUser!;
+    });
+  }
+
+  @override
+  Future<Either<Failure, bool>>? updatePassword(
+      String email, String newPassword) {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.updatePassword(email, newPassword) ?? false;
     });
   }
 }

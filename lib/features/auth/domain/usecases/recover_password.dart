@@ -10,23 +10,27 @@ class RecoverPassword implements AuthUseCase<bool, RecoverPasswordParams> {
   @override
   Future<Either<Failure, bool>> call(RecoverPasswordParams params) async {
     final email = InputEmail.dirty(params.email);
-    if (!email.isValid) {
+    final password = InputPassword.dirty(params.newPassword);
+    if (email.isValid && password.isValid) {
+      return authRepository.recoverPassword(
+        params.email,
+        params.newPassword,
+      )!;
+    } else {
       return Left(
         AuthenticationFailure(
-          'Email no válido',
+          'Email o contraseña incorrectos',
         ),
       );
     }
-    return await authRepository.recoverPassword(
-      params.email,
-    )!;
   }
 }
 
 class RecoverPasswordParams {
   final String email;
-
+  final String newPassword;
   RecoverPasswordParams({
     required this.email,
+    required this.newPassword,
   });
 }

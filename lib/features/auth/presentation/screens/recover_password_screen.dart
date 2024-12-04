@@ -14,10 +14,7 @@ class RecoverPasswordScreen extends ConsumerWidget {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
         (connectivityResult) {
-          if (connectivityResult == ConnectivityResult.none ||
-              connectivityResult == ConnectivityResult.wifi ||
-              connectivityResult == ConnectivityResult.mobile ||
-              connectivityResult == ConnectivityResult.ethernet) {
+          if (connectivityResult == ConnectivityResult.none) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text("Sin conexión a internet")),
             );
