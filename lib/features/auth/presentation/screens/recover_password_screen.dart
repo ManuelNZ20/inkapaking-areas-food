@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:inkapaking/features/auth/presentation/providers/form/recover_form_provider.dart';
 
 import '../../../../core/core.dart';
 import '../widgets/widgets.dart';
@@ -39,11 +40,30 @@ class RecoverPasswordScreen extends ConsumerWidget {
   }
 }
 
-class _RecoverPasswordForm extends StatelessWidget {
+class _RecoverPasswordForm extends ConsumerWidget {
   const _RecoverPasswordForm();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(recoverFormProvider, (next, previous) {
+      if (next!.isPosting) {
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => const Center(child: CircularProgressIndicator()),
+        );
+        if (Navigator.canPop(context)) Navigator.pop(context);
+      } else if (next.hasError) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Error al enviar el correo")),
+        );
+      } else if (next.isFormPosted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Correo enviado")),
+        );
+      }
+    });
+    final recoverFormState = ref.watch(recoverFormProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -58,11 +78,17 @@ class _RecoverPasswordForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 40),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: CustomTextField(
             label: 'Correo',
             hint: 'Ingrese su correo electrónico',
+            errorMessage: !recoverFormState.email.isValid &&
+                    recoverFormState.email.value.isNotEmpty
+                ? 'Correo electrónico no válido'
+                : null,
+            keyboardType: TextInputType.emailAddress,
+            onChanged: ref.read(recoverFormProvider.notifier).onEmailChange,
           ),
         ),
         const SizedBox(height: 35),
@@ -73,7 +99,11 @@ class _RecoverPasswordForm extends StatelessWidget {
         const SizedBox(height: 30),
         ContentButtonAuth(
           primaryButton: FilledButton(
-            onPressed: () {},
+            onPressed: !recoverFormState.isValid
+                ? null
+                : () async {
+                    ref.read(recoverFormProvider.notifier).onFormSubmit();
+                  },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size.fromHeight(50),
             ),

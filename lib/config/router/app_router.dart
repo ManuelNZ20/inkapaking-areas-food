@@ -84,9 +84,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       final isGoingTo = state.matchedLocation;
       final authStatus = goRouterNotifier.authStatus;
       final keyValue = ref.read(keyValueStorageProvider);
-      print(isGoingTo);
-      print(authStatus);
-      if (/* isGoingTo == '/splash' && */ authStatus == AuthStatus.offline) {
+      print('Redirecting from: $isGoingTo, AuthStatus: $authStatus');
+      if (authStatus == AuthStatus.offline) {
         return '/not_connection';
       }
       if (isGoingTo == '/splash' && authStatus == AuthStatus.checking) {
@@ -94,21 +93,15 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       }
       if (authStatus == AuthStatus.unauthenticated) {
         if (isGoingTo == '/login' ||
+            isGoingTo == '/login/recover_password' ||
             isGoingTo == '/register' ||
-            isGoingTo == '/login/recover_password') {
+            isGoingTo == '/register/confirm_register_email') {
           return null;
         }
-        // final isOnBoarding =
-        //     await keyValue.getValue<bool>('onBoarding') ?? false;
-        // if (!isOnBoarding) {
-        //   return '/onboarding';
-        // }
         return '/login';
       }
       if (authStatus == AuthStatus.authenticated) {
-        if (isGoingTo == '/login' ||
-            isGoingTo == '/splash' ||
-            isGoingTo == '/not_connection') {
+        if (isGoingTo == '/login' || isGoingTo == '/splash') {
           return '/home';
         }
       }

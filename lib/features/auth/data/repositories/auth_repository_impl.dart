@@ -41,10 +41,11 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, bool>>? recoverPassword(
-      String email, String newPassword) async {
+  Future<Either<Failure, bool>>? recoverPassword(String email) async {
     return _handleNetworkRequest(() async {
-      return await remoteDataSource.recoverPassword(email, newPassword) ??
+      return await remoteDataSource.recoverPassword(
+            email,
+          ) ??
           false;
     });
   }

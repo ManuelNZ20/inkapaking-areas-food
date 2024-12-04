@@ -35,7 +35,6 @@ abstract class AuthRemoteDataSource {
   /// - [NetworkException] si hay problemas de conexión.
   Future<bool>? recoverPassword(
     String email,
-    String newPassword,
   );
 
   /// Enviar correo de recuperación de contraseña

@@ -21,7 +21,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<bool>? recoverPassword(String email, String newPassword) async {
+  Future<bool>? recoverPassword(String email) async {
     const newPassword =
         ''; // TODO: implementar funcion para generar nueva contraseña
     final updateResult = await updatePassword(email, newPassword);
@@ -39,9 +39,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   Future<bool>? updatePassword(String email, String newPassword) async {
     final response = await client
         .from(tableNameAuth)
-        .update({'newPasswor': newPassword})
+        .update({'password': newPassword})
         .eq('email', email)
-        .select(queryFieldsFromAuth);
+        .select();
 
     if (response.isEmpty) {
       throw UnauthorizedException('Usuario no encontrado');

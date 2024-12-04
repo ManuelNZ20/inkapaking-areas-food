@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:inkapaking/features/auth/presentation/providers/auth_provider.dart';
-import '../../../../core/utils/utils.dart';
+import '../../../../../core/utils/utils.dart';
 
 // 3 - Como vamos a construir ese provider - StateNotifierProvider - Como se consume afuera
 final loginFormProvider =
