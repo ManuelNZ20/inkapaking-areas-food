@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../features/auth/presentation/providers/providers.dart';
 import '../../../../features/config/presentation/screens/screens.dart';
 import '../../../core.dart';
+import '../view/views.dart';
 
 class HomeScreen extends ConsumerWidget {
   static const String routeName = 'home_screen';
@@ -30,18 +31,23 @@ class HomeScreen extends ConsumerWidget {
         },
       );
     });
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
-        actions: [
-          IconButton(
-            onPressed: () => context.pushNamed(ConfigProfileScreen.routeName),
-            icon: const Icon(Icons.settings),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Home Screen'),
+          actions: [
+            IconButton(
+              onPressed: () => context.pushNamed(ConfigProfileScreen.routeName),
+              icon: const Icon(Icons.settings),
+            ),
+          ],
+        ),
+        body: const SafeArea(
+          child: SingleChildScrollView(
+            child: HomeViewRRHH(),
           ),
-        ],
-      ),
-      body: const Center(
-        child: Text('Home Screen'),
+        ),
       ),
     );
   }
