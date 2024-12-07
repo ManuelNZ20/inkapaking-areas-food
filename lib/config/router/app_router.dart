@@ -4,6 +4,7 @@ import '../../core/core.dart';
 import '../../features/auth/presentation/providers/providers.dart';
 import '../../features/auth/presentation/screens/screens.dart';
 import '../../features/config/presentation/screens/screens.dart';
+import '../../features/rrhh/presentation/screens/screens.dart';
 import 'auth_router_notifier.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
@@ -68,6 +69,22 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               return const ConfigProfileScreen();
             },
+          ),
+          GoRoute(
+            path: 'orders_all_areas',
+            name: OrdersAllAreasScreen.routeName,
+            builder: (context, state) {
+              return const OrdersAllAreasScreen();
+            },
+            routes: [
+              GoRoute(
+                path: 'form_order_all_areas',
+                name: FormOrderAllAreasScreen.routeName,
+                builder: (context, state) {
+                  return const FormOrderAllAreasScreen();
+                },
+              ),
+            ],
           ),
         ],
       ),

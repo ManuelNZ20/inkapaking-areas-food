@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
@@ -55,7 +56,7 @@ class ConfirmRegisterForm extends ConsumerWidget {
       children: [
         const ImgAuth(), // Encabezado con imagen
         const SizedBox(height: 20),
-        const TitleAuth(
+        const TitleApp(
           text: 'Confirmar Correo Electrónico',
         ), // Título de la pantalla
         const SizedBox(height: 30),

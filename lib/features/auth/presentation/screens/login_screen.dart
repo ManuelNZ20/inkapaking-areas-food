@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/core.dart';
+import '../../../../core/widgets/widgets.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
@@ -90,7 +91,7 @@ class _LoginForm extends ConsumerWidget {
         // Texto de bienvenida
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: TitleAuth(
+          child: TitleApp(
             text: 'Bienvenidos a la app de INKAPAKING S.A.C',
           ),
         ),
