@@ -1,8 +1,10 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inkapaking/features/auth/presentation/providers/form/recover_form_provider.dart';
 
 import '../../../../core/core.dart';
+import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
 class RecoverPasswordScreen extends ConsumerWidget {
@@ -12,10 +14,19 @@ class RecoverPasswordScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(connectivityProvider, (previous, next) async {
-      next.whenData(
-        (connectivityResult) =>
-            showConnectivitySnackBar(context, connectivityResult),
-      );
+      next.whenData((connectivityResult) async {
+        showConnectivitySnackBar(context, connectivityResult);
+        if (connectivityResult == ConnectivityResult.none) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+          await ref.read(authNotifierProvider.notifier).checkAuthStatus();
+        }
+      });
     });
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),

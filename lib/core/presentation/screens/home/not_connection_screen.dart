@@ -14,37 +14,8 @@ class NotConnectionScreen extends ConsumerWidget {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
         (connectivityResult) async {
-          print('Connection $connectivityResult');
-          if (connectivityResult == ConnectivityResult.none) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.warning,
-                      color: Colors.red[300],
-                    ),
-                    const Text("Sin conexión a internet"),
-                  ],
-                ),
-              ),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Icon(
-                      Icons.check,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                    const Text("Conexión restaurada"),
-                  ],
-                ),
-              ),
-            );
+          showConnectivitySnackBar(context, connectivityResult);
+          if (connectivityResult != ConnectivityResult.none) {
             showDialog(
               context: context,
               barrierDismissible: false,
@@ -66,48 +37,13 @@ class NotConnectionScreen extends ConsumerWidget {
             const Text('No hay conexión a internet'),
             ElevatedButton(
               child: const Text('Reintentar'),
-              onPressed: () => _handleRetry(context, ref),
+              onPressed: () async => await ref
+                  .read(authNotifierProvider.notifier)
+                  .checkAuthStatus(),
             ),
           ],
         ),
       ),
     );
-  }
-
-  Future<void> _handleRetry(BuildContext context, WidgetRef ref) async {
-    final connectivityResult = await Connectivity().checkConnectivity();
-
-    if (!connectivityResult.contains(ConnectivityResult.none)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(
-                Icons.check,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const Text("Conexión restaurada"),
-            ],
-          ),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(
-                Icons.warning,
-                color: Colors.red[300],
-              ),
-              const Text("Sin conexión a internet"),
-            ],
-          ),
-        ),
-      );
-    }
-    await ref.read(authNotifierProvider.notifier).checkAuthStatus();
   }
 }

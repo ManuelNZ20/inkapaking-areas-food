@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -16,8 +17,19 @@ class LoginScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
-        (connectivityResult) =>
-            showConnectivitySnackBar(context, connectivityResult),
+        (connectivityResult) async {
+          showConnectivitySnackBar(context, connectivityResult);
+          if (connectivityResult == ConnectivityResult.none) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+            await ref.read(authNotifierProvider.notifier).checkAuthStatus();
+          }
+        },
       );
     });
 

@@ -101,7 +101,9 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         return '/login';
       }
       if (authStatus == AuthStatus.authenticated) {
-        if (isGoingTo == '/login' || isGoingTo == '/splash') {
+        if (isGoingTo == '/login' ||
+            isGoingTo == '/splash' ||
+            isGoingTo == '/not_connection') {
           return '/home';
         }
       }

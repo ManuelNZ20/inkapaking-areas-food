@@ -1,7 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/core.dart';
+import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
 class ConfirmRegisterEmailScreen extends ConsumerWidget {
@@ -12,8 +14,18 @@ class ConfirmRegisterEmailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
-        (connectivityResult) {
+        (connectivityResult) async {
           showConnectivitySnackBar(context, connectivityResult);
+          if (connectivityResult == ConnectivityResult.none) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+            await ref.read(authNotifierProvider.notifier).checkAuthStatus();
+          }
         },
       );
     });

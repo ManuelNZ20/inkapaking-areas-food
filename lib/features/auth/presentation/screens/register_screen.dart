@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../../../core/core.dart';
+import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
 
@@ -13,8 +15,18 @@ class RegisterScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
-        (connectivityResult) {
+        (connectivityResult) async {
           showConnectivitySnackBar(context, connectivityResult);
+          if (connectivityResult == ConnectivityResult.none) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+            await ref.read(authNotifierProvider.notifier).checkAuthStatus();
+          }
         },
       );
     });
@@ -66,10 +78,11 @@ class _RegisterForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 25),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
-          child:
-              SelectedGender(), //TODO: ADAPTAR A EL USO DE RADIO BUTTONS IMPLEMENTANDO Riverpod
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+          child: SelectedGender(
+            onChanged: (p0) {},
+          ), //TODO: ADAPTAR A EL USO DE RADIO BUTTONS IMPLEMENTANDO Riverpod
         ),
         const SizedBox(height: 25),
         const Padding(

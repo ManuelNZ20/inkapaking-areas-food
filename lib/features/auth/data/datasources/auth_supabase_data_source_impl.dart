@@ -115,6 +115,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     bool stateAccount,
     String email,
   ) async {
+    final verifyEmail = await _sendEmailVerification(email);
+    if (verifyEmail == null || !verifyEmail) {
+      throw const EmailSendFailure(
+          'No se pudo enviar el correo de verificación');
+    }
     final response = await client
         .from(tableNameAuth)
         .insert(
@@ -132,6 +137,40 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .limit(1)
         .single();
     return UserModel.fromJson(response);
+  }
+
+  Future<bool?> _sendEmailVerification(String email) async {
+    final dio = Dio();
+    final headers = {
+      'Authorization': 'Bearer ${Environment.apiKeyResend}',
+      'Content-Type': 'application/json',
+    };
+    final data = {
+      'from': 'InkapakingApp <${Environment.emailSender}>',
+      'to': [email],
+      'subject': 'Verificación de correo',
+      'html': '''
+        <h1>Verificación de correo</h1>
+        <p>Se ha registrado en InkapakingApp, por favor verifique su correo electrónico.</p>
+        <p>Gracias por confiar en nosotros.</p>
+        <p>Atentamente, InkapakingApp</p>
+        <p>Este mensaje es generado automáticamente, por favor no responder.</p>
+        <p>Si tienes alguna duda o problema, por favor contacta con nosotros a través de nuestro correo: ${Environment.emailSender}</p>
+              ''',
+    };
+    try {
+      await dio.post(
+        'https://api.resend.com/emails',
+        options: Options(
+          headers: headers,
+        ),
+        data: data,
+      );
+      return true;
+    } on EmailSendException catch (e) {
+      throw EmailSendFailure(
+          'No se logro enviar el correo electronico ${e.toString()}');
+    }
   }
 
   @override

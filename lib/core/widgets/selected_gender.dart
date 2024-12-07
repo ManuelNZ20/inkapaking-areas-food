@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SelectedGender extends StatelessWidget {
-  const SelectedGender({super.key});
+  const SelectedGender({
+    super.key,
+    this.onChanged,
+  });
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,9 @@ class SelectedGender extends StatelessWidget {
           child: Text('Femenino'),
         ),
       ],
-      onChanged: (value) {},
+      onChanged: (value) {
+        onChanged!(value.toString());
+      },
     );
   }
 }

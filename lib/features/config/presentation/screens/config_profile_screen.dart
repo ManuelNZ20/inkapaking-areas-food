@@ -9,12 +9,6 @@ class ConfigProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authNotifierProvider);
-    if (user.status == AuthStatus.offline) {
-      return const Center(
-        child: Text('Usuario desconectado'),
-      );
-    }
     return RefreshIndicator(
       onRefresh: () async {
         await ref.read(authNotifierProvider.notifier).checkAuthStatus();
