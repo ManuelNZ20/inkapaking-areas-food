@@ -59,13 +59,13 @@ class _LoginForm extends ConsumerWidget {
           barrierDismissible: false,
           builder: (_) => const Center(child: CircularProgressIndicator()),
         );
-      } else if (next.hasFailure) {
+      } else if (next.isSigningIn && next.hasFailure) {
         showDialog(
           context: context,
           barrierDismissible: false,
           builder: (_) {
             return AlertDialog(
-              title: const Text('Error'),
+              title: const Text('Error del servidor'),
               content:
                   Text(next.errorMessage ?? 'Ocurrió un error desconocido'),
               actions: [

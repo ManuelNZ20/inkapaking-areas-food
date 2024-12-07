@@ -115,6 +115,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     bool stateAccount,
     String email,
   ) async {
+    print('Verificando correo');
     final verifyEmail = await _sendEmailVerification(email);
     if (verifyEmail == null || !verifyEmail) {
       throw const EmailSendFailure(

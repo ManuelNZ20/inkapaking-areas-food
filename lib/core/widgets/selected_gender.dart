@@ -27,14 +27,14 @@ class SelectedGender extends StatelessWidget {
         labelText: 'Género',
         isDense: true,
       ),
-      value: 'Masculino',
+      value: 'M',
       items: const [
         DropdownMenuItem(
-          value: 'Masculino',
+          value: 'M',
           child: Text('Masculino'),
         ),
         DropdownMenuItem(
-          value: 'Femenino',
+          value: 'F',
           child: Text('Femenino'),
         ),
       ],

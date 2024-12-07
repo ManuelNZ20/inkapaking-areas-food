@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../../../../core/core.dart';
 import '../providers/providers.dart';
+import '../providers/utils/utils.dart';
 import '../widgets/widgets.dart';
 import 'screens.dart';
 
@@ -17,25 +18,29 @@ class RegisterScreen extends ConsumerWidget {
       next.whenData(
         (connectivityResult) async {
           showConnectivitySnackBar(context, connectivityResult);
-          if (connectivityResult == ConnectivityResult.none) {
-            showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => const Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-            await ref.read(authNotifierProvider.notifier).checkAuthStatus();
-          }
+          await ref.read(authNotifierProvider.notifier).checkAuthStatus();
         },
       );
     });
+
+    final formState = ref.watch(registerFormProvider);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: const Scaffold(
+      child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            child: _RegisterForm(),
+            child: formState
+                    .isPosting // Mostrar loading si se está enviando el formulario
+                ? const Center(
+                    child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 10),
+                      Text('Enviando solicitud...'),
+                    ],
+                  ))
+                : const _RegisterForm(),
           ),
         ),
       ),
@@ -43,11 +48,29 @@ class RegisterScreen extends ConsumerWidget {
   }
 }
 
-class _RegisterForm extends StatelessWidget {
+class _RegisterForm extends ConsumerWidget {
   const _RegisterForm();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(registerFormProvider, (next, previous) {
+      if (next!.isPosting && !next.isFormPosted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Enviando correo...')),
+        );
+      } else {
+        if (next.hasError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(next.errorMessage ?? 'Error desconocido')),
+          );
+        } else if (next.isFormPosted && !next.isPosting) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Correo enviado")),
+          );
+        }
+      }
+    });
+    final formState = ref.watch(registerFormProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -61,58 +84,116 @@ class _RegisterForm extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 40),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: CustomTextField(
             label: 'Nombres',
             hint: 'Ingrese sus nombres',
+            onChanged: (value) =>
+                ref.read(registerFormProvider.notifier).onNameChange(value),
+            errorMessage:
+                !formState.name.isValid && formState.name.value.isNotEmpty
+                    ? formState.name.errorMessage
+                    : null,
           ),
         ),
         const SizedBox(height: 25),
         // Contener los radio buttons
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: CustomTextField(
             label: 'Apellidos',
             hint: 'Ingrese sus apellidos',
+            onChanged: (value) =>
+                ref.read(registerFormProvider.notifier).onLastNameChange(value),
+            errorMessage: !formState.lastName.isValid &&
+                    formState.lastName.value.isNotEmpty
+                ? formState.lastName.errorMessage
+                : null,
           ),
         ),
         const SizedBox(height: 25),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: SelectedGender(
-            onChanged: (p0) {},
-          ), //TODO: ADAPTAR A EL USO DE RADIO BUTTONS IMPLEMENTANDO Riverpod
+            onChanged: (value) =>
+                ref.read(registerFormProvider.notifier).onGenderChange(value),
+          ),
         ),
         const SizedBox(height: 25),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: CustomTextField(
             label: 'Teléfono',
             hint: 'Ingrese su teléfono',
             keyboardType: TextInputType.phone,
+            maxLength: 9,
+            onChanged: (value) =>
+                ref.read(registerFormProvider.notifier).onPhoneChange(value),
+            errorMessage:
+                !formState.phone.isValid && formState.phone.value.isNotEmpty
+                    ? formState.phone.errorMessage
+                    : null,
           ),
         ),
         const SizedBox(height: 25),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 18.0),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18.0),
           child: CustomTextField(
             label: 'Dirección',
             hint: 'Ingrese su dirección de residencia',
+            onChanged: (value) => ref
+                .read(registerFormProvider.notifier)
+                .onDirectionChange(value),
           ),
         ),
-        const SizedBox(height: 25),
-        // Colocar los botones al final y se ajusten al tamaño de cualquier pantalla
-        SizedBox(height: MediaQuery.of(context).size.height * .1),
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 18.0,
+          ),
+          child: CustomTextField(
+            label: 'Correo',
+            hint: 'Ingrese su correo electrónico',
+            keyboardType: TextInputType.emailAddress,
+            errorMessage:
+                !formState.email.isValid && formState.email.value.isNotEmpty
+                    ? formState.email.errorMessage
+                    : null,
+            onChanged: ref.read(registerFormProvider.notifier).onEmailChange,
+          ),
+        ), // Campo de entrada de correo
+        const SizedBox(height: 18),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18.0),
-          child: OutlinedButton(
-            onPressed: () =>
-                context.pushNamed(ConfirmRegisterEmailScreen.routeName),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton.icon(
+                onPressed: () {
+                  showInfoDialog(context);
+                },
+                icon: const Icon(Icons.info),
+                label: const Text('Términos y condiciones'),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 18),
+        ContentButtonAuth(
+          primaryButton: FilledButton(
+            onPressed: !formState.isValid
+                ? null
+                : () async {
+                    ref.read(registerFormProvider.notifier).onFormSubmit();
+                  },
             style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 50),
+              minimumSize: const Size.fromHeight(50),
             ),
-            child: const Text('Continuar'),
+            child: const Text('Solicitar Registro'),
+          ),
+          secondaryButton: const BackButtonAuth(
+            textButton: 'Volver',
           ),
         ),
 

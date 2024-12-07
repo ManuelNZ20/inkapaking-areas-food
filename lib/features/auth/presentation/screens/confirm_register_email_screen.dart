@@ -42,13 +42,14 @@ class ConfirmRegisterEmailScreen extends ConsumerWidget {
   }
 }
 
-class ConfirmRegisterForm extends StatelessWidget {
+class ConfirmRegisterForm extends ConsumerWidget {
   const ConfirmRegisterForm({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formState = ref.watch(registerFormProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
