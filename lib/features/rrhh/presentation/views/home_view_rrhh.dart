@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inkapaking/core/core.dart';
 
 import '../../../../core/widgets/widgets.dart';
 import '../screens/screens.dart';
@@ -136,6 +137,7 @@ class HomeViewRRHH extends StatelessWidget {
         // Lista de usuarios
         DividerSection(
           titleSection: 'Mi Área',
+          routeOfSection: AreaScreen.routeName,
           outlinedButtonIcon: OutlinedButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.picture_as_pdf),

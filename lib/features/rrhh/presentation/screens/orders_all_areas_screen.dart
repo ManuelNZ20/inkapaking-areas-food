@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import 'form_orders_all_areas._screen.dart';
 
 class OrdersAllAreasScreen extends StatelessWidget {
   static const String routeName = 'orders_all_areas_screen';
@@ -65,7 +62,29 @@ class OrdersAllAreasScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => context.pushNamed(FormOrderAllAreasScreen.routeName),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: const Text('Crear una orden'),
+                content: const Text('¿Desea crear una orden?'),
+                actions: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Aceptar'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Cancelar'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
         child: const Icon(Icons.add),
       ),
     );

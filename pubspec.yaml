@@ -66,6 +66,7 @@ flutter:
     - .env.dev # environment variables
     - .env.prod # environment variables
     - assets/images/auth/
+    - assets/images/home/
     - assets/icon/
     - google_fonts/nunito_alternates/
   # fonts:

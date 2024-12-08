@@ -63,6 +63,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           return const HomeScreen();
         },
         routes: [
+          // Configuración de perfil
           GoRoute(
             path: 'config_profile',
             name: ConfigProfileScreen.routeName,
@@ -70,6 +71,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return const ConfigProfileScreen();
             },
           ),
+          // Configuración de la aplicación
           GoRoute(
             path: 'orders_all_areas',
             name: OrdersAllAreasScreen.routeName,
@@ -85,6 +87,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 },
               ),
             ],
+          ),
+          // Mi área
+          GoRoute(
+            path: 'my_area',
+            name: AreaScreen.routeName,
+            builder: (context, state) {
+              return const AreaScreen();
+            },
           ),
         ],
       ),

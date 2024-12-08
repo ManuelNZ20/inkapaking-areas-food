@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:inkapaking/core/constants/list_images.dart';
 
 class CardDsh extends StatelessWidget {
   const CardDsh({
@@ -38,37 +41,49 @@ class CardDsh extends StatelessWidget {
           color: Theme.of(context).primaryColor,
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: Stack(
         children: [
-          // Texto en la parte superior
-          Container(
-            padding: const EdgeInsets.all(10),
-            width: double.infinity,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  titleCard,
-                  style: title,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  subTitleCard,
-                  style: subTitle,
-                ),
-              ],
+          SizedBox(
+            width: double.infinity, 
+            height: 140,
+            child: Image.asset(
+              listImagesRandom[Random().nextInt(listImagesRandom.length)],
+              fit: BoxFit.cover,
             ),
           ),
-          // Botones en la parte inferior
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ...buttons ?? [],
-              ],
-            ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Texto en la parte superior
+              Container(
+                padding: const EdgeInsets.all(10),
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      titleCard,
+                      style: title,
+                    ),
+                    const SizedBox(height: 5),
+                    Text(
+                      subTitleCard,
+                      style: subTitle,
+                    ),
+                  ],
+                ),
+              ),
+              // Botones en la parte inferior
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ...buttons ?? [],
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
