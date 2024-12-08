@@ -17,7 +17,10 @@ class AreaScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           return const SizedBox(
             width: double.infinity,
-            child: ListTileUser(),
+            child: ListTileUser(
+              nameUser: 'nameUser',
+              typeUser: 'typeUser',
+            ),
           );
         },
       ),

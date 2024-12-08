@@ -2,14 +2,24 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/core.dart';
 import '../domain.dart';
 
+/// Interfaz para el repositorio de autenticación.
+/// Se conecta con la fuente de datos de autenticación para realizar operaciones de autenticación.
 abstract class AuthRepository {
-  // Sign in with email and password
+  /// Iniciar sesión con correo electrónico y contraseña
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [AuthException] si hay problemas con la autenticación.
+  /// - [ServerException] si hay problemas con el servidor.
   Future<Either<Failure, User>>? signInWithEmailAndPassword(
     String email,
     String password,
   );
 
-  // Sign up with email and password
+  // Regístrate con correo electrónico y contraseña
+  // Puede lanzar las siguientes excepciones:
+  // - [NetworkException] si hay problemas de conexión.
+  // - [AuthException] si hay problemas con la autenticación.
+  // - [ServerException] si hay problemas con el servidor.
   Future<Either<Failure, User>>? signUpWithDataUser(
     String name,
     String lastName,
@@ -19,9 +29,15 @@ abstract class AuthRepository {
     bool stateAccount,
     String email,
   );
-  // Sign out
+
+  /// Sign out
   Future<Either<Failure, User>>? signOut();
-  // Get the current user
+
+  /// Obtener el usuario actual
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [AuthException] si hay problemas con la autenticación.
+  /// - [ServerException] si hay problemas con el servidor.
   Future<Either<Failure, User>>? getCurrentUser(
     String email,
   );
@@ -30,18 +46,31 @@ abstract class AuthRepository {
     String email,
   );
 
-  // Actualizar contraseña
+  /// Actualizar contraseña
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [AuthException] si hay problemas con la autenticación.
+  /// - [ServerException] si hay problemas con el servidor.
   Future<Either<Failure, bool>>? updatePassword(
     String email,
     String newPassword,
   );
 
-  // Send recovery email
+  /// Enviar correo electrónico de recuperación
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [AuthException] si hay problemas con la autenticación.
+  /// - [ServerException] si hay problemas con el servidor.
   Future<Either<Failure, bool>>? sendRecoveryEmail(
     String email,
     String newPassword,
   );
-  // Get the current user by token
+
+  /// Obtener el usuario actual por token
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [AuthException] si hay problemas con la autenticación.
+  /// - [ServerException] si hay problemas con el servidor.
   Future<Either<Failure, User>>? getCurrentUserByToken(
     int token,
   );

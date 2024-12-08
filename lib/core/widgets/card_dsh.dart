@@ -22,10 +22,12 @@ class CardDsh extends StatelessWidget {
     final title = Theme.of(context).textTheme.bodySmall!.copyWith(
           fontWeight: FontWeight.bold,
           fontSize: MediaQuery.of(context).size.width * 0.04,
+          color: Theme.of(context).scaffoldBackgroundColor,
           letterSpacing: 1.3,
         );
     final subTitle = Theme.of(context).textTheme.bodySmall!.copyWith(
           fontSize: MediaQuery.of(context).size.width * 0.03,
+          color: Theme.of(context).scaffoldBackgroundColor,
           letterSpacing: 1.3,
         );
     return Card(
@@ -61,10 +63,14 @@ class CardDsh extends StatelessWidget {
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Texto en la parte superior
               Container(
                 padding: const EdgeInsets.all(10),
                 width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.black
+                      .withOpacity(0.6), // Fondo oscuro con opacidad
+                  // borderRadius: BorderRadius.circular(10), // Bordes redondeados
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

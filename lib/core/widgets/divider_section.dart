@@ -15,7 +15,6 @@ class DividerSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = Theme.of(context).textTheme.bodyLarge!.copyWith(
           fontWeight: FontWeight.bold,
-          fontSize: MediaQuery.of(context).size.width * 0.05,
           letterSpacing: 1.5,
         );
     return Padding(

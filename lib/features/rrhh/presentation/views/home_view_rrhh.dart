@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inkapaking/core/core.dart';
+import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
 import '../../../../core/widgets/widgets.dart';
 import '../screens/screens.dart';
@@ -18,7 +19,7 @@ class HomeViewRRHH extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Icon(
-                Icons.business,
+                Icons.grass_rounded,
                 size: 30,
               ),
               TitleApp(
@@ -51,12 +52,12 @@ class HomeViewRRHH extends StatelessWidget {
           buttons: [
             ButtonDirectionScreen(
               title: 'Notificaciones',
-              routeName: '',
+              routeName: NotificationsOfRegisterScreen.routeName,
               icon: Icons.notifications_active,
             ),
             ButtonDirectionScreen(
               title: 'Historial',
-              routeName: '',
+              routeName: HistorialNotificationsScreen.routeName,
               icon: Icons.history,
             ),
           ],
@@ -78,51 +79,12 @@ class HomeViewRRHH extends StatelessWidget {
             scrollDirection: Axis.vertical,
             itemCount: 5,
             itemBuilder: (context, index) {
-              return SizedBox(
-                width: double.infinity,
-                child: Card(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 6,
-                    horizontal: 4,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    side: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(Icons.business),
-                            Text('Administración'),
-                            Chip(label: Text('Pendiente')),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon: const Icon(Icons.person_outline),
-                              label: const Text('10'),
-                            ),
-                            TextButton.icon(
-                              onPressed: () {},
-                              icon:
-                                  const Icon(Icons.circle_notifications_sharp),
-                              label: const Text('4'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+              return CardAreaWork(
+                idArea: 'idAre$index',
+                nameArea: 'nameArea',
+                statusArea: 'pendiente',
+                numberArea: 1,
+                notificationsArea: 10,
               );
             },
           ),
@@ -147,7 +109,10 @@ class HomeViewRRHH extends StatelessWidget {
             itemBuilder: (context, index) {
               return const SizedBox(
                 width: double.infinity,
-                child: ListTileUser(),
+                child: ListTileUser(
+                  nameUser: 'nameUser',
+                  typeUser: 'typeUser',
+                ),
               );
             },
           ),

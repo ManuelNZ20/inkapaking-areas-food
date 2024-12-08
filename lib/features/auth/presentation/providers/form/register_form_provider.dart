@@ -82,7 +82,6 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
 
   onFormSubmit() async {
     _touchEveryField();
-    print(state.isValid);
     if (!state.isValid) return;
     state = state.copyWith(
       isPosting: true,
@@ -106,7 +105,7 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
   }
 
   void _handleSuccess(User user) {
-    print('Usuario registrado');
+    //  Implementar lógica de éxito
     state = state.copyWith(
       isFormPosted: true,
       hasError: false,
@@ -116,7 +115,6 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
   }
 
   void _handleFailure(Failure failure) {
-    print('Usuario registrado');
     if (failure is AuthenticationFailure) {
       _updateStateWithFailure(
         errorMessage: 'Credenciales incorrectas',

@@ -88,6 +88,39 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
+          // Notificaciones de registro
+          GoRoute(
+            path: 'notifications_register',
+            name: NotificationsOfRegisterScreen.routeName,
+            builder: (context, state) {
+              return const NotificationsOfRegisterScreen();
+            },
+          ),
+          // Historial de notificaciones
+          GoRoute(
+            path: 'historial_notifications',
+            name: HistorialNotificationsScreen.routeName,
+            builder: (context, state) {
+              return const HistorialNotificationsScreen();
+            },
+            routes: [
+              GoRoute(
+                  path: 'request_new_user',
+                  name: RequestNewUser.routeName,
+                  builder: (context, state) {
+                    return const RequestNewUser();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'assign_area',
+                      name: AssignAreaScreen.routeName,
+                      builder: (context, state) {
+                        return const AssignAreaScreen();
+                      },
+                    ),
+                  ]),
+            ],
+          ),
           // Mi área
           GoRoute(
             path: 'my_area',

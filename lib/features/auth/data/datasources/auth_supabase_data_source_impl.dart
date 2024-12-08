@@ -40,6 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .from(tableNameAuth)
         .update({'password': newPassword})
         .eq('email', email)
+        .eq('state_account', true) // TODO: REVISIÓN DE ESTADO DE CUENTA
         .select();
 
     if (response.isEmpty) {

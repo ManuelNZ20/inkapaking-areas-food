@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inkapaking/core/constants/list_images.dart';
 
 import '../../../features/config/presentation/screens/screens.dart';
 
@@ -32,23 +35,8 @@ class CustomSliverAppBar extends StatelessWidget {
         ),
         background: Stack(
           children: [
-            SizedBox.expand(
-              child: Image.asset(
-                'assets/images/auth/inkapaking_background_register.png',
-                fit: BoxFit.fill,
-                errorBuilder: (context, error, stackTrace) =>
-                    const Icon(Icons.error),
-                frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
-                  if (wasSynchronouslyLoaded) {
-                    return child;
-                  }
-                  return AnimatedOpacity(
-                    duration: const Duration(milliseconds: 500),
-                    opacity: frame == null ? 0 : 1,
-                    child: child,
-                  );
-                },
-              ),
+            const SizedBox.expand(
+              child: _ImageBackground(),
             ),
             const SizedBox.expand(
               child: DecoratedBox(
@@ -86,6 +74,29 @@ class CustomSliverAppBar extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ImageBackground extends StatelessWidget {
+  const _ImageBackground();
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      listImagesHome[Random().nextInt(listImagesHome.length)],
+      fit: BoxFit.fill,
+      errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
+      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+        if (wasSynchronouslyLoaded) {
+          return child;
+        }
+        return AnimatedOpacity(
+          duration: const Duration(milliseconds: 500),
+          opacity: frame == null ? 0 : 1,
+          child: child,
+        );
+      },
     );
   }
 }

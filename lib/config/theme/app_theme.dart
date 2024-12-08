@@ -6,6 +6,7 @@ class AppTheme {
   ThemeData theme() {
     return ThemeData(
       useMaterial3: true,
+      brightness: Brightness.light,
       textTheme: textTheme,
       appBarTheme: appBarTheme,
       buttonTheme: buttonTheme,

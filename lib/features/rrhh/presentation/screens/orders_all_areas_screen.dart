@@ -1,92 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class OrdersAllAreasScreen extends StatelessWidget {
+import '../providers/providers.dart';
+import '../widgets/widgets.dart';
+
+class OrdersAllAreasScreen extends ConsumerStatefulWidget {
   static const String routeName = 'orders_all_areas_screen';
   const OrdersAllAreasScreen({super.key});
 
   @override
+  OrdersAllAreasScreenState createState() => OrdersAllAreasScreenState();
+}
+
+class OrdersAllAreasScreenState extends ConsumerState<OrdersAllAreasScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      ref.read(typeUsersNotifierProvider.notifier).loadTypeUsers();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final typeUsersState = ref.watch(typeUsersNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ordenes de todas las áreas'),
       ),
-      body: ListView.builder(
-        scrollDirection: Axis.vertical,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return SizedBox(
-            width: double.infinity,
-            child: Card(
-              margin: const EdgeInsets.symmetric(
-                vertical: 6,
-                horizontal: 4,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-                side: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  children: [
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(Icons.business),
-                        Text('Administración'),
-                        Chip(label: Text('Pendiente')),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.person_outline),
-                          label: const Text('10'),
-                        ),
-                        TextButton.icon(
-                          onPressed: () {},
-                          icon: const Icon(Icons.circle_notifications_sharp),
-                          label: const Text('4'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+      body: typeUsersState.isLoading == true
+          ? const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(child: CircularProgressIndicator()),
+                Text('Cargando áreas de trabajo...'),
+              ],
+            )
+          : ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: typeUsersState.typeUsers!.length,
+              itemBuilder: (context, index) {
+                final typeUser = typeUsersState.typeUsers![index];
+                if (typeUser.typeUserId == 1) return const SizedBox();
+                return CardAreaWork(
+                  idArea: '${typeUser.typeUserId}',
+                  nameArea: typeUser.typeName,
+                  statusArea: 'Activo',
+                  numberArea: 3,
+                  notificationsArea: 3,
+                );
+              },
             ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: const Text('Crear una orden'),
-                content: const Text('¿Desea crear una orden?'),
-                actions: [
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text('Aceptar'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Cancelar'),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

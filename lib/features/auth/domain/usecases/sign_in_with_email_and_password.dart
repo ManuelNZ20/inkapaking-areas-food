@@ -33,7 +33,8 @@ class SignInWithEmailAndPassword
       KeyValueStorageService keyValueStorageService) async {
     final tokenValue = await keyValueStorageService.getValue<int>('token');
     if (tokenValue != null) {
-      final user = await authRepository.getCurrentUserByToken(tokenValue);
+      final user = await authRepository.getCurrentUserByToken(
+          tokenValue); // TODO: hacer la comprobación de registro de usuarios, si su cuenta esta activa
       if (user != null) {
         return user;
       }

@@ -16,9 +16,21 @@ class ButtonDirectionScreen extends StatelessWidget {
   final IconData? icon;
   @override
   Widget build(BuildContext context) {
-    return FilledButton.icon(
-        icon: Icon(icon ?? Icons.info),
-        label: Text(title ?? 'Acción'),
-        onPressed: () => routeName!.isNotEmpty ? context.go(routeName!) : null);
+    final styleTitle = Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontSize: MediaQuery.of(context).size.width * 0.03,
+          color: Theme.of(context).scaffoldBackgroundColor,
+          letterSpacing: 1.3,
+        );
+    return TextButton.icon(
+        icon: Icon(
+          icon ?? Icons.info,
+          color: Colors.white,
+        ),
+        label: Text(
+          title ?? 'Acción',
+          style: styleTitle,
+        ),
+        onPressed: () =>
+            routeName!.isNotEmpty ? context.pushNamed(routeName!) : null);
   }
 }

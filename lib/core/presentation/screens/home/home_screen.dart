@@ -1,10 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../features/auth/presentation/providers/providers.dart';
-import '../../../../features/config/presentation/screens/screens.dart';
 import '../../../core.dart';
 import '../../../../features/rrhh/presentation/views/views.dart';
 import '../../widgets/widgets.dart';
@@ -36,11 +34,6 @@ class HomeScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-          // appBar: AppBar(
-          //   actions: [
-          //
-          //   ],
-          // ),
           body: CustomScrollView(
         physics: const ClampingScrollPhysics(),
         slivers: [
