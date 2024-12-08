@@ -11,11 +11,21 @@ class HomeViewRRHH extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 20),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: TitleApp(
-            text: 'Área RRHH\nBienvenido INKAPAKING S.A.C',
-            textAlign: TextAlign.start,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                Icons.business,
+                size: 30,
+              ),
+              TitleApp(
+                text: 'Área RRHH',
+                textAlign: TextAlign.start,
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 20),
@@ -30,22 +40,6 @@ class HomeViewRRHH extends StatelessWidget {
             ),
             ButtonDirectionScreen(
               title: 'Mi historial',
-              routeName: '',
-              icon: Icons.history,
-            ),
-          ],
-        ),
-        CardDsh(
-          titleCard: 'Ordenes del día para el personal',
-          subTitleCard: 'Crear y ver ordenes del día para el personal',
-          buttons: [
-            ButtonDirectionScreen(
-              title: 'Crear',
-              routeName: '',
-              icon: Icons.create,
-            ),
-            ButtonDirectionScreen(
-              title: 'Historial',
               routeName: '',
               icon: Icons.history,
             ),

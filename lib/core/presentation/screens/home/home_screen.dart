@@ -7,6 +7,7 @@ import '../../../../features/auth/presentation/providers/providers.dart';
 import '../../../../features/config/presentation/screens/screens.dart';
 import '../../../core.dart';
 import '../../../../features/rrhh/presentation/views/views.dart';
+import '../../widgets/widgets.dart';
 
 class HomeScreen extends ConsumerWidget {
   static const String routeName = 'home_screen';
@@ -31,23 +32,26 @@ class HomeScreen extends ConsumerWidget {
         },
       );
     });
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () => context.pushNamed(ConfigProfileScreen.routeName),
-              icon: const Icon(Icons.settings),
-            ),
-          ],
-        ),
-        body: const SafeArea(
-          child: SingleChildScrollView(
-            child: HomeViewRRHH(),
-          ),
-        ),
-      ),
+          // appBar: AppBar(
+          //   actions: [
+          //
+          //   ],
+          // ),
+          body: CustomScrollView(
+        physics: const ClampingScrollPhysics(),
+        slivers: [
+          const CustomSliverAppBar(),
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+            (context, index) => const HomeViewRRHH(),
+            childCount: 1,
+          )),
+        ],
+      )),
     );
   }
 }

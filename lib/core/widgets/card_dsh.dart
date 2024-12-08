@@ -35,20 +35,27 @@ class CardDsh extends StatelessWidget {
         horizontal: 10,
       ),
       clipBehavior: Clip.hardEdge,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: BorderSide(
-          color: Theme.of(context).primaryColor,
-        ),
-      ),
       child: Stack(
         children: [
           SizedBox(
-            width: double.infinity, 
+            width: double.infinity,
             height: 140,
             child: Image.asset(
               listImagesRandom[Random().nextInt(listImagesRandom.length)],
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) =>
+                  const Icon(Icons.error),
+              frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                if (wasSynchronouslyLoaded) {
+                  return child;
+                }
+                // Animación de opacidad
+                return AnimatedOpacity(
+                  duration: const Duration(milliseconds: 500),
+                  opacity: frame == null ? 0 : 1,
+                  child: child,
+                );
+              },
             ),
           ),
           Column(
@@ -78,9 +85,7 @@ class CardDsh extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ...buttons ?? [],
-                  ],
+                  children: buttons ?? [],
                 ),
               ),
             ],
