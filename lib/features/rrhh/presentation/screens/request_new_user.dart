@@ -12,54 +12,92 @@ class RequestNewUser extends StatelessWidget {
   final String email = "adan.perez@example.com";
 
   static const routeName = 'request_new_user_screen';
-  const RequestNewUser({super.key});
-
+  const RequestNewUser({
+    super.key,
+    required this.userId,
+  });
+  final int userId;
   @override
   Widget build(BuildContext context) {
+    // Aplicar gestor de estado para contener la información del usuario
+    final titleScreen = Theme.of(context).textTheme.bodyLarge!.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 16,
+          color: Theme.of(context).colorScheme.secondary.withOpacity(0.8),
+        );
+    final title = Theme.of(context).textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+          color: Theme.of(context).colorScheme.primary,
+        );
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Solicitud de nuevo usuario'),
+        title: Text('Solicitud de nuevo usuario $userId'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Un nuevo usuario desea registrarse'),
-            const SizedBox(height: 8),
-            const Text('Nombres'),
-            Text(name),
-            const SizedBox(height: 8),
-            const Text('Apellidos'),
-            Text(lastName),
-            const SizedBox(height: 8),
-            const Text('Genero'),
-            Text(genero),
-            const SizedBox(height: 8),
-            const Text('Dirección'),
-            Text(direccion),
-            const SizedBox(height: 8),
-            const Text('Teléfono'),
-            Text(phone),
-            const SizedBox(height: 8),
-            const Text('Correo'),
-            Text(email),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ElevatedButton(
-                  onPressed: () =>
-                      context.pushNamed(AssignAreaScreen.routeName),
-                  child: const Text('Asignar Área'),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Denegar Registro'),
-                ),
-              ],
-            ),
-          ],
+        child: SizedBox.expand(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Un nuevo usuario desea registrarse en la aplicación',
+                style: titleScreen,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 14),
+              Text(
+                'Nombres',
+                style: title,
+              ),
+              Text(name),
+              const SizedBox(height: 10),
+              Text(
+                'Apellidos',
+                style: title,
+              ),
+              Text(lastName),
+              const SizedBox(height: 10),
+              Text(
+                'Genero',
+                style: title,
+              ),
+              Text(genero),
+              const SizedBox(height: 10),
+              Text(
+                'Dirección',
+                style: title,
+              ),
+              Text(direccion),
+              const SizedBox(height: 10),
+              Text(
+                'Teléfono',
+                style: title,
+              ),
+              Text(phone),
+              const SizedBox(height: 10),
+              Text(
+                'Correo',
+                style: title,
+              ),
+              Text(email),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () =>
+                        context.pushNamed(AssignAreaScreen.routeName),
+                    child: const Text('Asignar Área'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Denegar Registro'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

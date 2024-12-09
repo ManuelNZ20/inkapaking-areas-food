@@ -34,8 +34,12 @@ class NotificationsOfRegisterScreen extends ConsumerWidget {
                       subtitle: Text(user.createdAt),
                       trailing: IconButton(
                         icon: const Icon(Icons.more_vert),
-                        onPressed: () =>
-                            context.pushNamed(RequestNewUser.routeName),
+                        onPressed: () => context.pushNamed(
+                          RequestNewUser.routeName,
+                          pathParameters: {
+                            'request_user_id': user.userId.toString(),
+                          },
+                        ),
                       ),
                     ),
                     const Divider(),

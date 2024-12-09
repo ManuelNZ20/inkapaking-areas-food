@@ -105,10 +105,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             },
             routes: [
               GoRoute(
-                  path: 'request_new_user',
+                  path: 'request_new_user/:request_user_id',
                   name: RequestNewUser.routeName,
                   builder: (context, state) {
-                    return const RequestNewUser();
+                    final userId =
+                        state.pathParameters['request_user_id'] ?? '0';
+                    return RequestNewUser(
+                      userId: int.parse(userId),
+                    );
                   },
                   routes: [
                     GoRoute(
