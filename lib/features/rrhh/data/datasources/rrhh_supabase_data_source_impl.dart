@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../domain/domain.dart';
 import '../data.dart';
@@ -40,5 +42,22 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
       int id, String typeName, String description) {
     // TODO: implement updateTypeUser
     throw UnimplementedError();
+  }
+
+  @override
+  Stream<List<RequestUser>>? getUserRequests() async* {
+    try {
+      final response = client.from('user_requests').stream(primaryKey: ['id']);
+      await for (final event in response) {
+        List<RequestUser> users = (event as List)
+            .map((userData) => RequestUserModel.fromJson(userData))
+            .toList();
+
+        yield users;
+      }
+    } catch (e) {
+      // Aquí podrías emitir un error o manejar el fallo
+      yield []; // O puedes emitir un stream vacío en caso de error
+    }
   }
 }

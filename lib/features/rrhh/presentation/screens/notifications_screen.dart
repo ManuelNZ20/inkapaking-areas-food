@@ -1,19 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../providers/providers.dart';
 import 'screens.dart';
-
-final client = Supabase.instance.client;
-final usersProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
-  final users =
-      await client.from('users').select('''''').eq('state_account', false);
-  if (users.isEmpty) {
-    throw Exception('No se encontraron usuarios');
-  }
-  return users;
-});
 
 class NotificationsOfRegisterScreen extends ConsumerWidget {
   static const routeName = 'notifications_register_screen';
@@ -21,7 +11,7 @@ class NotificationsOfRegisterScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.read(usersProvider);
+    final data = ref.watch(getRequestUserProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Solicitudes Pendientes'),
@@ -29,6 +19,9 @@ class NotificationsOfRegisterScreen extends ConsumerWidget {
       body: Center(
         child: data.when(
           data: (users) {
+            if (users.isEmpty) {
+              return const Text('No hay solicitudes pendientes');
+            }
             return ListView.builder(
               itemCount: users.length,
               itemBuilder: (context, index) {
@@ -38,9 +31,7 @@ class NotificationsOfRegisterScreen extends ConsumerWidget {
                     ListTile(
                       leading: const Icon(Icons.notifications),
                       title: const Text('Solicitud de nuevo usuario'),
-                      subtitle: Text(
-                          DateTime.parse(user['created_at'].toString())
-                              .toString()),
+                      subtitle: Text(user.createdAt),
                       trailing: IconButton(
                         icon: const Icon(Icons.more_vert),
                         onPressed: () =>
@@ -54,9 +45,29 @@ class NotificationsOfRegisterScreen extends ConsumerWidget {
             );
           },
           error: (error, _) => Text('Error: $error'),
-          loading: () => const CircularProgressIndicator(),
+          loading: () => const _LoadingNotifications(),
         ),
       ),
+    );
+  }
+}
+
+class _LoadingNotifications extends StatelessWidget {
+  const _LoadingNotifications();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+          ),
+        ),
+        SizedBox(height: 20),
+        Text('Cargando datos...'),
+      ],
     );
   }
 }

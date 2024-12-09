@@ -4,5 +4,7 @@ import '../repository/rrhh_repository_provider.dart';
 
 final getTypeUsersUseCaseProvider = Provider<GetTypeUser>((ref) {
   final rrhhRepository = ref.watch(rrhhRepositoryProvider);
-  return GetTypeUser(rrhhRepository);
+  return GetTypeUser(
+    rrhhRepository,
+  );
 });

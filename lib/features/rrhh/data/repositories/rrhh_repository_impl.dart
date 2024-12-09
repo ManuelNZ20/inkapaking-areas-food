@@ -17,8 +17,6 @@ class RRHHRepositoryImpl implements RRHHRepository {
       try {
         final result = await request();
         return Right(result);
-      } on UnauthorizedException catch (e) {
-        return Left(AuthenticationFailure(e.message));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       } on GenericException catch (e) {
@@ -26,6 +24,24 @@ class RRHHRepositoryImpl implements RRHHRepository {
       }
     } else {
       return Left(ServerFailure("No hay conexión a Internet"));
+    }
+  }
+
+  Stream<Either<Failure, T>> _handleNetworkRequestStream<T>(
+      Stream<T> Function() request) async* {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = request();
+        await for (final event in result) {
+          yield Right(event);
+        }
+      } on ServerException catch (e) {
+        yield Left(ServerFailure(e.message));
+      } on GenericException catch (e) {
+        yield Left(CustomFailure(e.toString()));
+      }
+    } else {
+      yield Left(ServerFailure("No hay conexión a Internet"));
     }
   }
 
@@ -44,20 +60,7 @@ class RRHHRepositoryImpl implements RRHHRepository {
 
   @override
   Stream<Either<Failure, List<TypeUser>>>? getTypeUsers() async* {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteTypeUsers = remoteDataSource.getTypeUsers()!;
-        await for (final event in remoteTypeUsers) {
-          yield Right(event);
-        }
-      } on ServerException catch (e) {
-        yield Left(ServerFailure(e.message));
-      } on GenericException catch (e) {
-        yield Left(CustomFailure(e.toString()));
-      }
-    } else {
-      yield Left(ServerFailure("No hay conexión a Internet"));
-    }
+    yield* _handleNetworkRequestStream(() => remoteDataSource.getTypeUsers()!);
   }
 
   @override
@@ -65,5 +68,11 @@ class RRHHRepositoryImpl implements RRHHRepository {
       int id, String typeName, String description) {
     // TODO: implement updateTypeUser
     throw UnimplementedError();
+  }
+
+  @override
+  Stream<Either<Failure, List<RequestUser>>>? getUserRequests() {
+    return _handleNetworkRequestStream(
+        () => remoteDataSource.getUserRequests()!);
   }
 }

@@ -113,11 +113,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     bool stateAccount,
     String email,
   ) async {
-    print('Verificando correo');
+    // Comprobar si el correo ya existe
+    final responseEmail =
+        await client.from(tableNameAuth).select().eq('email', email).limit(1);
+    if (responseEmail.isNotEmpty) {
+      throw EmailAlreadyExistsException('El correo ya existe');
+    }
     final verifyEmail = await _sendEmailVerification(email);
     if (verifyEmail == null || !verifyEmail) {
-      throw const EmailSendFailure(
-          'No se pudo enviar el correo de verificación');
+      throw EmailSendException('No se pudo enviar el correo de verificación');
     }
     final response = await client
         .from(tableNameAuth)
@@ -130,6 +134,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
             'direction': direction,
             'state_account': stateAccount,
             'email': email,
+            'created_at': DateTime.now().toString(),
           },
         )
         .select()
@@ -137,11 +142,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .single();
     if (response.isNotEmpty) {
       final idUser = response['id'];
+      final dateCreated = response['created_at'];
       final userRequest = await client
           .from('user_requests')
           .insert(
             {
               'user_id': idUser,
+              'created_at': dateCreated,
             },
           )
           .select()

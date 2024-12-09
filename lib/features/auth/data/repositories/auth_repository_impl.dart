@@ -21,6 +21,10 @@ class AuthRepositoryImpl extends AuthRepository {
         return Left(AuthenticationFailure(e.message));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message)); // Mensaje más descriptivo
+      } on EmailAlreadyExistsException catch (e) {
+        return Left(EmailFailure(e.message)); // Mensaje más descriptivo
+      } on EmailSendException catch (e) {
+        return Left(EmailSendFailure(e.message)); // Mensaje más descriptivo
       } on GenericException catch (e) {
         return Left(
             CustomFailure(e.toString())); // Para capturar errores generales

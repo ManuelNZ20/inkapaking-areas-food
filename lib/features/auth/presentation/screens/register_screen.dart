@@ -26,22 +26,21 @@ class RegisterScreen extends ConsumerWidget {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: formState
-                    .isPosting // Mostrar loading si se está enviando el formulario
-                ? const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 10),
-                      Text('Enviando solicitud...'),
-                    ],
-                  )
-                : const _RegisterForm(),
-          ),
-        ),
+        body: formState
+                .isPosting // Mostrar loading si se está enviando el formulario
+            ? const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(child: CircularProgressIndicator()),
+                  SizedBox(height: 10),
+                  Text('Enviando solicitud...'),
+                ],
+              )
+            : const SafeArea(
+                child: SingleChildScrollView(
+                  child: _RegisterForm(),
+                ),
+              ),
       ),
     );
   }

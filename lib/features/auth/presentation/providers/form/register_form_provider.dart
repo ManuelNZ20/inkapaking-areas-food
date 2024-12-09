@@ -112,17 +112,30 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
       errorMessage: null,
       isPosting: false,
     );
+    Future.delayed(
+      const Duration(milliseconds: 1500),
+      _resetState,
+    );
+  }
+
+  void _resetState() {
+    state = RegisterFormState();
   }
 
   void _handleFailure(Failure failure) {
-    if (failure is AuthenticationFailure) {
+    if (failure is EmailFailure) {
       _updateStateWithFailure(
-        errorMessage: 'Credenciales incorrectas',
+        errorMessage: 'El correo ya esta registrado',
         hasConnection: true,
       );
     } else if (failure is ServerFailure) {
       _updateStateWithFailure(
         errorMessage: 'Fallo el servidor',
+        hasConnection: false,
+      );
+    } else if (failure is EmailSendFailure) {
+      _updateStateWithFailure(
+        errorMessage: 'Fallo el envio del correo',
         hasConnection: false,
       );
     } else {
@@ -140,6 +153,12 @@ class RegisterFormNotifier extends StateNotifier<RegisterFormState> {
       isPosting: false,
       hasError: true,
       errorMessage: errorMessage,
+    );
+    Future.delayed(
+      const Duration(milliseconds: 1500),
+      () {
+        _resetState();
+      },
     );
   }
 

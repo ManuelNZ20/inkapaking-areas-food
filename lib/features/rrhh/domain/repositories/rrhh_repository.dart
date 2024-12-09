@@ -40,4 +40,13 @@ abstract class RRHHRepository {
     String typeName,
     String description,
   );
+
+  /// Obtener solicitud de nuevo usuario.
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [RRHHException] si hay problemas con la base de datos.
+  /// - [FormatException] si hay problemas con el formato de los datos.
+  /// - [NoUserFoundException] si no se encontraron usuarios.
+  /// - [NoRequestFoundException] si no se encontraron solicitudes.
+  Stream<Either<Failure, List<RequestUser>>>? getUserRequests();
 }
