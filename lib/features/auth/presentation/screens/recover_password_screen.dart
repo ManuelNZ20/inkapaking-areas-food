@@ -47,7 +47,7 @@ class _RecoverPasswordForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.listen(recoverFormProvider, (next, previous) {
-      if (next!.isPosting && !next.isFormPosted) {
+      if (next!.hasError && next.isPosting && !next.isFormPosted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Enviando correo...')),
         );

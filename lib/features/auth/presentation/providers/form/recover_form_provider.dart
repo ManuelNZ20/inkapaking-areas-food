@@ -48,8 +48,9 @@ class RecoverFormNotifier extends StateNotifier<RecoverFormState> {
           state = state.copyWith(
             isPosting: false,
             isFormPosted: true,
-            hasError: false,
-            errorMessage: null, // Reseteamos cualquier mensaje de error
+            hasError: !r,
+            errorMessage: !r ? 'Error al enviar el correo' : null,
+            // Reseteamos cualquier mensaje de error
           );
         });
       },

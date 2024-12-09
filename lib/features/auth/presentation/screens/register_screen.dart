@@ -30,15 +30,15 @@ class RegisterScreen extends ConsumerWidget {
           child: SingleChildScrollView(
             child: formState
                     .isPosting // Mostrar loading si se está enviando el formulario
-                ? const Center(
-                    child: Column(
+                ? const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       CircularProgressIndicator(),
                       SizedBox(height: 10),
                       Text('Enviando solicitud...'),
                     ],
-                  ))
+                  )
                 : const _RegisterForm(),
           ),
         ),

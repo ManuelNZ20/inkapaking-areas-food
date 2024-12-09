@@ -25,11 +25,11 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     final newPassword = generatePassword();
     final updateResult = await updatePassword(email, newPassword);
     if (updateResult == null || !updateResult) {
-      throw ServerException('No se pudo actualizar la contraseña');
+      return false;
     }
     final sendEmail = await sendRecoveryEmail(email, newPassword);
     if (sendEmail == null || !sendEmail) {
-      throw ServerException('No se pudo enviar el correo de recuperación');
+      return false;
     }
     return true;
   }
@@ -40,13 +40,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .from(tableNameAuth)
         .update({'password': newPassword})
         .eq('email', email)
-        .eq('state_account', true) // TODO: REVISIÓN DE ESTADO DE CUENTA
+        .eq('state_account', true)
         .select();
-
-    if (response.isEmpty) {
-      throw UnauthorizedException('Usuario no encontrado');
-    }
-    return true;
+    print(response);
+    return response.isEmpty ? false : true;
   }
 
   @override
@@ -138,6 +135,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         .select()
         .limit(1)
         .single();
+    if (response.isNotEmpty) {
+      final idUser = response['id'];
+      final userRequest = await client
+          .from('user_requests')
+          .insert(
+            {
+              'user_id': idUser,
+            },
+          )
+          .select()
+          .limit(1)
+          .single();
+      if (userRequest.isEmpty) {
+        throw ServerException('No se pudo crear la solicitud de usuario');
+      }
+    }
     return UserModel.fromJson(response);
   }
 
