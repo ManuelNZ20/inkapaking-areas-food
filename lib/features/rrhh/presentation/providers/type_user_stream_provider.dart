@@ -21,7 +21,7 @@ final typeUsersNotifierProvider =
 });
 
 class TypeUsersNotifier extends StateNotifier<TypeUserState> {
-  GetTypeUser fetchTypeUsersUseCase;
+  GetTypeUsers fetchTypeUsersUseCase;
   TypeUsersNotifier({
     required this.fetchTypeUsersUseCase,
   }) : super(TypeUserState());

@@ -13,6 +13,13 @@ abstract class RRHHRepository {
   /// - [FormatException] si hay problemas con el formato de los datos.
   Stream<Either<Failure, List<TypeUser>>>? getTypeUsers();
 
+  /// Obtener el tipo de usuario
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [RRHHException] si hay problemas con la base de datos.
+  /// - [FormatException] si hay problemas con el formato de los datos.
+  Future<Either<Failure, User>>? getDetailUserWithTypeUser(int typeId);
+
   /// Crea un nuevo tipo de usuario.
   /// Puede lanzar las siguientes excepciones:
   /// - [NetworkException] si hay problemas de conexión.

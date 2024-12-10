@@ -1,4 +1,5 @@
 import '../../domain/domain.dart';
+import 'type_user.module.dart';
 
 class UserModel extends User {
   const UserModel({
@@ -11,6 +12,7 @@ class UserModel extends User {
     required super.email,
     required super.createdAt,
     required super.typeId,
+    required super.typeUser,
   });
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -23,6 +25,7 @@ class UserModel extends User {
       email: json['email'] ?? '',
       createdAt: DateTime.parse(json['created_at'] ?? ''),
       typeId: json['type_user_id'] ?? 0,
+      typeUser: TypeUserModel.fromJson(json['type_user'] ?? {}),
     );
   }
 
@@ -37,6 +40,11 @@ class UserModel extends User {
       'email': email,
       'created_at': createdAt,
       'type_user_id': typeId,
+      'type_user': <String, dynamic>{
+        'id': typeUser.typeUserId,
+        'type_name': typeUser.typeName,
+        'description': typeUser.description,
+      },
     };
   }
 }

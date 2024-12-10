@@ -10,6 +10,13 @@ abstract class RRHHSupabaseDataSource {
   /// - [FormatException] si hay problemas con el formato de los datos.
   Stream<List<TypeUserModel>>? getTypeUsers();
 
+  /// Obtener el tipo de usuario.
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [RRHHException] si hay problemas con la base de datos.
+  /// - [FormatException] si hay problemas con el formato de los datos.
+  Future<UserModel>? getDetailUserWithTypeUser(int userId);
+
   /// Crea un nuevo tipo de usuario.
   /// Puede lanzar las siguientes excepciones:
   /// - [NetworkException] si hay problemas de conexión.

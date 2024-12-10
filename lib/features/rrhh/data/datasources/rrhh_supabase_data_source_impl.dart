@@ -37,6 +37,21 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
   }
 
   @override
+  Future<UserModel>? getDetailUserWithTypeUser(int userId) async {
+    final response = await client
+        .from('users')
+        .select('''*,type_user(*)''')
+        .eq('id', userId)
+        .limit(1)
+        .single();
+
+    if (response.isEmpty) {
+      throw GenericException('No se encontró el tipo de usuario');
+    }
+    return UserModel.fromJson(response);
+  }
+
+  @override
   Stream<List<RequestUserModel>>? getUserRequests() async* {
     try {
       final response = client
@@ -55,9 +70,15 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
   }
 
   @override
-  Future<UserModel>? getUserById(int id) async {
-    final response =
-        await client.from('users').select().eq('id', id).limit(1).single();
+  Future<UserModel>? getUserById(
+    int id,
+  ) async {
+    final response = await client
+        .from('users')
+        .select('''*,type_user(*)''')
+        .eq('id', id)
+        .limit(1)
+        .single();
 
     if (response.isEmpty) {
       throw GenericException('No se encontró el usuario');
@@ -66,7 +87,10 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
   }
 
   @override
-  Future<UserModel>? assignAreaToUser(int userId, int areaId) async {
+  Future<UserModel>? assignAreaToUser(
+    int userId,
+    int areaId,
+  ) async {
     final response = await client
         .from('users')
         .update(
@@ -75,7 +99,7 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
           },
         )
         .eq('id', userId)
-        .select()
+        .select('''*,type_user(*)''')
         .order('id', ascending: true)
         .limit(1)
         .single();
@@ -121,14 +145,23 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
     if (user == null) {
       throw GenericException('No se encontró el usuario');
     }
-    final emailSent = await _sendEmailCreateUser(user.email, newPassword);
+    final area = user.typeUser.typeName;
+    final emailSent = await _sendEmailCreateUser(
+      user.email,
+      newPassword,
+      area,
+    );
     if (emailSent == null || !emailSent) {
       throw EmailSendException('No se pudo enviar el correo');
     }
     return UserModel.fromJson(response);
   }
 
-  Future<bool>? _sendEmailCreateUser(String email, String newPassword) async {
+  Future<bool>? _sendEmailCreateUser(
+    String email,
+    String newPassword,
+    String area,
+  ) async {
     final dio = Dio();
     final headers = {
       'Authorization': 'Bearer ${Environment.apiKeyResend}',
@@ -142,6 +175,7 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
         <h1>Creación de cuenta</h1>
         <p>Se ha creado una cuenta para usted en InkapakingApp</p>
         <p>Su nueva contraseña es: $newPassword</p>
+        <p>Su área de trabajo es: $area</p>
         <p>Por favor inicie sesión con su correo electrónico y la contraseña proporcionada</p>
               ''',
     };

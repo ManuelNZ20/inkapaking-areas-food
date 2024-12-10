@@ -15,7 +15,7 @@ final assignAreaFormProvider =
 });
 
 class AssignNotifier extends StateNotifier<AssignFormState> {
-  GetTypeUser getTypeUserUseCase;
+  GetTypeUsers getTypeUserUseCase;
   AssignAreaNewUser assignAreaNewUserUseCase;
   AssignNotifier({
     required this.getTypeUserUseCase,

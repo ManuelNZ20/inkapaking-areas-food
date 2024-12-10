@@ -78,15 +78,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             builder: (context, state) {
               return const OrdersAllAreasScreen();
             },
-            routes: [
-              GoRoute(
-                path: 'form_order_all_areas',
-                name: FormOrderAllAreasScreen.routeName,
-                builder: (context, state) {
-                  return const FormOrderAllAreasScreen();
-                },
-              ),
-            ],
+            routes: const [],
           ),
           // Notificaciones de registro
           GoRoute(
@@ -94,14 +86,6 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             name: NotificationsOfRegisterScreen.routeName,
             builder: (context, state) {
               return const NotificationsOfRegisterScreen();
-            },
-          ),
-          // Historial de notificaciones
-          GoRoute(
-            path: 'historial_notifications',
-            name: HistorialNotificationsScreen.routeName,
-            builder: (context, state) {
-              return const HistorialNotificationsScreen();
             },
             routes: [
               GoRoute(
@@ -127,6 +111,26 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                       },
                     ),
                   ]),
+            ],
+          ),
+          // Historial de notificaciones
+          GoRoute(
+            path: 'historial_notifications',
+            name: HistorialNotificationsScreen.routeName,
+            builder: (context, state) {
+              return const HistorialNotificationsScreen();
+            },
+            routes: [
+              GoRoute(
+                path: 'detail_user/:detail_user_id',
+                name: DetailUserScreen.routeName,
+                builder: (context, state) {
+                  final userId = state.pathParameters['detail_user_id'] ?? '0';
+                  return DetailUserScreen(
+                    userUserId: int.parse(userId),
+                  );
+                },
+              ),
             ],
           ),
           // Mi área

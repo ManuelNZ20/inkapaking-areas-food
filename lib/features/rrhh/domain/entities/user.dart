@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'type_user.dart';
 
 class User extends Equatable {
   final int userId;
@@ -10,6 +11,7 @@ class User extends Equatable {
   final String email;
   final DateTime createdAt;
   final int typeId;
+  final TypeUser typeUser;
 
   const User({
     required this.userId,
@@ -21,6 +23,7 @@ class User extends Equatable {
     required this.email,
     required this.createdAt,
     required this.typeId,
+    required this.typeUser,
   });
 
   @override
@@ -34,5 +37,6 @@ class User extends Equatable {
         email,
         createdAt,
         typeId,
+        typeUser,
       ];
 }

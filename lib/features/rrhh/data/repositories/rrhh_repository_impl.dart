@@ -11,40 +11,6 @@ class RRHHRepositoryImpl implements RRHHRepository {
     required this.remoteDataSource,
   });
 
-  Future<Either<Failure, T>> _handleNetworkRequest<T>(
-      Future<T> Function() request) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await request();
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on GenericException catch (e) {
-        return Left(CustomFailure(e.toString()));
-      }
-    } else {
-      return Left(ServerFailure("No hay conexión a Internet"));
-    }
-  }
-
-  Stream<Either<Failure, T>> _handleNetworkRequestStream<T>(
-      Stream<T> Function() request) async* {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = request();
-        await for (final event in result) {
-          yield Right(event);
-        }
-      } on ServerException catch (e) {
-        yield Left(ServerFailure(e.message));
-      } on GenericException catch (e) {
-        yield Left(CustomFailure(e.toString()));
-      }
-    } else {
-      yield Left(ServerFailure("No hay conexión a Internet"));
-    }
-  }
-
   @override
   Future<Either<Failure, TypeUser>>? createTypeUser(
       String typeName, String description) {
@@ -83,6 +49,49 @@ class RRHHRepositoryImpl implements RRHHRepository {
 
   @override
   Future<Either<Failure, List<RequestUser>>>? getAcceptedRequests() async {
-    return _handleNetworkRequest(() => remoteDataSource.getAcceptedRequests()!);
+    return _handleNetworkRequest(
+      () => remoteDataSource.getAcceptedRequests()!,
+    );
+  }
+
+  @override
+  Future<Either<Failure, User>>? getDetailUserWithTypeUser(int typeId) async {
+    return _handleNetworkRequest(
+      () => remoteDataSource.getDetailUserWithTypeUser(typeId)!,
+    );
+  }
+
+  Future<Either<Failure, T>> _handleNetworkRequest<T>(
+      Future<T> Function() request) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await request();
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      } on GenericException catch (e) {
+        return Left(CustomFailure(e.toString()));
+      }
+    } else {
+      return Left(ServerFailure("No hay conexión a Internet"));
+    }
+  }
+
+  Stream<Either<Failure, T>> _handleNetworkRequestStream<T>(
+      Stream<T> Function() request) async* {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = request();
+        await for (final event in result) {
+          yield Right(event);
+        }
+      } on ServerException catch (e) {
+        yield Left(ServerFailure(e.message));
+      } on GenericException catch (e) {
+        yield Left(CustomFailure(e.toString()));
+      }
+    } else {
+      yield Left(ServerFailure("No hay conexión a Internet"));
+    }
   }
 }
