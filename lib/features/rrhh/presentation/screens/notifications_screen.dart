@@ -5,12 +5,25 @@ import 'package:go_router/go_router.dart';
 import '../providers/providers.dart';
 import 'screens.dart';
 
-class NotificationsOfRegisterScreen extends ConsumerWidget {
+class NotificationsOfRegisterScreen extends ConsumerStatefulWidget {
   static const routeName = 'notifications_register_screen';
   const NotificationsOfRegisterScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _NotificationsOfRegisterScreenState();
+}
+
+class _NotificationsOfRegisterScreenState
+    extends ConsumerState<NotificationsOfRegisterScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(getRequestUserProvider);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final data = ref.watch(getRequestUserProvider);
     return Scaffold(
       appBar: AppBar(
@@ -35,11 +48,10 @@ class NotificationsOfRegisterScreen extends ConsumerWidget {
                       trailing: IconButton(
                         icon: const Icon(Icons.more_vert),
                         onPressed: () => context.pushNamed(
-                          RequestNewUser.routeName,
-                          pathParameters: {
-                            'request_user_id': user.userId.toString(),
-                          },
-                        ),
+                            RequestNewUser.routeName,
+                            pathParameters: {
+                              'request_user_id': user.userId.toString(),
+                            }),
                       ),
                     ),
                     const Divider(),

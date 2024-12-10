@@ -6,16 +6,13 @@ import 'providers.dart';
 
 final getRequestUserProvider =
     StreamProvider.autoDispose<List<RequestUser>>((ref) async* {
-  print('getRequestUserProvider');
-  final useCase = ref.watch(getRequestUserCaseProvider);
+  final useCase = ref.watch(getRequestUserUseCaseProvider);
   await for (var event in useCase(NoParams())) {
     yield event.fold(
       (l) {
-        print('Fallot');
         return [];
       },
       (r) {
-        print('Data $r');
         return r;
       },
     );

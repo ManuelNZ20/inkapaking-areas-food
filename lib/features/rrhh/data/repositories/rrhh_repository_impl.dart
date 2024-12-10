@@ -75,4 +75,16 @@ class RRHHRepositoryImpl implements RRHHRepository {
     return _handleNetworkRequestStream(
         () => remoteDataSource.getUserRequests()!);
   }
+
+  @override
+  Future<Either<Failure, User>>? getUserById(int id) {
+    return _handleNetworkRequest(() => remoteDataSource.getUserById(id)!);
+  }
+
+  @override
+  Future<Either<Failure, User>>? assignAreaToUser(
+      int userId, int areaId) async {
+    return _handleNetworkRequest(
+        () => remoteDataSource.assignAreaToUser(userId, areaId)!);
+  }
 }

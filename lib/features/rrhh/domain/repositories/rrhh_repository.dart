@@ -49,4 +49,25 @@ abstract class RRHHRepository {
   /// - [NoUserFoundException] si no se encontraron usuarios.
   /// - [NoRequestFoundException] si no se encontraron solicitudes.
   Stream<Either<Failure, List<RequestUser>>>? getUserRequests();
+
+  /// Obtener datos un usuario por su id.
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [RRHHException] si hay problemas con la base de datos.
+  /// - [FormatException] si hay problemas con el formato de los datos.
+  /// - [NoUserFoundException] si no se encontraron usuarios.
+  /// - [NoRequestFoundException] si no se encontraron solicitudes.
+  /// - [NoDataFoundException] si no se encontraron datos.
+  /// - [NoDataFoundException] si no se encontraron datos.
+  Future<Either<Failure, User>>? getUserById(int id);
+
+  /// Asignar un área a un usuario.
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [RRHHException] si hay problemas con la base de datos.
+  /// - [FormatException] si hay problemas con el formato de los datos.
+  /// - [NoUserFoundException] si no se encontraron usuarios.
+  /// - [NoRequestFoundException] si no se encontraron solicitudes.
+  /// - [NoDataFoundException] si no se encontraron datos.
+  Future<Either<Failure, User>>? assignAreaToUser(int userId, int areaId);
 }

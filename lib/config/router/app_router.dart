@@ -116,10 +116,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                   },
                   routes: [
                     GoRoute(
-                      path: 'assign_area',
+                      path: 'assign_area/:assign_area_user_id',
                       name: AssignAreaScreen.routeName,
                       builder: (context, state) {
-                        return const AssignAreaScreen();
+                        final userId =
+                            state.pathParameters['assign_area_user_id'] ?? '0';
+                        return AssignAreaScreen(
+                          userId: int.parse(userId),
+                        );
                       },
                     ),
                   ]),
@@ -147,7 +151,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       // Presenta la ruta en la que se encuentra el usuario
       final isGoingTo = state.matchedLocation;
       final authStatus = goRouterNotifier.authStatus;
-      final keyValue = ref.read(keyValueStorageProvider);
+      // final keyValue = ref.read(keyValueStorageProvider);
       print('Redirecting from: $isGoingTo, AuthStatus: $authStatus');
       if (authStatus == AuthStatus.offline) {
         return '/not_connection';
