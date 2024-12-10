@@ -37,12 +37,6 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
   }
 
   @override
-  Future<TypeUserModel>? updateTypeUser(
-      int id, String typeName, String description) async {
-    throw UnimplementedError();
-  }
-
-  @override
   Stream<List<RequestUserModel>>? getUserRequests() async* {
     try {
       final response = client
@@ -112,12 +106,12 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
     await client.from('user_tokens_data').insert(
       {
         'user_id': userId,
-        'token_id': newToken['id'],
+        'token_id': newToken['id_token'],
       },
     );
     // Crear una contraseña aleatoria
     final newPassword = generatePassword();
-    await client.from('user_passwords').insert(
+    await client.from('users').update(
       {
         'password': newPassword,
       },
@@ -164,5 +158,17 @@ class RRHHSupabaseDataSourceImpl implements RRHHSupabaseDataSource {
       throw EmailSendFailure(
           'No se logro enviar el correo electronico ${e.toString()}');
     }
+  }
+
+  @override
+  Future<List<RequestUserModel>>? getAcceptedRequests() async {
+    final response = await client
+        .from('user_requests')
+        .select()
+        .neq('date_accept_request', '');
+    if (response.isEmpty) {
+      throw GenericException('No se encontraron solicitudes aceptadas');
+    }
+    return response.map((e) => RequestUserModel.fromJson(e)).toList();
   }
 }

@@ -30,17 +30,6 @@ abstract class RRHHRepository {
   /// - [FormatException] si hay problemas con el formato de los datos.
   Future<Either<Failure, TypeUser>>? deleteTypeUser(int id);
 
-  /// Actualiza un tipo de usuario.
-  /// Puede lanzar las siguientes excepciones:
-  /// - [NetworkException] si hay problemas de conexión.
-  /// - [RRHHException] si hay problemas con la base de datos.
-  /// - [FormatException] si hay problemas con el formato de los datos.
-  Future<Either<Failure, TypeUser>>? updateTypeUser(
-    int id,
-    String typeName,
-    String description,
-  );
-
   /// Obtener solicitud de nuevo usuario.
   /// Puede lanzar las siguientes excepciones:
   /// - [NetworkException] si hay problemas de conexión.
@@ -70,4 +59,11 @@ abstract class RRHHRepository {
   /// - [NoRequestFoundException] si no se encontraron solicitudes.
   /// - [NoDataFoundException] si no se encontraron datos.
   Future<Either<Failure, User>>? assignAreaToUser(int userId, int areaId);
+
+  /// Obtener lista de usuarios de solicitudes aceptadas.
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [RRHHException] si hay problemas con la base de datos.
+  /// - [FormatException] si hay problemas con el formato de los datos.
+  Future<Either<Failure, List<RequestUser>>>? getAcceptedRequests();
 }

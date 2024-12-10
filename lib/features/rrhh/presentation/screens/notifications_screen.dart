@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../providers/providers.dart';
+import '../widgets/widgets.dart';
 import 'screens.dart';
 
 class NotificationsOfRegisterScreen extends ConsumerStatefulWidget {
@@ -61,29 +62,9 @@ class _NotificationsOfRegisterScreenState
             );
           },
           error: (error, _) => Text('Error: $error'),
-          loading: () => const _LoadingNotifications(),
+          loading: () => const LoadingViewNotifications(),
         ),
       ),
-    );
-  }
-}
-
-class _LoadingNotifications extends StatelessWidget {
-  const _LoadingNotifications();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: CircularProgressIndicator(
-            strokeWidth: 2,
-          ),
-        ),
-        SizedBox(height: 20),
-        Text('Cargando datos...'),
-      ],
     );
   }
 }

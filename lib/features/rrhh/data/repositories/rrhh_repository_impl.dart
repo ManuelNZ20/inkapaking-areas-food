@@ -64,13 +64,6 @@ class RRHHRepositoryImpl implements RRHHRepository {
   }
 
   @override
-  Future<Either<Failure, TypeUser>>? updateTypeUser(
-      int id, String typeName, String description) {
-    // TODO: implement updateTypeUser
-    throw UnimplementedError();
-  }
-
-  @override
   Stream<Either<Failure, List<RequestUser>>>? getUserRequests() {
     return _handleNetworkRequestStream(
         () => remoteDataSource.getUserRequests()!);
@@ -86,5 +79,10 @@ class RRHHRepositoryImpl implements RRHHRepository {
       int userId, int areaId) async {
     return _handleNetworkRequest(
         () => remoteDataSource.assignAreaToUser(userId, areaId)!);
+  }
+
+  @override
+  Future<Either<Failure, List<RequestUser>>>? getAcceptedRequests() async {
+    return _handleNetworkRequest(() => remoteDataSource.getAcceptedRequests()!);
   }
 }

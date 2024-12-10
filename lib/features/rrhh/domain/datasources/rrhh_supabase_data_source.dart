@@ -27,17 +27,6 @@ abstract class RRHHSupabaseDataSource {
   /// - [FormatException] si hay problemas con el formato de los datos.
   Future<TypeUserModel>? deleteTypeUser(int id);
 
-  /// Actualiza un tipo de usuario.
-  /// Puede lanzar las siguientes excepciones:
-  /// - [NetworkException] si hay problemas de conexión.
-  /// - [RRHHException] si hay problemas con la base de datos.
-  /// - [FormatException] si hay problemas con el formato de los datos.
-  Future<TypeUserModel>? updateTypeUser(
-    int id,
-    String typeName,
-    String description,
-  );
-
   /// Obtener solicitud de nuevo usuario.
   /// Puede lanzar las siguientes excepciones:
   /// - [NetworkException] si hay problemas de conexión.
@@ -65,4 +54,12 @@ abstract class RRHHSupabaseDataSource {
   /// - [NoUserFoundException] si no se encontraron usuarios.
   /// - [NoAreaFoundException] si no se encontraron áreas.
   Future<UserModel>? assignAreaToUser(int userId, int areaId);
+
+  /// Obtener lista de usuarios de solicitudes aceptadas.
+  /// Puede lanzar las siguientes excepciones:
+  /// - [NetworkException] si hay problemas de conexión.
+  /// - [RRHHException] si hay problemas con la base de datos.
+  /// - [FormatException] si hay problemas con el formato de los datos.
+  /// - [NoUserFoundException] si no se encontraron usuarios.
+  Future<List<RequestUserModel>>? getAcceptedRequests();
 }

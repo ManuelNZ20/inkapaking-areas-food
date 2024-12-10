@@ -100,13 +100,26 @@ class AssignArea extends ConsumerWidget {
                   .read(assignAreaFormProvider.notifier)
                   .assignAreaNewUser(typeUsersState.typeUserId!);
               if (success) {
-                // Mostrar un mensaje de éxito
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Área asignada exitosamente')),
+                // Mostrar un mensaje de éxito en showDialog
+                showDialog(
+                  context: context,
+                  barrierLabel: 'Área asignada',
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Área asignada'),
+                      content: const Text('El área ha sido asignada con éxito'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            context.goNamed(HomeScreen.routeName);
+                          },
+                          child: const Text('Aceptar'),
+                        ),
+                      ],
+                    );
+                  },
                 );
-
-                // Navegar a otra pantalla (por ejemplo, "HomeScreen")
-                context.goNamed(HomeScreen.routeName);
               } else {
                 // Mostrar un mensaje de error
                 ScaffoldMessenger.of(context).showSnackBar(
