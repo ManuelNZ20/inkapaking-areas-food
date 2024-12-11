@@ -49,9 +49,6 @@ class _SettingForm extends ConsumerWidget {
             child: const Text('Editar datos'),
           ),
           const SizedBox(height: 12),
-          // Boton para mostrar notificaciones
-
-          const SizedBox(height: 12),
           ElevatedButton.icon(
             onPressed: ref.read(authNotifierProvider).hasConnection
                 ? ref.read(authNotifierProvider.notifier).signOut
