@@ -5,3 +5,5 @@ export 'repositories/config_repository.dart';
 // DataSources
 export 'datasources/config_supabase_data_sources.dart';
 // UseCases
+export 'usecases/get_user_by_id.dart';
+export 'usecases/update_data_user.dart';

@@ -3,17 +3,17 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../domain/domain.dart';
 
-class ConfigSupabaseDataSources implements ConfigDataSources {
+class ConfigSupabaseDataSourcesImpl implements ConfigDataSources {
   final SupabaseClient client;
 
-  ConfigSupabaseDataSources({
+  ConfigSupabaseDataSourcesImpl({
     required this.client,
   });
   @override
   Future<UserModel>? configGetUserById(int userId) async {
     final response = await client
         .from('users')
-        .select('''*,type_users(type_name)''')
+        .select('''*,type_user(type_name)''')
         .eq('id', userId)
         .limit(1)
         .single();

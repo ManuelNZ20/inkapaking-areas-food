@@ -22,7 +22,7 @@ class UserModel extends User {
         gender: json['gender'] ?? true,
         phone: json['phone'] ?? '',
         direction: json['direction'] ?? '',
-        createAt: json['create_at'] ?? '',
+        createAt: json['created_at'] ?? '',
         password: json['password'] ?? '',
         typeName: json['type_user']['type_name'] ?? '',
       );

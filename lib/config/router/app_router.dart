@@ -67,10 +67,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           // Configuración de perfil
           GoRoute(
-            path: 'config_profile',
+            path: 'config_profile/:config_user_id',
             name: ConfigProfileScreen.routeName,
             builder: (context, state) {
-              return const ConfigProfileScreen();
+              final userId = state.pathParameters['config_user_id'] ?? '0';
+              return ConfigProfileScreen(
+                userId: int.parse(userId),
+              );
             },
           ),
           // Configuración de la aplicación

@@ -4,3 +4,4 @@ export 'title_view.dart';
 export 'divider_section.dart';
 export 'button_direction_screens.dart';
 export 'list_tile_user.dart';
+export 'loading_view_notifications.dart';

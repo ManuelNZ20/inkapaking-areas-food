@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/core.dart';
 import '../../providers/providers.dart';
-import '../../widgets/widgets.dart';
 import '../screens.dart';
 
 class NotificationsOfRegisterScreen extends ConsumerStatefulWidget {

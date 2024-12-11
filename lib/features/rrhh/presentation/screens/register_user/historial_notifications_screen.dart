@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkapaking/features/rrhh/presentation/screens/screens.dart';
 
+import '../../../../../core/core.dart';
 import '../../providers/providers.dart';
-import '../../widgets/widgets.dart';
 
 class HistorialNotificationsScreen extends ConsumerWidget {
   static const routeName = 'historial_notifications_screen';

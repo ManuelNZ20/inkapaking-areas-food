@@ -42,14 +42,15 @@ class ConfigRepositoryImpl extends ConfigRepository {
 
   @override
   Future<Either<Failure, User>>? configUpdateData(
-      int userId,
-      String email,
-      String name,
-      String lastName,
-      bool gender,
-      String phone,
-      String direction,
-      String password) async {
+    int userId,
+    String email,
+    String name,
+    String lastName,
+    bool gender,
+    String phone,
+    String direction,
+    String password,
+  ) async {
     return _handleNetworkRequest(() async {
       return await configDataSource.configUpdateData(
         userId,

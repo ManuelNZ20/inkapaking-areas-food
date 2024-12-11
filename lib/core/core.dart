@@ -5,7 +5,7 @@ export 'env/env.dart';
 // services
 export 'services/supabase.service.dart';
 // widgets
-export 'widgets/selected_gender.dart';
+export 'widgets/widgets.dart';
 
 // Domain
 // Data

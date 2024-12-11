@@ -1,16 +1,19 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkapaking/core/constants/list_images.dart';
 
+import '../../../features/auth/presentation/providers/providers.dart';
 import '../../../features/config/presentation/screens/screens.dart';
 
-class CustomSliverAppBar extends StatelessWidget {
+class CustomSliverAppBar extends ConsumerWidget {
   const CustomSliverAppBar({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authNotifier = ref.watch(authNotifierProvider);
     final size = MediaQuery.of(context).size;
 
     return SliverAppBar(
@@ -66,9 +69,21 @@ class CustomSliverAppBar extends StatelessWidget {
               right: 10,
               top: 20,
               child: IconButton.filledTonal(
-                onPressed: () =>
-                    context.pushNamed(ConfigProfileScreen.routeName),
-                icon: const Icon(Icons.settings),
+                onPressed: authNotifier.user != null
+                    ? () => context.pushNamed(
+                          ConfigProfileScreen.routeName,
+                          pathParameters: {
+                            'config_user_id':
+                                authNotifier.user!.userId.toString(),
+                          },
+                        )
+                    : null,
+                // context.pushNamed(
+                //   ConfigProfileScreen.routeName,
+                // )
+                icon: authNotifier.user == null
+                    ? const Icon(Icons.replay_outlined)
+                    : const Icon(Icons.settings),
               ),
             ),
           ],
