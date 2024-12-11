@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../auth/presentation/providers/providers.dart';
+import '../../../rrhh/presentation/providers/notification_local_provider.dart';
 
 class ConfigProfileScreen extends ConsumerWidget {
   static const String routeName = 'config_profile_screen';
@@ -49,6 +50,19 @@ class _SettingForm extends ConsumerWidget {
             ),
             // icon: const Icon(Icons.person),
             child: const Text('Editar datos'),
+          ),
+          const SizedBox(height: 12),
+          // Boton para mostrar notificaciones
+          FilledButton(
+            onPressed: () {
+              print('Local notification');
+              ref.read(userNotifierProvider).checkNewRequestUser();
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 50),
+            ),
+            // icon: const Icon(Icons.notifications),
+            child: const Text('Notificaciones'),
           ),
           const SizedBox(height: 12),
           ElevatedButton.icon(

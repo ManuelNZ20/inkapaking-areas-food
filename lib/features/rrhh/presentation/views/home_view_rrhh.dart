@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inkapaking/core/core.dart';
 import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
 import '../../../../core/widgets/widgets.dart';
+import '../providers/providers.dart';
 import '../screens/screens.dart';
 
-class HomeViewRRHH extends StatelessWidget {
+class HomeViewRRHH extends ConsumerWidget {
   const HomeViewRRHH({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         const SizedBox(height: 20),

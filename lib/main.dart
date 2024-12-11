@@ -5,10 +5,12 @@ import 'core/core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Environment.initEnv();
 
+  await LocalNotificationService.init();
+
   await SupabaseService.initialize();
+
   runApp(
     const ProviderScope(
       child: MyApp(),

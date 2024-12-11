@@ -36,7 +36,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   void _setLogged(User user) async {
-    final token = user.tokens!.firstWhere((token) => token.state == true);
+    if (user.tokens != null && user.tokens!.isNotEmpty) {
+      state = state.copyWith(
+        hasToken: true,
+      );
+    }
+    final token = user.tokens!.firstWhere(
+      (token) => token.state == true,
+    );
     state = state.copyWith(
       user: user,
       status: AuthStatus.authenticated,
@@ -46,6 +53,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       hasFailure: false,
       hasError: false,
       token: token.tokenId.toString(),
+      hasToken: true,
     );
     await keyValueStorageService.setKeyValue<int>(
       'token',

@@ -13,3 +13,4 @@ export 'type_user_stream_provider.dart';
 export 'get_request_user_provider.dart';
 export 'data_user_provider.dart';
 export 'get_accepted_requests_provider.dart';
+export 'notification_local_provider.dart';
