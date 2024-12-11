@@ -1,5 +1,8 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rxdart/subjects.dart';
+
+import '../../main.dart';
 
 class LocalNotificationService {
   // Cree una instancia del complemento. También puede especificar el canal de notificación predeterminado para las plataformas Android e iOS.
@@ -9,7 +12,17 @@ class LocalNotificationService {
   // Inicializa el complemento de notificación local
   static void onNotificationTap(NotificationResponse notificationResponse) {
     onClickNotification.add(notificationResponse.payload!);
-    print('onNotificationTap: ${notificationResponse.payload}');
+    navigateTo(notificationResponse.payload!);
+  }
+
+  // Navegar con go_router
+  static void navigateTo(String route) {
+    onClickNotification.listen(
+      (route) {
+        final context = navigatorKey.currentState!.context;
+        GoRouter.of(context).push(route);
+      },
+    );
   }
 
   static Future<void> init() async {
@@ -20,7 +33,9 @@ class LocalNotificationService {
     );
     // Inicialización de la configuración de notificación para iOS y macOS
     const DarwinInitializationSettings initializationSettingsDarwin =
-        DarwinInitializationSettings(requestSoundPermission: true);
+        DarwinInitializationSettings(
+      requestSoundPermission: true,
+    );
     // Inicialización de la configuración de notificación para Linux
     const LinuxInitializationSettings initializationSettingsLinux =
         LinuxInitializationSettings(

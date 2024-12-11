@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:inkapaking/main.dart';
 import '../../core/core.dart';
 import '../../features/auth/presentation/providers/providers.dart';
 import '../../features/auth/presentation/screens/screens.dart';
@@ -12,6 +13,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: '/splash',
     refreshListenable: goRouterNotifier,
+    navigatorKey: navigatorKey,
     routes: [
       /// Splash screen para verificar el estado de autenticación
       /// y redirigir al usuario a la pantalla correcta.

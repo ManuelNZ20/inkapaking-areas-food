@@ -4,7 +4,7 @@ import '../../../../core/core.dart';
 import '../../domain/domain.dart';
 import 'providers.dart';
 
-final userNotifierProvider = Provider<UserNotifier>((ref) {
+final userNotificationProvider = Provider<UserNotifier>((ref) {
   // final notificationService = ref.watch(notificationServiceProvider);
   final getRequestUser = ref.watch(getRequestUserProvider);
   return UserNotifier(
@@ -31,11 +31,7 @@ class UserNotifier {
   void checkNewRequestUser() {
     getRequestUser.when(
       data: (users) {
-        print('Users: $users');
-        if (isFirstLoad) {
-          isFirstLoad = false;
-          return;
-        }
+        print('users: $users');
         if (users.isNotEmpty) {
           final newUser = users.last;
           _sendNotification(newUser);

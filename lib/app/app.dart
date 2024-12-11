@@ -12,21 +12,21 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // Escuchar las notificaciones de la app
     // authNotifierProvider
-    final authNotifier = ref.watch(authNotifierProvider);
+    // final authNotifier = ref.watch(authNotifierProvider);
 
-    ref.listen(
-      userNotifierProvider,
-      (previous, next) {
-        if (authNotifier.hasUser) {
-          if (next.isFirstLoad) {
-            next.checkNewRequestUser();
-          }
-          if (authNotifier.user!.typeUser.id == 5) {
-            next.checkNewRequestUser();
-          }
-        }
-      },
-    );
+    // ref.listen(
+    //   userNotifierProvider,
+    //   (previous, next) {
+    //     if (authNotifier.hasUser) {
+    //       if (next.isFirstLoad) {
+    //         next.checkNewRequestUser();
+    //       }
+    //       if (authNotifier.user!.typeUser.id == 5) {
+    //         next.checkNewRequestUser();
+    //       }
+    //     }
+    //   },
+    // );
 
     final appRouter = ref.watch(appRouterProvider);
 

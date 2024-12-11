@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../features/auth/presentation/providers/providers.dart';
+import '../../../../features/rrhh/presentation/providers/providers.dart';
 import '../../../core.dart';
 import '../../../../features/rrhh/presentation/views/views.dart';
 import '../../widgets/widgets.dart';
@@ -13,6 +14,18 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final authNotifier = ref.watch(authNotifierProvider);
+    ref.listen(
+      userNotificationProvider,
+      (previous, next) {
+        if (authNotifier.hasUser) {
+          if (authNotifier.user!.typeUser.id == 5) {
+            next.checkNewRequestUser();
+          }
+        }
+      },
+    );
+
     ref.listen(connectivityProvider, (previous, next) async {
       next.whenData(
         (connectivityResult) async {
