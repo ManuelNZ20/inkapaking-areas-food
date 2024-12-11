@@ -6,11 +6,14 @@ void main() {
     'InputEmail',
     () {
       // Test para un correo vacío
-      test('should return an error when the email is empty', () {
-        const input = InputEmail.dirty('');
-        expect(input.errorMessage, 'El campo es requerido');
-        expect(input.isValid, false); // El campo no debe ser válido
-      });
+      test(
+        'should return an error when the email is empty',
+        () {
+          const input = InputEmail.dirty('');
+          expect(input.errorMessage, 'El campo es requerido');
+          expect(input.isValid, false); // El campo no debe ser válido
+        },
+      );
 
       // Test para un correo con formato incorrecto
       test('should return an error when the email format is invalid', () {
