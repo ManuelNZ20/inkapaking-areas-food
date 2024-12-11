@@ -50,7 +50,6 @@ class ConfirmRegisterForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formState = ref.watch(registerFormProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

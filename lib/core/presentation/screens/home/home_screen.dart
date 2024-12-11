@@ -2,7 +2,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../config/config.dart';
 import '../../../../features/auth/presentation/providers/providers.dart';
 import '../../../core.dart';
 import '../../../../features/rrhh/presentation/views/views.dart';
