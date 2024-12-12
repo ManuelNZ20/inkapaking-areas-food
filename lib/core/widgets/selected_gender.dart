@@ -4,9 +4,13 @@ class SelectedGender extends StatelessWidget {
   const SelectedGender({
     super.key,
     this.onChanged,
-  });
+    this.initValue,
+  }) : assert(
+          initValue == null || initValue == 'M' || initValue == 'F',
+          'initValue must be M or F',
+        );
   final Function(String)? onChanged;
-
+  final String? initValue;
   @override
   Widget build(BuildContext context) {
     const border = UnderlineInputBorder(
@@ -27,7 +31,7 @@ class SelectedGender extends StatelessWidget {
         labelText: 'Género',
         isDense: true,
       ),
-      value: 'M',
+      value: initValue ?? 'M',
       items: const [
         DropdownMenuItem(
           value: 'M',

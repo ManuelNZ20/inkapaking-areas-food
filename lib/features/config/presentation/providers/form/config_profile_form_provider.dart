@@ -1,12 +1,169 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:formz/formz.dart';
 
 import '../../../../../core/core.dart';
+import '../../../domain/domain.dart';
+import '../providers.dart';
+
+final configProfileFormProvider = StateNotifierProvider.family<
+    ConfigProfileFormNotifier, ConfigProfileFormState, User>((ref, user) {
+  final updateDataUser = ref.watch(updateDataUserProvider);
+  return ConfigProfileFormNotifier(
+    user: user,
+    updateDataUser: updateDataUser,
+  );
+});
 
 class ConfigProfileFormNotifier extends StateNotifier<ConfigProfileFormState> {
-  ConfigProfileFormNotifier()
-      : super(
-          ConfigProfileFormState(),
+  final UpdateDataUser updateDataUser;
+  ConfigProfileFormNotifier({
+    required User user,
+    required this.updateDataUser,
+  }) : super(
+          ConfigProfileFormState(
+            userId: user.userId,
+            email: InputEmail.dirty(user.email),
+            name: InputName.dirty(user.name),
+            lastName: InputName.dirty(user.lastName),
+            gender: user.gender,
+            phone: InputPhone.dirty(user.phone),
+            direction: user.direction,
+            password: InputPassword.dirty(user.password),
+            isValid: true,
+          ),
         );
+
+  void onNameChanged(String value) {
+    final nameValue = InputName.dirty(value);
+    state = state.copyWith(
+      name: nameValue,
+    );
+  }
+
+  void onLastNameChanged(String value) {
+    final lastNameValue = InputName.dirty(value);
+    state = state.copyWith(
+      lastName: lastNameValue,
+    );
+  }
+
+  void onPhoneChanged(String value) {
+    final phoneValue = InputPhone.dirty(value);
+    state = state.copyWith(
+      phone: phoneValue,
+    );
+  }
+
+  void onDirectionChanged(String value) {
+    state = state.copyWith(
+      direction: value,
+    );
+  }
+
+  void onGenderChanged(String value) {
+    state = state.copyWith(
+      gender: value == 'M',
+    );
+  }
+
+  void onEmailChanged(String value) {
+    final newValue = InputEmail.dirty(value);
+    state = state.copyWith(
+      email: newValue,
+    );
+  }
+
+  void onViewPassword() {
+    state = state.copyWith(
+      obscureText: !state.obscureText,
+    );
+  }
+
+  void onPasswordChanged(String value) {
+    final newValue = InputPassword.dirty(value);
+    state = state.copyWith(
+      password: newValue,
+    );
+  }
+
+  Future<bool> onFormSubmit() async {
+    _touchEveryField();
+    if (!state.isValid) return false;
+    state = state.copyWith(isPosting: true);
+    final result = await updateDataUser(
+      UpdateDataUserParams(
+        userId: state.userId,
+        email: state.email.value,
+        name: state.name.value,
+        lastName: state.lastName.value,
+        phone: state.phone.value,
+        direction: state.direction,
+        gender: state.gender,
+        password: state.password.value,
+      ),
+    );
+    return result.fold(
+      (failure) {
+        _handleFailure(failure);
+        return false;
+      },
+      (user) {
+        state = state.copyWith(
+          isPosting: false,
+        );
+        return true;
+      },
+    );
+  }
+
+  void _handleFailure(Failure failure) {
+    if (failure is ServerFailure) {
+      _updateStateWithFailure(
+        errorMessage: 'Fallo el servidor',
+        hasConnection: false,
+      );
+    } else {
+      _updateStateWithFailure(
+        errorMessage: 'Error desconocido',
+      );
+    }
+  }
+
+  void _updateStateWithFailure({
+    required String errorMessage,
+    bool hasConnection = true,
+  }) {
+    state = state.copyWith(
+      isPosting: false,
+      hasError: true,
+      errorMessage: errorMessage,
+    );
+  }
+
+  _touchEveryField() {
+    final email = InputEmail.dirty(state.email.value);
+    final name = InputName.dirty(state.name.value);
+    final lastName = InputName.dirty(state.lastName.value);
+    final phone = InputPhone.dirty(state.phone.value);
+    final password = InputPassword.dirty(state.password.value);
+    state = state.copyWith(
+      isFormPosted: true,
+      email: email,
+      name: name,
+      lastName: lastName,
+      phone: phone,
+      password: password,
+      isValid: Formz.validate(
+        [
+          email,
+          name,
+          lastName,
+          phone,
+          password,
+        ],
+      ),
+    );
+  }
 }
 
 class ConfigProfileFormState {
@@ -22,6 +179,7 @@ class ConfigProfileFormState {
   final String direction;
   final InputPassword password;
   final bool hasError;
+  final bool obscureText;
   final String? errorMessage;
 
   ConfigProfileFormState({
@@ -37,6 +195,7 @@ class ConfigProfileFormState {
     this.direction = '',
     this.password = const InputPassword.pure(),
     this.hasError = false,
+    this.obscureText = true,
     this.errorMessage = '',
   });
 
@@ -53,6 +212,7 @@ class ConfigProfileFormState {
     String? direction,
     InputPassword? password,
     bool? hasError,
+    bool? obscureText,
     String? errorMessage,
   }) =>
       ConfigProfileFormState(
@@ -68,6 +228,7 @@ class ConfigProfileFormState {
         direction: direction ?? this.direction,
         password: password ?? this.password,
         hasError: hasError ?? this.hasError,
+        obscureText: obscureText ?? this.obscureText,
         errorMessage: errorMessage ?? this.errorMessage,
       );
 }

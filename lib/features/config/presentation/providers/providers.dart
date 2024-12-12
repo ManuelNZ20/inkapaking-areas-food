@@ -6,5 +6,6 @@ export 'repository/config_repository_provider.dart';
 export 'state/config_state.dart';
 // Use Cases
 export 'use_cases/get_user_by_id_use_case_provider.dart';
+export 'use_cases/update_data_user.dart';
 // Providers
 export 'user_provider.dart';
