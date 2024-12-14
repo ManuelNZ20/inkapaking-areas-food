@@ -129,6 +129,21 @@ inkapacking/
 
 ---
 
+## **Convenciones de codificación**
+
+Para mantener un código limpio y legible, sigue estas convenciones:
+
+- **Nombres de archivos y carpetas**: Utiliza minúsculas y guiones bajos para separar palabras.
+- **Ejemplo**: `nombre_de_archivo.dart`.
+- **Nombres de clases y funciones**: Utiliza CamelCase.
+- **Ejemplo**: `NombreDeClase`, `nombreDeFuncion`.
+- **Comentarios**: Utiliza comentarios en el código para explicar partes complejas o importantes.
+- **Ejemplo**: `// Este método realiza una acción importante`.
+- **Formato de código**: Utiliza el comando `flutter format` para mantener un formato consistente.
+- **Ejemplo**: `flutter format lib/`.
+
+---
+
 ## **Contribuciones**
 
 Si deseas contribuir a este proyecto:

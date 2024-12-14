@@ -14,10 +14,10 @@ export 'presentation/presentation.dart';
 // Error
 export 'error/error.dart';
 // UseCases
-export 'usecases/auth_usecase.dart';
-export 'usecases/use_cases.dart';
-export 'usecases/use_cases_stream.dart';
-export 'usecases/no_params.dart';
+export 'use_cases/auth_usecase.dart';
+export 'use_cases/use_cases.dart';
+export 'use_cases/use_cases_stream.dart';
+export 'use_cases/no_params.dart';
 // platform
 export 'network/network_info_supabase.dart';
 // Utils

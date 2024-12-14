@@ -198,7 +198,15 @@ class _SettingForm extends ConsumerWidget {
                   content: Text('Datos actualizado'),
                 ),
               );
-            }),
+            }).onError(
+              (error, stackTrace) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(error.toString()),
+                  ),
+                );
+              },
+            ),
             style: ElevatedButton.styleFrom(
               minimumSize: const Size(double.infinity, 50),
             ),

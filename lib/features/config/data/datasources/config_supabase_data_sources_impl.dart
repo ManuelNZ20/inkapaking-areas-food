@@ -42,7 +42,8 @@ class ConfigSupabaseDataSourcesImpl implements ConfigDataSources {
           'password': password,
         })
         .eq('id', userId)
-        .select()
+        .select('''*,type_user(type_name)''')
+        .order('id', ascending: true) // Orden explícito
         .limit(1)
         .single();
     return UserModel.fromJson(response);
