@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inkapaking/core/core.dart';
 import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
-import '../../../../core/widgets/widgets.dart';
+import '../../../all_areas/presentation/screens/screens.dart';
 import '../screens/screens.dart';
 
 class HomeViewRRHH extends ConsumerWidget {
@@ -94,12 +94,15 @@ class HomeViewRRHH extends ConsumerWidget {
         // Lista de usuarios
         DividerSection(
           titleSection: 'Mi Área',
-          routeOfSection: AreaScreen.routeName,
+          routeOfSection: MyAreaScreen.routeName,
           outlinedButtonIcon: OutlinedButton.icon(
             onPressed: () {},
             icon: const Icon(Icons.picture_as_pdf),
             label: const Text('Generar'),
           ),
+          params: const {
+            'my_area_type_user_id': '5',
+          },
         ),
         SizedBox(
           width: double.infinity,

@@ -6,10 +6,12 @@ class DividerSection extends StatelessWidget {
     super.key,
     this.titleSection,
     this.routeOfSection,
+    this.params,
     this.outlinedButtonIcon,
   });
   final String? titleSection;
   final String? routeOfSection;
+  final Map<String, String>? params;
   final OutlinedButton? outlinedButtonIcon;
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,16 @@ class DividerSection extends StatelessWidget {
                   child: TextButton.icon(
                     onPressed: routeOfSection != null
                         ? () {
-                            context.pushNamed(routeOfSection!);
+                            if (params != null) {
+                              context.pushNamed(
+                                routeOfSection!,
+                                pathParameters: params!,
+                              );
+                              return;
+                            }
+                            context.pushNamed(
+                              routeOfSection!,
+                            );
                           }
                         : null,
                     label: Text(

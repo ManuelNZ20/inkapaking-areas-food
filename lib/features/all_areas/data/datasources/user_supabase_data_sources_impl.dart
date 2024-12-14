@@ -4,15 +4,15 @@ import '../../domain/domain.dart';
 import '../data.dart';
 
 class UserSupabaseDataSourceImpl implements UserRemoteDataSource {
-  final SupabaseClient supabaseClient;
+  final SupabaseClient client;
 
-  UserSupabaseDataSourceImpl(
-    this.supabaseClient,
-  );
+  UserSupabaseDataSourceImpl({
+    required this.client,
+  });
 
   @override
   Future<List<UserModel>>? getUsers(int typeUserId) async {
-    final response = await supabaseClient.from('users').select(
+    final response = await client.from('users').select(
         '''id,name,type_user(type_name)''').eq('user_type_id', typeUserId);
     if (response.isEmpty) {
       throw Exception('No user found');
@@ -23,7 +23,7 @@ class UserSupabaseDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<UserModel>? getUserById(int userId) async {
-    final response = await supabaseClient
+    final response = await client
         .from('users')
         .select('''*,type_user(type_name)''')
         .eq('id', userId)

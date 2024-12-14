@@ -25,7 +25,6 @@ class ListTileUser extends StatelessWidget {
                   icon: const Icon(Icons.notifications_active_outlined),
                   onPressed: () {},
                 ),
-          onTap: typeUser == '1' ? () {} : () {},
         ),
         const Divider(),
       ],

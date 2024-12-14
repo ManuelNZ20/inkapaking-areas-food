@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkapaking/main.dart';
 import '../../core/core.dart';
+import '../../features/all_areas/presentation/screens/screens.dart';
 import '../../features/auth/presentation/providers/providers.dart';
 import '../../features/auth/presentation/screens/screens.dart';
 import '../../features/config/presentation/screens/screens.dart';
@@ -140,10 +141,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
           // Mi área
           GoRoute(
-            path: 'my_area',
-            name: AreaScreen.routeName,
+            path: 'my_area/:my_area_type_user_id',
+            name: MyAreaScreen.routeName,
             builder: (context, state) {
-              return const AreaScreen();
+              final userId =
+                  state.pathParameters['my_area_type_user_id'] ?? '0';
+              return MyAreaScreen(
+                typeUserId: int.parse(userId),
+              );
             },
           ),
         ],
