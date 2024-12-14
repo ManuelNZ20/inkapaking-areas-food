@@ -9,12 +9,12 @@ abstract class UserRemoteDataSource {
   /// Retorna un [Future] que puede ser completado con un [User] si la operación fue exitosa.
   /// Si la operación falla, se completa con un [Exception].
   /// Cualquier otro error provoca un error.
-  Future<UserModel> getUser();
+  Future<List<UserModel>>? getUsers(int typeUserId);
 
   /// Datos de un usuario por su id
   ///
   /// Retorna un [Future] que puede ser completado con un [User] si la operación fue exitosa.
   /// Si la operación falla, se completa con un [Exception].
   /// Cualquier otro error provoca un error.
-  Future<UserModel> getUserById(int userId);
+  Future<UserModel>? getUserById(int userId);
 }

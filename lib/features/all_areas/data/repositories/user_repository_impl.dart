@@ -28,19 +28,19 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, User>> getUser() async {
+  Future<Either<Failure, List<User>>>? getUsers(int typeUserId) async {
     return _handleNetworkRequest(
       () async {
-        return await userRemoteDataSource.getUser();
+        return await userRemoteDataSource.getUsers(typeUserId)!;
       },
     );
   }
 
   @override
-  Future<Either<Failure, User>> getUserById(int id) async {
+  Future<Either<Failure, User>>? getUserById(int id) async {
     return _handleNetworkRequest(
       () async {
-        return await userRemoteDataSource.getUserById(id);
+        return await userRemoteDataSource.getUserById(id)!;
       },
     );
   }

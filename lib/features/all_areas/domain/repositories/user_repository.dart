@@ -12,7 +12,7 @@ abstract class UserRepository {
   /// Cualquier otro error provoca un error.
   /// Retorna un [Future] que puede ser completado con un [User] si la operación fue exitosa.
   /// Si la operación falla, se completa con un [Exception].
-  Future<Either<Failure, User>> getUser();
+  Future<Either<Failure, List<User>>>? getUsers(int typeUserId);
 
   /// Datos de un usuario por su id
   /// Retorna un [Future] que puede ser completado con un [User] si la operación fue exitosa.
@@ -21,5 +21,5 @@ abstract class UserRepository {
   /// Retorna un [Future] que puede ser completado con un [User] si la operación fue exitosa.
   /// Si la operación falla, se completa con un [Exception].
   /// Retorna un [Future] que puede ser completado con un [User] si la operación fue exitosa.
-  Future<Either<Failure, User>> getUserById(int id);
+  Future<Either<Failure, User>>? getUserById(int id);
 }

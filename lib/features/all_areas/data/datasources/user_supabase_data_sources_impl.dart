@@ -11,20 +11,18 @@ class UserSupabaseDataSourceImpl implements UserRemoteDataSource {
   );
 
   @override
-  Future<UserModel> getUser() async {
-    final response = await supabaseClient
-        .from('users')
-        .select('''id,name,type_user(type_name)''')
-        .limit(1)
-        .single();
+  Future<List<UserModel>>? getUsers(int typeUserId) async {
+    final response = await supabaseClient.from('users').select(
+        '''id,name,type_user(type_name)''').eq('user_type_id', typeUserId);
     if (response.isEmpty) {
       throw Exception('No user found');
     }
-    return UserModel.fromJson(response);
+    final users = response.map((e) => UserModel.fromJson(e)).toList();
+    return users;
   }
 
   @override
-  Future<UserModel> getUserById(int userId) async {
+  Future<UserModel>? getUserById(int userId) async {
     final response = await supabaseClient
         .from('users')
         .select('''*,type_user(type_name)''')
