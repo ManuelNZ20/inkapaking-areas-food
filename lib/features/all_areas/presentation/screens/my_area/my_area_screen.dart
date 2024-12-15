@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../views/views.dart';
+import '../../../../../core/presentation/screens/views/views.dart';
 
 class MyAreaScreen extends StatelessWidget {
   static const String routeName = 'my_area_screen';

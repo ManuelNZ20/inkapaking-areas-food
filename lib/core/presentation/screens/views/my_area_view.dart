@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../core/core.dart';
-import '../providers/providers.dart';
+import '../../../../features/all_areas/presentation/providers/providers.dart';
 
 class MyAreaView extends ConsumerWidget {
   const MyAreaView({

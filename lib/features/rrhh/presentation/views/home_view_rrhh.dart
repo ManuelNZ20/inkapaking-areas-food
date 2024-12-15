@@ -4,7 +4,6 @@ import 'package:inkapaking/core/core.dart';
 import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
 import '../../../all_areas/presentation/screens/screens.dart';
-import '../../../all_areas/presentation/views/views.dart';
 import '../screens/screens.dart';
 
 class HomeViewRRHH extends ConsumerWidget {
