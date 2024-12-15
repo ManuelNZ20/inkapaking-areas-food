@@ -4,9 +4,12 @@ import 'package:inkapaking/core/core.dart';
 import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
 import '../../../all_areas/presentation/screens/screens.dart';
+import '../../../all_areas/presentation/views/views.dart';
 import '../screens/screens.dart';
 
 class HomeViewRRHH extends ConsumerWidget {
+  static const String routeName = 'home_view_rrhh';
+  final String typeUserId = '5';
   const HomeViewRRHH({super.key});
 
   @override
@@ -100,25 +103,15 @@ class HomeViewRRHH extends ConsumerWidget {
             icon: const Icon(Icons.picture_as_pdf),
             label: const Text('Generar'),
           ),
-          params: const {
-            'my_area_type_user_id': '5',
+          params: {
+            'my_area_type_user_id': typeUserId,
           },
         ),
         SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.3,
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return const SizedBox(
-                width: double.infinity,
-                child: ListTileUser(
-                  nameUser: 'nameUser',
-                  typeUser: 'typeUser',
-                ),
-              );
-            },
+          child: MyAreaView(
+            typeUserId: int.parse(typeUserId),
           ),
         ),
         const SizedBox(height: 30),
