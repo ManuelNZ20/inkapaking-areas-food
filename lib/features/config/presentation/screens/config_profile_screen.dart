@@ -4,6 +4,7 @@ import 'package:inkapaking/features/auth/presentation/widgets/widgets.dart';
 
 import '../../../../core/core.dart';
 import '../../../auth/presentation/providers/providers.dart';
+import '../../../home/presentation/providers/providers.dart';
 import '../../domain/domain.dart';
 import '../providers/providers.dart';
 

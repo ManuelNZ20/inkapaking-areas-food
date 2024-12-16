@@ -7,10 +7,6 @@ export 'services/supabase/supabase.service.dart';
 // widgets
 export 'widgets/widgets.dart';
 
-// Domain
-// Data
-// Presentation - Screens - Providers
-export 'presentation/presentation.dart';
 // Error
 export 'error/error.dart';
 // UseCases
@@ -24,3 +20,5 @@ export 'network/network_info_supabase.dart';
 export 'utils/utils.dart';
 // Services
 export 'services/services.dart';
+// Helpers
+export 'helpers/helpers.dart';

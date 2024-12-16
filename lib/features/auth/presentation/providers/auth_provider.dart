@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inkapaking/features/auth/presentation/providers/use_cases/login_use_case_provider.dart';
 import 'package:inkapaking/features/auth/presentation/providers/state/auth_state.dart';
 import '../../../../core/core.dart';
+import '../../../home/presentation/providers/providers.dart';
 import '../../domain/domain.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> {

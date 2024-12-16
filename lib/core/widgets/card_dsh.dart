@@ -3,19 +3,21 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:inkapaking/core/constants/list_images.dart';
 
+import 'button_direction_screens.dart';
+
 class CardDsh extends StatelessWidget {
   const CardDsh({
     super.key,
     required this.titleCard,
     required this.subTitleCard,
-    this.buttons,
+    this.buttonsDirection,
   }) : assert(
-          buttons == null || buttons.length <= 3,
+          buttonsDirection == null || buttonsDirection.length <= 3,
           'El número máximo de botones es 3',
         );
   final String titleCard;
   final String subTitleCard;
-  final List<Widget>? buttons;
+  final List<DirectionButtonToAScreen>? buttonsDirection;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +93,7 @@ class CardDsh extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: buttons ?? [],
+                  children: buttonsDirection ?? [],
                 ),
               ),
             ],

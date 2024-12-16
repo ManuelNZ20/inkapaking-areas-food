@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ButtonDirectionScreen extends StatelessWidget {
-  ButtonDirectionScreen({
+class DirectionButtonToAScreen extends StatelessWidget {
+  DirectionButtonToAScreen({
     super.key,
     this.title,
     this.routeName,

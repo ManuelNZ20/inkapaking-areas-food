@@ -1,7 +1,10 @@
 export 'card_dsh.dart';
 export 'selected_gender.dart';
 export 'title_view.dart';
-export 'divider_section.dart';
 export 'button_direction_screens.dart';
 export 'list_tile_user.dart';
 export 'loading_view_notifications.dart';
+// Home
+export 'home/divider_section.dart';
+export 'home/header_with_icon.dart';
+export 'home/my_area_print_pdf_divider.dart';

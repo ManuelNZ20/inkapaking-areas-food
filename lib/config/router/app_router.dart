@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:inkapaking/main.dart';
-import '../../core/core.dart';
 import '../../features/all_areas/presentation/screens/screens.dart';
 import '../../features/auth/presentation/providers/providers.dart';
 import '../../features/auth/presentation/screens/screens.dart';
 import '../../features/config/presentation/screens/screens.dart';
+import '../../features/home/presentation/screens/screens.dart';
 import '../../features/rrhh/presentation/screens/screens.dart';
 import 'auth_router_notifier.dart';
 

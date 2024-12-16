@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:inkapaking/core/core.dart';
 import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
-import '../../../all_areas/presentation/screens/screens.dart';
+import '../../../home/presentation/screens/screens.dart';
 import '../screens/screens.dart';
 
 class HomeViewRRHH extends ConsumerWidget {
@@ -16,33 +16,21 @@ class HomeViewRRHH extends ConsumerWidget {
     return Column(
       children: [
         const SizedBox(height: 20),
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(
-                Icons.grass_rounded,
-                size: 30,
-              ),
-              TitleApp(
-                text: 'Área RRHH',
-                textAlign: TextAlign.start,
-              ),
-            ],
-          ),
+        const HeaderWithIcon(
+          titleArea: 'RRHH',
+          icon: Icons.groups,
         ),
         const SizedBox(height: 20),
         CardDsh(
           titleCard: 'Mis Ordenes',
           subTitleCard: 'Crear y ver ordenes',
-          buttons: [
-            ButtonDirectionScreen(
+          buttonsDirection: [
+            DirectionButtonToAScreen(
               title: 'Crear',
               routeName: '',
               icon: Icons.create,
             ),
-            ButtonDirectionScreen(
+            DirectionButtonToAScreen(
               title: 'Mi historial',
               routeName: '',
               icon: Icons.history,
@@ -52,13 +40,13 @@ class HomeViewRRHH extends ConsumerWidget {
         CardDsh(
           titleCard: 'Registros de usuario',
           subTitleCard: 'Notificaciones de registros de usuario e historial',
-          buttons: [
-            ButtonDirectionScreen(
+          buttonsDirection: [
+            DirectionButtonToAScreen(
               title: 'Notificaciones',
               routeName: NotificationsOfRegisterScreen.routeName,
               icon: Icons.notifications_active,
             ),
-            ButtonDirectionScreen(
+            DirectionButtonToAScreen(
               title: 'Historial',
               routeName: HistorialNotificationsScreen.routeName,
               icon: Icons.history,
@@ -69,10 +57,9 @@ class HomeViewRRHH extends ConsumerWidget {
         DividerSection(
           titleSection: 'Ordenes por Área',
           routeOfSection: OrdersAllAreasScreen.routeName,
-          outlinedButtonIcon: OutlinedButton.icon(
-            onPressed: () {},
+          iconButton: IconButton(
+            onPressed: () async {},
             icon: const Icon(Icons.picture_as_pdf),
-            label: const Text('Generar'),
           ),
         ),
         SizedBox(
@@ -94,39 +81,7 @@ class HomeViewRRHH extends ConsumerWidget {
         ),
         const SizedBox(height: 10),
         // Lista de usuarios
-        DividerSection(
-          titleSection: 'Mi Área',
-          routeOfSection: MyAreaScreen.routeName,
-          outlinedButtonIcon: OutlinedButton.icon(
-            onPressed: () async {
-              try {
-                final file = await ref.read(
-                  generateAttendancePdfProvider(
-                    int.parse(typeUserId),
-                  ).future,
-                );
-                SaveAndOpenDocument().openPdf(
-                  file: file,
-                );
-              } catch (error) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Error'),
-                      content: Text(error.toString()),
-                    );
-                  },
-                );
-              }
-            },
-            icon: const Icon(Icons.picture_as_pdf),
-            label: const Text('Generar'),
-          ),
-          params: {
-            'my_area_type_user_id': typeUserId,
-          },
-        ),
+        MyAreaPrintPdfDivider(typeUserId: typeUserId),
         SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.3,
