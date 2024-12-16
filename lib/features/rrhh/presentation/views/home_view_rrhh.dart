@@ -98,7 +98,28 @@ class HomeViewRRHH extends ConsumerWidget {
           titleSection: 'Mi Área',
           routeOfSection: MyAreaScreen.routeName,
           outlinedButtonIcon: OutlinedButton.icon(
-            onPressed: () {},
+            onPressed: () async {
+              try {
+                final file = await ref.read(
+                  generateAttendancePdfProvider(
+                    int.parse(typeUserId),
+                  ).future,
+                );
+                SaveAndOpenDocument().openPdf(
+                  file: file,
+                );
+              } catch (error) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: Text(error.toString()),
+                    );
+                  },
+                );
+              }
+            },
             icon: const Icon(Icons.picture_as_pdf),
             label: const Text('Generar'),
           ),

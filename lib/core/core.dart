@@ -3,7 +3,7 @@ export 'constants/constants.dart';
 // env
 export 'env/env.dart';
 // services
-export 'services/supabase.service.dart';
+export 'services/supabase/supabase.service.dart';
 // widgets
 export 'widgets/widgets.dart';
 

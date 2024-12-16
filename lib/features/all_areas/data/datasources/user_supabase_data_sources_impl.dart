@@ -12,8 +12,10 @@ class UserSupabaseDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<List<UserModel>>? getUsers(int typeUserId) async {
-    final response = await client.from('users').select(
-        '''id,name,type_user(type_name)''').eq('user_type_id', typeUserId);
+    final response = await client
+        .from('users')
+        .select('''id,name,last_name,type_user(type_name)''').eq(
+            'user_type_id', typeUserId);
     if (response.isEmpty) {
       throw Exception('No user found');
     }
