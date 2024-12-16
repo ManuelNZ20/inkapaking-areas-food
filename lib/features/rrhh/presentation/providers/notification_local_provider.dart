@@ -45,8 +45,8 @@ class UserNotifier {
   void _sendNotification(RequestUser newUser) {
     LocalNotificationService.show(
       id: newUser.userId,
-      title: 'Nuevo usuario registrado',
-      body: 'Se ha registrado un nuevo usuario Id ${newUser.userId}',
+      title: 'Nuevos usuarios',
+      body: 'Se ha registrado una nueva solicitud de usuario',
       payload: '/home/notifications_register',
     );
   }

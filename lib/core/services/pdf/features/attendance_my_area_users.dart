@@ -53,7 +53,7 @@ class AttendanceMyAreaUsers {
                 padding: const pw.EdgeInsets.all(8),
                 child: pw.Center(
                   child: pw.Text(
-                    'Relación de personal Recursos Humanos',
+                    'Relación de personal $nameArea',
                     style: const pw.TextStyle(
                       color: PdfColors.white,
                       fontSize: 18,
