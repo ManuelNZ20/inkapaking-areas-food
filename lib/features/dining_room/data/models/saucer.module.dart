@@ -9,6 +9,7 @@ class SaucerModel extends Saucer {
     required super.scheduleId,
     required super.schedule,
     required super.createdAt,
+    required super.updateAt,
   });
 
   factory SaucerModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +20,7 @@ class SaucerModel extends Saucer {
       scheduleId: json['schedule_id'] ?? 0,
       schedule: ScheduleModel.fromJson(json['schedule'] ?? {}),
       createdAt: json['created_at'] ?? '',
+      updateAt: json['update_at'] ?? '',
     );
   }
 }

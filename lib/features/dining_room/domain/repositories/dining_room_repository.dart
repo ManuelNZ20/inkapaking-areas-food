@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:inkapaking/core/core.dart';
 
 import '../../data/data.dart';
+import '../domain.dart';
 
 /// Abstracción del repositorio del comedor
 /// Esta clase es una abstracción del Repositorio del Comedor
@@ -14,7 +15,7 @@ abstract class DiningRoomRepository {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Either<Failure, List<SaucerModel>>> listSaucers();
+  Future<Either<Failure, List<Saucer>>>? listSaucers();
 
   /// Listar horarios de la base de datos.
   /// Este método se encarga de listar todos los horarios de la base de datos.
@@ -22,7 +23,7 @@ abstract class DiningRoomRepository {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Either<Failure, List<ScheduleModel>>> listSchedules();
+  Future<Either<Failure, List<Schedule>>>? listSchedules();
 
   /// Crear un platillo en la base de datos.
   /// Este método se encarga de crear un platillo en la base de datos.
@@ -30,7 +31,7 @@ abstract class DiningRoomRepository {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Either<Failure, SaucerModel>> createSaucer(
+  Future<Either<Failure, Saucer>>? createSaucer(
     String nameSaucer,
     String nameDrink,
     int scheduleId,
@@ -43,12 +44,12 @@ abstract class DiningRoomRepository {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Either<Failure, SaucerModel>> updateSaucer(
+  Future<Either<Failure, Saucer>>? updateSaucer(
     int saucerId,
     String nameSaucer,
     String nameDrink,
     int scheduleId,
-    String createdAt,
+    String updateAt,
   );
 
   /// Eliminar un platillo en la base de datos.
@@ -57,5 +58,5 @@ abstract class DiningRoomRepository {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Either<Failure, bool>> deleteSaucer(int saucerId);
+  Future<Either<Failure, bool>>? deleteSaucer(int saucerId);
 }

@@ -8,6 +8,7 @@ class Saucer extends Equatable {
   final int scheduleId;
   final Schedule? schedule;
   final String createdAt;
+  final String updateAt;
 
   const Saucer({
     required this.saucerId,
@@ -16,6 +17,7 @@ class Saucer extends Equatable {
     required this.scheduleId,
     this.schedule,
     required this.createdAt,
+    required this.updateAt,
   });
 
   @override
@@ -26,5 +28,6 @@ class Saucer extends Equatable {
         scheduleId,
         schedule,
         createdAt,
+        updateAt,
       ];
 }

@@ -1,4 +1,4 @@
-import '../domain.dart';
+import '../../data/data.dart';
 
 /// Esta es una clase abstracta que se utilizará como tipo para que el repositorio obtenga los datos de la fuente remota.
 /// La fuente de datos remota es la API de Supabase.
@@ -9,7 +9,7 @@ abstract class DiningRoomRemoteDataSource {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<List<Saucer>> listSaucers();
+  Future<List<SaucerModel>>? listSaucers();
 
   /// Listar horarios de la base de datos.
   /// Este método se encarga de listar todos los horarios de la base de datos.
@@ -17,7 +17,7 @@ abstract class DiningRoomRemoteDataSource {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<List<Schedule>> listSchedules();
+  Future<List<ScheduleModel>>? listSchedules();
 
   /// Crear un platillo en la base de datos.
   /// Este método se encarga de crear un platillo en la base de datos.
@@ -25,7 +25,7 @@ abstract class DiningRoomRemoteDataSource {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Saucer> createSaucer(
+  Future<SaucerModel>? createSaucer(
     String nameSaucer,
     String nameDrink,
     int scheduleId,
@@ -38,12 +38,12 @@ abstract class DiningRoomRemoteDataSource {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Saucer> updateSaucer(
+  Future<SaucerModel>? updateSaucer(
     int saucerId,
     String nameSaucer,
     String nameDrink,
     int scheduleId,
-    String createdAt,
+    String updateAt,
   );
 
   /// Eliminar un platillo en la base de datos.
@@ -52,5 +52,5 @@ abstract class DiningRoomRemoteDataSource {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<bool> deleteSaucer(int saucerId);
+  Future<bool>? deleteSaucer(int saucerId);
 }
