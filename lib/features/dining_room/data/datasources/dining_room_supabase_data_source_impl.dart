@@ -67,6 +67,7 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
         })
         .eq('id', saucerId)
         .select('''*,schedule(*)''')
+        .order('id', ascending: false)
         .limit(1)
         .single();
     return SaucerModel.fromJson(response);
@@ -81,5 +82,19 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
         .limit(1)
         .single();
     return SaucerModel.fromJson(response);
+  }
+
+  @override
+  Future<List<SaucerModel>>? getSaucersByScheduleId(
+    int scheduleId,
+    int from,
+    int to,
+  ) async {
+    final response = await client
+        .from('saucer')
+        .select('''*,schedule(*)''')
+        .eq('schedule_id', scheduleId)
+        .range(from, to);
+    return response.map((e) => SaucerModel.fromJson(e)).toList();
   }
 }

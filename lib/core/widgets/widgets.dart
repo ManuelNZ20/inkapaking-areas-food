@@ -8,3 +8,4 @@ export 'loading_view_notifications.dart';
 export 'home/divider_section.dart';
 export 'home/header_with_icon.dart';
 export 'home/my_area_print_pdf_divider.dart';
+export 'home/divider_title_type_schedule.dart';

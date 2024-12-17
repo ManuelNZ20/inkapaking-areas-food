@@ -6,9 +6,9 @@ import '../../domain/domain.dart';
 import 'providers.dart';
 
 final iconsSchedule = <int, IconData>{
-  3: Icons.breakfast_dining,
-  4: Icons.lunch_dining,
-  5: Icons.dinner_dining,
+  3: Icons.breakfast_dining_outlined,
+  4: Icons.lunch_dining_outlined,
+  5: Icons.dinner_dining_outlined,
 };
 
 final schedulesProvider = FutureProvider<List<ScheduleState>>((ref) async {

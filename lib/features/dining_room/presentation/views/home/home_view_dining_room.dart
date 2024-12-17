@@ -53,7 +53,7 @@ class HomeViewDiningRoom extends ConsumerWidget {
             ),
             DirectionButtonToAScreen(
               title: 'Lista de platillos',
-              routeName: '',
+              routeName: HistorialSaucerScreen.routeName,
               icon: Icons.restaurant_menu_rounded,
             ),
           ],

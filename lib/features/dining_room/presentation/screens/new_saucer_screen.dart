@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/core.dart';
 import '../../../auth/presentation/widgets/widgets.dart';
 import '../../../home/presentation/providers/providers.dart';
+import '../../../home/presentation/screens/screens.dart';
 import '../../domain/domain.dart';
 import '../providers/providers.dart';
 import '../widgets/widgets.dart';
@@ -62,23 +63,29 @@ class SaucerForm extends ConsumerWidget {
     ref.listen(
       saucerFormProvider(saucer!),
       (previous, next) {
-        if (next.isPosting) {
+        if (previous?.isPosting == false && next.isPosting == true) {
+          // Mostrar SnackBar cuando empieza el guardado
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Guardando platillo...'),
-            ),
+            const SnackBar(content: Text('Guardando platillo...')),
           );
-        } else {
+        }
+
+        if (previous?.isPosting == true && next.isPosting == false) {
+          // Acciones después de terminar de guardar
           if (next.failure != null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(next.errorMessage ?? 'Error desconocido'),
-              ),
+              SnackBar(content: Text(next.errorMessage ?? 'Error desconocido')),
             );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Platillo guardado')),
+            );
+            context.pushNamed(HomeScreen.routeName);
           }
         }
       },
     );
+
     final saucerForm = ref.watch(saucerFormProvider(saucer!));
     return Column(
       children: [
@@ -128,7 +135,7 @@ class SaucerForm extends ConsumerWidget {
                     content: Text('Platillo guardado'),
                   ),
                 );
-                context.pop();
+                context.pushNamed(HomeScreen.routeName);
               });
             },
             style: ElevatedButton.styleFrom(

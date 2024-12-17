@@ -61,4 +61,16 @@ abstract class DiningRoomRemoteDataSource {
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
   Future<SaucerModel>? getSaucerById(int saucerId);
+
+  /// Obtener platillos por id de horario de la base de datos.
+  /// Este método se encarga de obtener los platillos por id de horario de la base de datos.
+  /// Retorna una lista de platillos.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<List<SaucerModel>>? getSaucersByScheduleId(
+    int scheduleId,
+    int from,
+    int to,
+  );
 }

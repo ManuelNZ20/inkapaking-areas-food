@@ -96,4 +96,19 @@ class DiningRoomRepositoryImpl extends DiningRoomRepository {
       return await remoteDataSource.getSaucerById(saucerId)!;
     });
   }
+
+  @override
+  Future<Either<Failure, List<Saucer>>>? getSaucersByScheduleId(
+    int scheduleId,
+    int from,
+    int to,
+  ) async {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.getSaucersByScheduleId(
+        scheduleId,
+        from,
+        to,
+      )!;
+    });
+  }
 }
