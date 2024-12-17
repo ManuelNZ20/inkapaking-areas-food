@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../home/presentation/screens/views/views.dart';
@@ -17,10 +18,11 @@ class HomeViewDiningRoom extends ConsumerWidget {
         const SizedBox(height: 20),
         const HeaderWithIcon(
           titleArea: 'Comedor',
-          icon: Icons.restaurant,
+          icon: FontAwesomeIcons.plateWheat,
         ),
         const SizedBox(height: 20),
         CardDsh(
+          icon: FontAwesomeIcons.layerGroup,
           titleCard: 'Ordenes generales del comedor',
           subTitleCard: 'Crear y ver ordenes',
           buttonsDirection: [
@@ -37,6 +39,7 @@ class HomeViewDiningRoom extends ConsumerWidget {
           ],
         ),
         CardDsh(
+          icon: FontAwesomeIcons.bowlRice,
           titleCard: 'Platillos',
           subTitleCard: 'Crear y lista de platillos',
           buttonsDirection: [
@@ -56,6 +59,7 @@ class HomeViewDiningRoom extends ConsumerWidget {
           ],
         ),
         CardDsh(
+          icon: FontAwesomeIcons.bowlFood,
           titleCard: 'Mis Ordenes',
           subTitleCard: 'Crear y ver ordenes',
           buttonsDirection: [

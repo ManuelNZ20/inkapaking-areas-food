@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inkapaking/core/core.dart';
 import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
@@ -22,6 +23,7 @@ class HomeViewRRHH extends ConsumerWidget {
         ),
         const SizedBox(height: 20),
         CardDsh(
+          icon: FontAwesomeIcons.bowlFood,
           titleCard: 'Mis Ordenes',
           subTitleCard: 'Crear y ver ordenes',
           buttonsDirection: [
@@ -38,6 +40,7 @@ class HomeViewRRHH extends ConsumerWidget {
           ],
         ),
         CardDsh(
+          icon: FontAwesomeIcons.usersRays,
           titleCard: 'Registros de usuario',
           subTitleCard: 'Notificaciones de registros de usuario e historial',
           buttonsDirection: [

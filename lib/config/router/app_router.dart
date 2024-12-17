@@ -165,6 +165,13 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               );
             },
           ),
+          GoRoute(
+            path: 'historial_saucer',
+            name: HistorialSaucerScreen.routeName,
+            builder: (context, state) {
+              return const HistorialSaucerScreen();
+            },
+          ),
         ],
       ),
       GoRoute(

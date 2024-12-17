@@ -11,6 +11,7 @@ class CardDsh extends StatelessWidget {
     required this.titleCard,
     required this.subTitleCard,
     this.buttonsDirection,
+    required this.icon,
   }) : assert(
           buttonsDirection == null || buttonsDirection.length <= 3,
           'El número máximo de botones es 3',
@@ -18,7 +19,7 @@ class CardDsh extends StatelessWidget {
   final String titleCard;
   final String subTitleCard;
   final List<DirectionButtonToAScreen>? buttonsDirection;
-
+  final IconData icon;
   @override
   Widget build(BuildContext context) {
     final title = Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -76,9 +77,21 @@ class CardDsh extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      titleCard,
-                      style: title,
+                    Row(
+                      children: [
+                        Icon(
+                          icon,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          titleCard,
+                          style: title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 5),
                     Text(
