@@ -71,7 +71,8 @@ class SaucerFormNotifier extends StateNotifier<SaucerFormState> {
           nameSaucer: state.nameSaucer,
           nameDrink: state.nameDrink,
           scheduleId: state.scheduleId,
-          createdAt: state.updateAt!,
+          createdAt: DateFormat('dd-MM-yyyy HH:mm:ss')
+              .format(DateTime.now().toUtc().toLocal()),
         ),
       );
       final result = saucer.fold(
@@ -94,7 +95,8 @@ class SaucerFormNotifier extends StateNotifier<SaucerFormState> {
         nameSaucer: state.nameSaucer,
         nameDrink: state.nameDrink,
         scheduleId: state.scheduleId,
-        updateAt: state.updateAt!,
+        updateAt: DateFormat('dd-MM-yyyy HH:mm:ss')
+            .format(DateTime.now().toUtc().toLocal()),
       ),
     );
     final result = saucer.fold(
@@ -142,8 +144,8 @@ class SaucerFormState {
   final int scheduleId;
   final Failure? failure;
   final String? errorMessage;
-  String? updateAt = DateFormat('dd-MM-yyyy HH:mm:ss')
-      .format(DateTime.now().toUtc().toLocal());
+  final String? updateAt;
+  final String? createdAt;
 
   SaucerFormState({
     required this.isFormValid,
@@ -155,6 +157,7 @@ class SaucerFormState {
     this.failure,
     this.errorMessage,
     this.updateAt,
+    this.createdAt,
   });
 
   SaucerFormState copyWith({
@@ -167,6 +170,7 @@ class SaucerFormState {
     Failure? failure,
     String? errorMessage,
     String? updateAt,
+    String? createdAt,
   }) {
     return SaucerFormState(
       isFormValid: isFormValid ?? this.isFormValid,
@@ -178,6 +182,7 @@ class SaucerFormState {
       failure: failure ?? this.failure,
       errorMessage: errorMessage ?? this.errorMessage,
       updateAt: updateAt ?? this.updateAt,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 }

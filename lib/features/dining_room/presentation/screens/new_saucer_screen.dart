@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/core.dart';
 import '../../../auth/presentation/widgets/widgets.dart';
@@ -127,6 +128,7 @@ class SaucerForm extends ConsumerWidget {
                     content: Text('Platillo guardado'),
                   ),
                 );
+                context.pop();
               });
             },
             style: ElevatedButton.styleFrom(
