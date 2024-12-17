@@ -7,3 +7,6 @@ export 'datasources/dining_room_data_sources.dart';
 export 'repositories/dining_room_repository.dart';
 // Use cases
 export 'use_cases/get_schedules.dart';
+export 'use_cases/get_saucer_by_id.dart';
+export 'use_cases/create_saucer.dart';
+export 'use_cases/update_saucer.dart';

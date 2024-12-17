@@ -44,7 +44,7 @@ class HomeViewDiningRoom extends ConsumerWidget {
               title: 'Crear',
               routeName: SaucerFormScreen.routeName,
               pathParameters: const {
-                'new_saucer_id': '1',
+                'new_saucer_id': '0',
               },
               icon: Icons.create,
             ),

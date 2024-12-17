@@ -58,4 +58,12 @@ abstract class DiningRoomRepository {
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
   Future<Either<Failure, bool>>? deleteSaucer(int saucerId);
+
+  /// Obtener platillo por id de la base de datos.
+  /// Este método se encarga de obtener un platillo por id de la base de datos.
+  /// Retorna el platillo obtenido.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<Either<Failure, Saucer>>? getSaucerById(int saucerId);
 }

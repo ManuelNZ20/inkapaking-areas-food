@@ -171,7 +171,7 @@ class _SettingForm extends ConsumerWidget {
             label: 'Contraseña',
             hint: 'Ingrese su contraseña',
             initialValue: configProfile.password.value,
-            obscureText: true,
+            obscureText: configProfile.obscureText,
             keyboardType: TextInputType.visiblePassword,
             onPressed: ref
                 .read(configProfileFormProvider(user).notifier)

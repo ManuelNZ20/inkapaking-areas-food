@@ -71,4 +71,15 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
         .single();
     return SaucerModel.fromJson(response);
   }
+
+  @override
+  Future<SaucerModel>? getSaucerById(int saucerId) async {
+    final response = await client
+        .from('saucer')
+        .select('''*,schedule(*)''')
+        .eq('id', saucerId)
+        .limit(1)
+        .single();
+    return SaucerModel.fromJson(response);
+  }
 }

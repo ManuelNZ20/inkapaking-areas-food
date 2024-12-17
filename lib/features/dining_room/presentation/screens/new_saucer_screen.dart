@@ -5,6 +5,7 @@ import '../../../../core/core.dart';
 import '../../../auth/presentation/widgets/widgets.dart';
 import '../../../home/presentation/providers/providers.dart';
 import '../../domain/domain.dart';
+import '../providers/providers.dart';
 import '../widgets/widgets.dart';
 
 class SaucerFormScreen extends ConsumerWidget {
@@ -24,19 +25,22 @@ class SaucerFormScreen extends ConsumerWidget {
       });
     });
     // TODO:formstate
+    final saucerState = ref.watch(saucerProvider(saucerId));
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Platillo'),
         ),
-        body: const SafeArea(
-          child: SingleChildScrollView(
-            child: SaucerForm(
-              saucer: null,
-            ),
-          ),
-        ),
+        body: saucerState.isLoading == true
+            ? const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(child: CircularProgressIndicator()),
+                  Text('Cargando datos...'),
+                ],
+              )
+            : SaucerForm(saucer: saucerState.saucer!),
       ),
     );
   }
@@ -51,29 +55,39 @@ class SaucerForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO: form state and save button
+    final saucerForm = ref.watch(saucerFormProvider(saucer!));
     return Column(
       children: [
         const SizedBox(height: 20),
-        const Padding(
-          padding: EdgeInsets.all(18.0),
+        Padding(
+          padding: const EdgeInsets.all(18.0),
           child: CustomTextField(
             label: 'Platillo',
             hint: 'Ingrese el nombre del platillo',
+            initialValue: saucerForm.nameSaucer,
+            onChanged: ref
+                .read(saucerFormProvider(saucer!).notifier)
+                .onNameSaucerChanged,
           ),
         ),
         const SizedBox(height: 20),
-        const Padding(
-          padding: EdgeInsets.all(18.0),
+        Padding(
+          padding: const EdgeInsets.all(18.0),
           child: CustomTextField(
             label: 'Bebida',
             hint: 'Ingrese el nombre de la bebida',
+            initialValue: saucerForm.nameDrink,
+            onChanged: ref
+                .read(saucerFormProvider(saucer!).notifier)
+                .onNameDrinkChanged,
           ),
         ),
         const SizedBox(height: 20),
         SegmentedButtonSchedule(
-          selected: const <int>{3},
-          onSelectionChanged: (p0) {},
+          selected: <int>{saucerForm.scheduleId},
+          onSelectionChanged: ref
+              .read(saucerFormProvider(saucer!).notifier)
+              .onScheduleIdChanged,
         ),
         const SizedBox(height: 8),
         Padding(
