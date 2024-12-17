@@ -24,7 +24,6 @@ class SaucerFormScreen extends ConsumerWidget {
         await handleConnectivity(context, ref, connectivityResult);
       });
     });
-    // TODO:formstate
     final saucerState = ref.watch(saucerProvider(saucerId));
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -40,7 +39,11 @@ class SaucerFormScreen extends ConsumerWidget {
                   Text('Cargando datos...'),
                 ],
               )
-            : SaucerForm(saucer: saucerState.saucer!),
+            : SafeArea(
+                child: SingleChildScrollView(
+                  child: SaucerForm(saucer: saucerState.saucer!),
+                ),
+              ),
       ),
     );
   }
@@ -55,6 +58,26 @@ class SaucerForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen(
+      saucerFormProvider(saucer!),
+      (previous, next) {
+        if (next.isPosting) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Guardando platillo...'),
+            ),
+          );
+        } else {
+          if (next.failure != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(next.errorMessage ?? 'Error desconocido'),
+              ),
+            );
+          }
+        }
+      },
+    );
     final saucerForm = ref.watch(saucerFormProvider(saucer!));
     return Column(
       children: [
@@ -93,7 +116,19 @@ class SaucerForm extends ConsumerWidget {
         Padding(
           padding: const EdgeInsets.all(18.0),
           child: FilledButton(
-            onPressed: () async {},
+            onPressed: () async {
+              await ref
+                  .read(saucerFormProvider(saucer!).notifier)
+                  .onFormSubmit()
+                  .then((value) {
+                if (!value) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Platillo guardado'),
+                  ),
+                );
+              });
+            },
             style: ElevatedButton.styleFrom(
               minimumSize: const Size.fromHeight(50),
             ),

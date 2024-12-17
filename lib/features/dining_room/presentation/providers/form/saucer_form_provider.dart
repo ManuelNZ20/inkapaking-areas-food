@@ -59,6 +59,12 @@ class SaucerFormNotifier extends StateNotifier<SaucerFormState> {
 
   Future<bool> onFormSubmit() async {
     if (!state.isFormValid) return false;
+    state = state.copyWith(
+      isPosting: true,
+      errorMessage: null,
+      isFormValid: true,
+      failure: null,
+    );
     if (state.saucerId == 0) {
       final saucer = await createSaucer!(
         CreateSaucerParams(
@@ -74,6 +80,9 @@ class SaucerFormNotifier extends StateNotifier<SaucerFormState> {
           return false;
         },
         (saucer) {
+          state = state.copyWith(
+            saucerId: saucer.saucerId,
+          );
           return true;
         },
       );
