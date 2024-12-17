@@ -80,7 +80,7 @@ class SaucerForm extends ConsumerWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Platillo guardado')),
             );
-            context.pushNamed(HomeScreen.routeName);
+            context.goNamed(HomeScreen.routeName);
           }
         }
       },
@@ -135,7 +135,7 @@ class SaucerForm extends ConsumerWidget {
                     content: Text('Platillo guardado'),
                   ),
                 );
-                context.pushNamed(HomeScreen.routeName);
+                context.goNamed(HomeScreen.routeName);
               });
             },
             style: ElevatedButton.styleFrom(

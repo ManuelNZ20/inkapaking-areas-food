@@ -28,7 +28,7 @@ class HomeViewDiningRoom extends ConsumerWidget {
           buttonsDirection: [
             DirectionButtonToAScreen(
               title: 'Crear',
-              routeName: '',
+              routeName: NewGeneralOrderScreen.routeName,
               icon: Icons.create,
             ),
             DirectionButtonToAScreen(

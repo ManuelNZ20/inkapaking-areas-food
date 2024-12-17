@@ -172,6 +172,21 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return const HistorialSaucerScreen();
             },
           ),
+          // Orden general
+          GoRoute(
+            path: 'new_general_order',
+            name: NewGeneralOrderScreen.routeName,
+            builder: (context, state) {
+              return const NewGeneralOrderScreen();
+            },
+          ),
+          GoRoute(
+            path: 'historial_general_order',
+            name: HistorialGeneralOrderScreen.routeName,
+            builder: (context, state) {
+              return const HistorialGeneralOrderScreen();
+            },
+          ),
         ],
       ),
       GoRoute(
