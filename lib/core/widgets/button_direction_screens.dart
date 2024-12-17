@@ -7,6 +7,7 @@ class DirectionButtonToAScreen extends StatelessWidget {
     this.title,
     this.routeName,
     this.icon,
+    this.pathParameters,
   }) : assert(
           routeName != null && !routeName.startsWith('/'),
           'The path name should not start with /',
@@ -14,6 +15,7 @@ class DirectionButtonToAScreen extends StatelessWidget {
   final String? title;
   final String? routeName;
   final IconData? icon;
+  final Map<String, String>? pathParameters;
   @override
   Widget build(BuildContext context) {
     final styleTitle = Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -30,7 +32,15 @@ class DirectionButtonToAScreen extends StatelessWidget {
           title ?? 'Acción',
           style: styleTitle,
         ),
-        onPressed: () =>
-            routeName!.isNotEmpty ? context.pushNamed(routeName!) : null);
+        onPressed: () => routeName!.isNotEmpty
+            ? pathParameters != null
+                ? context.pushNamed(
+                    routeName!,
+                    pathParameters: pathParameters!,
+                  )
+                : context.pushNamed(
+                    routeName!,
+                  )
+            : null);
   }
 }

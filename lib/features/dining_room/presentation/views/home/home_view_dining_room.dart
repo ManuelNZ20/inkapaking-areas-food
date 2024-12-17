@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/core.dart';
 import '../../../../home/presentation/screens/views/views.dart';
+import '../../screens/screens.dart';
 
 class HomeViewDiningRoom extends ConsumerWidget {
   static const String routeName = 'home_view_dining_room';
@@ -41,7 +42,10 @@ class HomeViewDiningRoom extends ConsumerWidget {
           buttonsDirection: [
             DirectionButtonToAScreen(
               title: 'Crear',
-              routeName: '',
+              routeName: SaucerFormScreen.routeName,
+              pathParameters: const {
+                'new_saucer_id': '1',
+              },
               icon: Icons.create,
             ),
             DirectionButtonToAScreen(

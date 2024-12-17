@@ -5,6 +5,7 @@ import '../../features/all_areas/presentation/screens/screens.dart';
 import '../../features/auth/presentation/providers/providers.dart';
 import '../../features/auth/presentation/screens/screens.dart';
 import '../../features/config/presentation/screens/screens.dart';
+import '../../features/dining_room/presentation/screens/screens.dart';
 import '../../features/home/presentation/screens/screens.dart';
 import '../../features/rrhh/presentation/screens/screens.dart';
 import 'auth_router_notifier.dart';
@@ -59,6 +60,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
+      // Rutas de configuración
       GoRoute(
         path: '/home',
         name: HomeScreen.routeName,
@@ -95,28 +97,28 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             },
             routes: [
               GoRoute(
-                  path: 'request_new_user/:request_user_id',
-                  name: RequestNewUser.routeName,
-                  builder: (context, state) {
-                    final userId =
-                        state.pathParameters['request_user_id'] ?? '0';
-                    return RequestNewUser(
-                      userId: int.parse(userId),
-                    );
-                  },
-                  routes: [
-                    GoRoute(
-                      path: 'assign_area/:assign_area_user_id',
-                      name: AssignAreaScreen.routeName,
-                      builder: (context, state) {
-                        final userId =
-                            state.pathParameters['assign_area_user_id'] ?? '0';
-                        return AssignAreaScreen(
-                          userId: int.parse(userId),
-                        );
-                      },
-                    ),
-                  ]),
+                path: 'request_new_user/:request_user_id',
+                name: RequestNewUser.routeName,
+                builder: (context, state) {
+                  final userId = state.pathParameters['request_user_id'] ?? '0';
+                  return RequestNewUser(
+                    userId: int.parse(userId),
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: 'assign_area/:assign_area_user_id',
+                    name: AssignAreaScreen.routeName,
+                    builder: (context, state) {
+                      final userId =
+                          state.pathParameters['assign_area_user_id'] ?? '0';
+                      return AssignAreaScreen(
+                        userId: int.parse(userId),
+                      );
+                    },
+                  ),
+                ],
+              ),
             ],
           ),
           // Historial de notificaciones
@@ -148,6 +150,18 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                   state.pathParameters['my_area_type_user_id'] ?? '0';
               return MyAreaScreen(
                 typeUserId: int.parse(userId),
+              );
+            },
+          ),
+
+          // Configuración de la aplicación para el área de comedor
+          GoRoute(
+            path: 'new_saucer/:new_saucer_id',
+            name: SaucerFormScreen.routeName,
+            builder: (context, state) {
+              final saucerId = state.pathParameters['new_saucer_id'] ?? '0';
+              return SaucerFormScreen(
+                saucerId: int.parse(saucerId),
               );
             },
           ),
