@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:inkapaking/core/core.dart';
 
-import '../../data/data.dart';
 import '../domain.dart';
 
 /// Abstracción del repositorio del comedor

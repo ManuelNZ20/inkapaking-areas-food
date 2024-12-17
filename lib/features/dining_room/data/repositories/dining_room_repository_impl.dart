@@ -56,7 +56,7 @@ class DiningRoomRepositoryImpl extends DiningRoomRepository {
   }
 
   @override
-  Future<Either<Failure, List<Saucer>>>? listSaucers() async {
+  Future<Either<Failure, List<Saucer>>>? getSaucers() async {
     return _handleNetworkRequest(() async {
       return await remoteDataSource.listSaucers()!;
     });
