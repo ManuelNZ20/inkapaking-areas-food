@@ -111,4 +111,34 @@ class DiningRoomRepositoryImpl extends DiningRoomRepository {
       )!;
     });
   }
+
+  @override
+  Future<Either<Failure, GeneralOrder>>? addSaucerToGeneralOrder(
+      int generalOrderId, int saucerId) async {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.addSaucerToGeneralOrder(
+        generalOrderId,
+        saucerId,
+      )!;
+    });
+  }
+
+  @override
+  Future<Either<Failure, GeneralOrder>>? createGeneralOrder(
+      String startDate, String endDate, String createdAt) async {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.createGeneralOrder(
+        startDate,
+        endDate,
+        createdAt,
+      )!;
+    });
+  }
+
+  @override
+  Future<Either<Failure, List<GeneralOrder>>>? listGeneralOrders() async {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.listGeneralOrders()!;
+    });
+  }
 }

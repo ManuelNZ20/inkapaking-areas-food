@@ -33,7 +33,7 @@ class HomeViewDiningRoom extends ConsumerWidget {
             ),
             DirectionButtonToAScreen(
               title: 'Mi historial',
-              routeName: '',
+              routeName: HistorialGeneralOrderScreen.routeName,
               icon: Icons.history,
             ),
           ],

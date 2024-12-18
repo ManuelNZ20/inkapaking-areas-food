@@ -97,4 +97,35 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
         .range(from, to);
     return response.map((e) => SaucerModel.fromJson(e)).toList();
   }
+
+  @override
+  Future<GeneralOrderModel>? addSaucerToGeneralOrder(
+      int generalOrderId, int saucerId) async {
+    // TODO: implement addSaucerToGeneralOrder
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<GeneralOrderModel>? createGeneralOrder(
+      String startDate, String endDate, String createdAt) async {
+    final response = await client
+        .from('general_order')
+        .insert({
+          'start_date': startDate,
+          'end_date': endDate,
+          'created_at': createdAt,
+        })
+        .select()
+        .limit(1)
+        .single();
+    return GeneralOrderModel.fromJson(response);
+  }
+
+  @override
+  Future<List<GeneralOrderModel>>? listGeneralOrders() async {
+    final response = await client
+        .from('general_order_saucers')
+        .select('''*,saucers:general_order_saucers(saucer(*))''');
+    return response.map((e) => GeneralOrderModel.fromJson(e)).toList();
+  }
 }

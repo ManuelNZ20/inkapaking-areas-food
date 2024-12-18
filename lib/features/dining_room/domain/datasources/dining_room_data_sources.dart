@@ -73,4 +73,36 @@ abstract class DiningRoomRemoteDataSource {
     int from,
     int to,
   );
+
+  /// Crear una orden general en la base de datos.
+  /// Este método se encarga de crear una orden general en la base de datos.
+  /// Retorna la orden general creada.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<GeneralOrderModel>? createGeneralOrder(
+    String startDate,
+    String endDate,
+    String createdAt,
+  );
+
+  /// Listar ordenes generales de la base de datos.
+  /// Este método se encarga de listar todas las ordenes generales de la base de datos.
+  /// Retorna una lista de ordenes generales.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<List<GeneralOrderModel>>? listGeneralOrders();
+
+  /// Agregar un platillo a una orden general en la base de datos.
+  /// Este método se encarga de agregar un platillo a una orden general en la base de datos.
+  /// Retorna la orden general con el platillo agregado.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  /// Si el platillo ya se encuentra en la orden general, se lanza una excepción como [ResourceAlreadyExistException].
+  Future<GeneralOrderModel>? addSaucerToGeneralOrder(
+    int generalOrderId,
+    int saucerId,
+  );
 }

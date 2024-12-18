@@ -1,6 +1,8 @@
 // Entities
 export 'entities/saucer.dart';
 export 'entities/schedule.dart';
+export 'entities/general_order.dart';
+export 'entities/general_order_saucers.dart';
 // Data sources
 export 'datasources/dining_room_data_sources.dart';
 // Repositories
