@@ -46,7 +46,7 @@ class _RadioListSaucerState extends ConsumerState<RadioListsSaucers> {
   @override
   Widget build(BuildContext context) {
     final saucers = widget.saucers;
-    final groupValue = saucers.first.saucerId;
+    final groupValue = widget.value;
     final size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width,
@@ -67,7 +67,7 @@ class _RadioListSaucerState extends ConsumerState<RadioListsSaucers> {
               child: RadioListTile(
                 title: Text(saucer.nameSaucer),
                 subtitle: Text(saucer.nameDrink),
-                value: widget.value,
+                value: saucer.saucerId,
                 groupValue: groupValue,
                 onChanged: widget.onChanged,
                 shape: RoundedRectangleBorder(

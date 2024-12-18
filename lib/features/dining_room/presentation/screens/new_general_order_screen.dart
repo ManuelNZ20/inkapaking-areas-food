@@ -69,26 +69,52 @@ class NewGeneralOrderScreenState extends ConsumerState<NewGeneralOrderScreen> {
             scheduleName: 'Desayuno',
             iconData: Icons.breakfast_dining,
             scheduleId: 3,
-            saucers: breakfastSaucers,
-            value: breakfastSaucers.first.saucerId,
+            saucers: breakfastSaucers.saucers,
+            value: ref
+                .read(breakfastSaucersByScheduleProvider(3))
+                .selectedSaucerId,
+            onChanged: ref
+                .read(breakfastSaucersByScheduleProvider(3).notifier)
+                .selectSaucer,
           ),
           SaucersWithScheduleListView(
             scheduleName: 'Almuerzo',
             iconData: Icons.lunch_dining,
             scheduleId: 4,
-            saucers: lunchSaucers,
-            value: lunchSaucers.first.saucerId,
+            saucers: lunchSaucers.saucers,
+            value: ref.read(lunchSaucersByScheduleProvider(4)).selectedSaucerId,
+            onChanged: ref
+                .read(lunchSaucersByScheduleProvider(4).notifier)
+                .selectSaucer,
           ),
           SaucersWithScheduleListView(
             scheduleName: 'Cena',
             iconData: Icons.dinner_dining,
             scheduleId: 5,
-            saucers: dinnerSaucers,
-            value: dinnerSaucers.first.saucerId,
+            saucers: dinnerSaucers.saucers,
+            value:
+                ref.read(dinnerSaucersByScheduleProvider(5)).selectedSaucerId,
+            onChanged: ref
+                .read(dinnerSaucersByScheduleProvider(5).notifier)
+                .selectSaucer,
           ),
           // Botón para guardar la orden
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              final selectedSaucerIdBreakfast = ref
+                  .read(breakfastSaucersByScheduleProvider(3))
+                  .selectedSaucerId;
+
+              final selectedSaucerIdLunch =
+                  ref.read(lunchSaucersByScheduleProvider(4)).selectedSaucerId;
+
+              final selectedSaucerIdDinner =
+                  ref.read(dinnerSaucersByScheduleProvider(5)).selectedSaucerId;
+
+              print('selectedSaucerIdBreakfast: $selectedSaucerIdBreakfast');
+              print('selectedSaucerIdLunch: $selectedSaucerIdLunch');
+              print('selectedSaucerIdDinner: $selectedSaucerIdDinner');
+            },
             child: const Text('Guardar orden'),
           ),
         ],

@@ -4,12 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../domain/domain.dart';
 
 class GeneralOrderNotifier extends StateNotifier<GeneralOrderFormState> {
-  GetSaucersByScheduleId getSaucersByScheduleId;
-  GetSchedules getSchedule;
-  GeneralOrderNotifier({
-    required this.getSaucersByScheduleId,
-    required this.getSchedule,
-  }) : super(GeneralOrderFormState());
+  GeneralOrderNotifier() : super(GeneralOrderFormState());
 
   void onStartDateChanged(TimeOfDay value) {
     final startDate = value;
@@ -24,6 +19,27 @@ class GeneralOrderNotifier extends StateNotifier<GeneralOrderFormState> {
       endDate: endDate,
     );
   }
+
+  void onBreakfastSaucerSelected(int value) {
+    final breakfastSaucerSelected = value;
+    state = state.copyWith(
+      breakfastSaucerSelected: breakfastSaucerSelected,
+    );
+  }
+
+  void onLunchSaucerSelected(int value) {
+    final lunchSaucerIdSelected = value;
+    state = state.copyWith(
+      lunchSaucerIdSelected: lunchSaucerIdSelected,
+    );
+  }
+
+  void onDinnerSaucerSelected(int value) {
+    final dinnerSaucerIdSelected = value;
+    state = state.copyWith(
+      dinnerSaucerIdSelected: dinnerSaucerIdSelected,
+    );
+  }
 }
 
 class GeneralOrderFormState {
@@ -36,7 +52,6 @@ class GeneralOrderFormState {
   final int breakfastSaucerSelected;
   final int lunchSaucerIdSelected;
   final int dinnerSaucerIdSelected;
-  final List<Saucer> totalSaucers;
 
   GeneralOrderFormState({
     this.isFormValid = false,
@@ -48,7 +63,6 @@ class GeneralOrderFormState {
     this.breakfastSaucerSelected = 0,
     this.lunchSaucerIdSelected = 0,
     this.dinnerSaucerIdSelected = 0,
-    this.totalSaucers = const [],
   });
 
   GeneralOrderFormState copyWith({
@@ -61,7 +75,6 @@ class GeneralOrderFormState {
     int? breakfastSaucerSelected,
     int? lunchSaucerIdSelected,
     int? dinnerSaucerIdSelected,
-    List<Saucer>? totalSaucers,
   }) {
     return GeneralOrderFormState(
       isFormValid: isFormValid ?? this.isFormValid,
@@ -76,7 +89,6 @@ class GeneralOrderFormState {
           lunchSaucerIdSelected ?? this.lunchSaucerIdSelected,
       dinnerSaucerIdSelected:
           dinnerSaucerIdSelected ?? this.dinnerSaucerIdSelected,
-      totalSaucers: totalSaucers ?? this.totalSaucers,
     );
   }
 }

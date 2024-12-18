@@ -54,9 +54,9 @@ class ContainerListSaucerWithScheduleState
         physics: const BouncingScrollPhysics(),
         controller: scrollController,
         scrollDirection: Axis.horizontal,
-        itemCount: saucers.length,
+        itemCount: saucers.saucers.length,
         itemBuilder: (context, index) {
-          final saucer = saucers[index];
+          final saucer = saucers.saucers[index];
           return Padding(
             padding: const EdgeInsets.only(right: 8),
             child: SizedBox(

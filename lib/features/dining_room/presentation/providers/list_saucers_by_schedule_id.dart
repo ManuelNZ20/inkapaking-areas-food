@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/domain.dart';
 import 'providers.dart';
 
-final breakfastSaucersByScheduleProvider = StateNotifierProvider.family
-    .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
+final breakfastSaucersByScheduleProvider =
+    StateNotifierProvider.family<SaucersNotifier, SaucersState, int>(
+        (ref, scheduleId) {
   final getSaucerByScheduleId =
       ref.watch(getSaucersByScheduleIdUseCaseProvider);
   return SaucersNotifier(
@@ -13,8 +14,9 @@ final breakfastSaucersByScheduleProvider = StateNotifierProvider.family
   );
 });
 
-final lunchSaucersByScheduleProvider = StateNotifierProvider.family
-    .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
+final lunchSaucersByScheduleProvider =
+    StateNotifierProvider.family<SaucersNotifier, SaucersState, int>(
+        (ref, scheduleId) {
   final getSaucerByScheduleId =
       ref.watch(getSaucersByScheduleIdUseCaseProvider);
   return SaucersNotifier(
@@ -23,8 +25,9 @@ final lunchSaucersByScheduleProvider = StateNotifierProvider.family
   );
 });
 
-final dinnerSaucersByScheduleProvider = StateNotifierProvider.family
-    .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
+final dinnerSaucersByScheduleProvider =
+    StateNotifierProvider.family<SaucersNotifier, SaucersState, int>(
+        (ref, scheduleId) {
   final getSaucerByScheduleId =
       ref.watch(getSaucersByScheduleIdUseCaseProvider);
   return SaucersNotifier(
@@ -33,8 +36,9 @@ final dinnerSaucersByScheduleProvider = StateNotifierProvider.family
   );
 });
 
-final saucersByScheduleProvider = StateNotifierProvider.family
-    .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
+final saucersByScheduleProvider =
+    StateNotifierProvider.family<SaucersNotifier, SaucersState, int>(
+        (ref, scheduleId) {
   final getSaucerByScheduleId =
       ref.watch(getSaucersByScheduleIdUseCaseProvider);
   return SaucersNotifier(
@@ -43,7 +47,7 @@ final saucersByScheduleProvider = StateNotifierProvider.family
   );
 });
 
-class SaucersNotifier extends StateNotifier<List<Saucer>> {
+class SaucersNotifier extends StateNotifier<SaucersState> {
   final GetSaucersByScheduleId getSaucerByScheduleId;
   final int scheduleId;
   int from = 0;
@@ -52,7 +56,7 @@ class SaucersNotifier extends StateNotifier<List<Saucer>> {
   SaucersNotifier({
     required this.scheduleId,
     required this.getSaucerByScheduleId,
-  }) : super([]) {
+  }) : super(SaucersState()) {
     reset();
   }
 
@@ -78,10 +82,10 @@ class SaucersNotifier extends StateNotifier<List<Saucer>> {
         return null;
       },
       (saucers) {
-        state = [
-          ...state,
-          ...saucers,
-        ];
+        state = state.copyWith(
+          saucers: List.of(state.saucers)..addAll(saucers),
+          selectedSaucerId: saucers.isNotEmpty ? saucers.first.saucerId : 0,
+        );
       },
     );
   }
@@ -89,7 +93,33 @@ class SaucersNotifier extends StateNotifier<List<Saucer>> {
   Future<void> reset() async {
     from = 0;
     to = 10;
-    state = [];
+    state = SaucersState();
     loadNextPage();
+  }
+
+  void selectSaucer(int? saucerId) {
+    state = state.copyWith(
+      selectedSaucerId: saucerId,
+    );
+  }
+}
+
+class SaucersState {
+  final List<Saucer> saucers;
+  final int selectedSaucerId;
+
+  SaucersState({
+    this.saucers = const [],
+    this.selectedSaucerId = 0,
+  });
+
+  SaucersState copyWith({
+    List<Saucer>? saucers,
+    int? selectedSaucerId,
+  }) {
+    return SaucersState(
+      saucers: saucers ?? this.saucers,
+      selectedSaucerId: selectedSaucerId ?? this.selectedSaucerId,
+    );
   }
 }
