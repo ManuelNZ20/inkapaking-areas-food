@@ -17,7 +17,7 @@ class GeneralOrderModel extends GeneralOrder {
         endDate: json['end_date'],
         createdAt: json['created_at'],
         saucers: (json['saucers'] ?? [])
-            .map((e) => SaucerModel.fromJson(e))
+            .map((e) => SaucerModel.fromJson(e['saucer']))
             .toList(),
       );
 }

@@ -125,7 +125,7 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
   Future<List<GeneralOrderModel>>? listGeneralOrders() async {
     final response = await client
         .from('general_order_saucers')
-        .select('''*,saucers:general_order_saucers(saucer(*))''');
+        .select('''*,saucers:general_order_saucers!inner(saucer(*))''');
     return response.map((e) => GeneralOrderModel.fromJson(e)).toList();
   }
 }
