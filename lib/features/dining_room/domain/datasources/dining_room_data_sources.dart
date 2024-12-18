@@ -101,7 +101,7 @@ abstract class DiningRoomRemoteDataSource {
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
   /// Si el platillo ya se encuentra en la orden general, se lanza una excepción como [ResourceAlreadyExistException].
-  Future<GeneralOrderModel>? addSaucerToGeneralOrder(
+  Future<bool>? addSaucerToGeneralOrder(
     int generalOrderId,
     int saucerId,
   );

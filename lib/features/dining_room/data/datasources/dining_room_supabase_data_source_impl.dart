@@ -99,10 +99,18 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
   }
 
   @override
-  Future<GeneralOrderModel>? addSaucerToGeneralOrder(
+  Future<bool>? addSaucerToGeneralOrder(
       int generalOrderId, int saucerId) async {
-    // TODO: implement addSaucerToGeneralOrder
-    throw UnimplementedError();
+    final response = await client
+        .from('general_order_saucers')
+        .insert({
+          'general_order_id': generalOrderId,
+          'saucer_id': saucerId,
+        })
+        .select()
+        .limit(1)
+        .single();
+    return response.isNotEmpty;
   }
 
   @override

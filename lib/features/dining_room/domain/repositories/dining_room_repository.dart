@@ -105,7 +105,7 @@ abstract class DiningRoomRepository {
   /// Si ocurre un error, se lanza una excepción como [ServerException].
   /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
-  Future<Either<Failure, GeneralOrder>>? addSaucerToGeneralOrder(
+  Future<Either<Failure, bool>>? addSaucerToGeneralOrder(
     int generalOrderId,
     int saucerId,
   );
