@@ -109,9 +109,7 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
         .insert(
           insertData,
         )
-        .select()
-        .limit(1)
-        .single();
+        .select();
     return response.isNotEmpty;
   }
 

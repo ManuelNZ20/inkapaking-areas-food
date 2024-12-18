@@ -100,62 +100,88 @@ class NewGeneralOrderScreenState extends ConsumerState<NewGeneralOrderScreen> {
           ),
           // Botón para guardar la orden
           ElevatedButton(
-            onPressed: () async {
-              if (startTime == null || endTime == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Seleccione fechas válidas')),
-                );
-                return;
-              }
+            onPressed: ref.watch(generalOrderFormProvider).isPosting
+                ? null // Desactiva el botón si el formulario está posteando
+                : () async {
+                    if (startTime == null || endTime == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Seleccione fechas válidas')),
+                      );
+                      return;
+                    }
 
-              final breakfast = ref
-                  .read(breakfastSaucersByScheduleProvider(3))
-                  .selectedSaucerId;
+                    // Validar si las fechas son iguales
+                    if (startTime!.hour == endTime!.hour &&
+                        startTime!.minute == endTime!.minute) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text(
+                                'Las fechas de inicio y fin no pueden ser iguales')),
+                      );
+                      return;
+                    }
 
-              final lunch =
-                  ref.read(lunchSaucersByScheduleProvider(4)).selectedSaucerId;
+                    // Validar que haya al menos una hora de diferencia
+                    final duration = endTime!.hour - startTime!.hour;
+                    if (duration < 1) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text(
+                                'La diferencia entre las fechas debe ser de al menos una hora')),
+                      );
+                      return;
+                    }
 
-              final dinner =
-                  ref.read(dinnerSaucersByScheduleProvider(5)).selectedSaucerId;
-              await ref
-                  .read(generalOrderFormProvider.notifier)
-                  .onSaucerSubmit(
-                    context,
-                    breakfast,
-                    lunch,
-                    dinner,
-                    startTime!,
-                    endTime!,
+                    final breakfast = ref
+                        .read(breakfastSaucersByScheduleProvider(3))
+                        .selectedSaucerId;
+                    final lunch = ref
+                        .read(lunchSaucersByScheduleProvider(4))
+                        .selectedSaucerId;
+                    final dinner = ref
+                        .read(dinnerSaucersByScheduleProvider(5))
+                        .selectedSaucerId;
+
+                    await ref
+                        .read(generalOrderFormProvider.notifier)
+                        .onSaucerSubmit(
+                          context,
+                          breakfast,
+                          lunch,
+                          dinner,
+                          startTime!,
+                          endTime!,
+                        )
+                        .then(
+                      (value) {
+                        if (!value) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Orden guardada')),
+                        );
+                      },
+                    ).onError(
+                      (error, stackTrace) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Error al guardar la orden')),
+                        );
+                      },
+                    ).timeout(
+                      const Duration(seconds: 10),
+                      onTimeout: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Tiempo de espera agotado')),
+                        );
+                      },
+                    );
+                  },
+            child: ref.watch(generalOrderFormProvider).isPosting
+                ? const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                   )
-                  .then(
-                (value) {
-                  if (!value) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Orden guardada'),
-                    ),
-                  );
-                },
-              ).onError(
-                (error, stackTrace) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Error al guardar la orden'),
-                    ),
-                  );
-                },
-              ).timeout(
-                const Duration(seconds: 10),
-                onTimeout: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Tiempo de espera agotado'),
-                    ),
-                  );
-                },
-              );
-            },
-            child: const Text('Guardar orden'),
+                : const Text('Guardar orden'),
           ),
         ],
       ),
