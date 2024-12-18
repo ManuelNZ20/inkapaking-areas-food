@@ -5,6 +5,7 @@ import '../../features/all_areas/presentation/screens/screens.dart';
 import '../../features/auth/presentation/providers/providers.dart';
 import '../../features/auth/presentation/screens/screens.dart';
 import '../../features/config/presentation/screens/screens.dart';
+import '../../features/dining_room/domain/domain.dart';
 import '../../features/dining_room/presentation/screens/screens.dart';
 import '../../features/home/presentation/screens/screens.dart';
 import '../../features/rrhh/presentation/screens/screens.dart';
