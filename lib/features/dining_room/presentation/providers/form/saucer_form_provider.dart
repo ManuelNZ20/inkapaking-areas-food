@@ -84,6 +84,7 @@ class SaucerFormNotifier extends StateNotifier<SaucerFormState> {
           state = state.copyWith(
             saucerId: saucer.saucerId,
           );
+          _resetState();
           return true;
         },
       );
@@ -105,10 +106,15 @@ class SaucerFormNotifier extends StateNotifier<SaucerFormState> {
         return false;
       },
       (saucer) {
+        _resetState();
         return true;
       },
     );
     return result;
+  }
+
+  void _resetState() {
+    state = SaucerFormState();
   }
 
   void _handleFailure(Failure failure) {
@@ -148,12 +154,12 @@ class SaucerFormState {
   final String? createdAt;
 
   SaucerFormState({
-    required this.isFormValid,
+    this.isFormValid = false,
     this.isPosting = false,
-    required this.saucerId,
-    required this.nameSaucer,
-    required this.nameDrink,
-    required this.scheduleId,
+    this.saucerId = 0,
+    this.nameSaucer = '',
+    this.nameDrink = '',
+    this.scheduleId = 0,
     this.failure,
     this.errorMessage,
     this.updateAt,

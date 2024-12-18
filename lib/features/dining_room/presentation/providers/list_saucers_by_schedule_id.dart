@@ -3,6 +3,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/domain.dart';
 import 'providers.dart';
 
+final breakfastSaucersByScheduleProvider = StateNotifierProvider.family
+    .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
+  final getSaucerByScheduleId =
+      ref.watch(getSaucersByScheduleIdUseCaseProvider);
+  return SaucersNotifier(
+    scheduleId: scheduleId,
+    getSaucerByScheduleId: getSaucerByScheduleId,
+  );
+});
+
+final lunchSaucersByScheduleProvider = StateNotifierProvider.family
+    .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
+  final getSaucerByScheduleId =
+      ref.watch(getSaucersByScheduleIdUseCaseProvider);
+  return SaucersNotifier(
+    scheduleId: scheduleId,
+    getSaucerByScheduleId: getSaucerByScheduleId,
+  );
+});
+
+final dinnerSaucersByScheduleProvider = StateNotifierProvider.family
+    .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
+  final getSaucerByScheduleId =
+      ref.watch(getSaucersByScheduleIdUseCaseProvider);
+  return SaucersNotifier(
+    scheduleId: scheduleId,
+    getSaucerByScheduleId: getSaucerByScheduleId,
+  );
+});
+
 final saucersByScheduleProvider = StateNotifierProvider.family
     .autoDispose<SaucersNotifier, List<Saucer>, int>((ref, scheduleId) {
   final getSaucerByScheduleId =
@@ -45,7 +75,6 @@ class SaucersNotifier extends StateNotifier<List<Saucer>> {
     );
     result.fold(
       (failure) {
-        print('Failure: $failure');
         return null;
       },
       (saucers) {
