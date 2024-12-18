@@ -141,4 +141,12 @@ class DiningRoomRepositoryImpl extends DiningRoomRepository {
       return await remoteDataSource.listGeneralOrders()!;
     });
   }
+
+  @override
+  Future<Either<Failure, GeneralOrder>>? getLastGeneralOrder(
+      String createdAt) async {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.getLastGeneralOrder(createdAt)!;
+    });
+  }
 }

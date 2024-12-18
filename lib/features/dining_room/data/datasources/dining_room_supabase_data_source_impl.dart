@@ -138,4 +138,13 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
             ascending: true);
     return response.map((e) => GeneralOrderModel.fromJson(e)).toList();
   }
+
+  @override
+  Future<GeneralOrderModel>? getLastGeneralOrder(String createdAt) async {
+    final response = await client
+        .from('general_order')
+        .select('''*,saucers:general_order_saucers!inner(saucer(*,schedule(*)))''').eq(
+            'created_at', createdAt);
+    return GeneralOrderModel.fromJson(response.first);
+  }
 }

@@ -105,4 +105,6 @@ abstract class DiningRoomRemoteDataSource {
     int generalOrderId,
     List<int> saucerId,
   );
+
+  Future<GeneralOrderModel>? getLastGeneralOrder(String createdAt);
 }

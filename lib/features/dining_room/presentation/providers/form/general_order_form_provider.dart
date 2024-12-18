@@ -11,18 +11,22 @@ final generalOrderFormProvider =
   final addSaucerToGeneralOrder =
       ref.watch(addSaucerToGeneralOrderUseCaseProvider);
   final createGeneralOrder = ref.watch(createGeneralOrderUseCaseProvider);
+  final getLastGeneralOrder = ref.watch(getLastGeneralOrderUseCaseProvider);
   return GeneralOrderNotifier(
     addSaucerToGeneralOrder: addSaucerToGeneralOrder,
     createGeneralOrder: createGeneralOrder,
+    getLastGeneralOrder: getLastGeneralOrder,
   );
 });
 
 class GeneralOrderNotifier extends StateNotifier<GeneralOrderFormState> {
   AddSaucerToGeneralOrder addSaucerToGeneralOrder;
   CreateGeneralOrder createGeneralOrder;
+  GetLastGeneralOrder getLastGeneralOrder;
   GeneralOrderNotifier({
     required this.addSaucerToGeneralOrder,
     required this.createGeneralOrder,
+    required this.getLastGeneralOrder,
   }) : super(GeneralOrderFormState());
 
   Future<bool> onSaucerSubmit(
@@ -33,6 +37,20 @@ class GeneralOrderNotifier extends StateNotifier<GeneralOrderFormState> {
     TimeOfDay startTime,
     TimeOfDay endTime,
   ) async {
+    // Determinar si ya se creó una orden general en el día
+    final lastGeneralOrder = await getLastGeneralOrder(
+      GetLastGeneralOrderParams(
+        createdAt:
+            DateFormat('yyyy-MM-dd').format(DateTime.now().toUtc().toLocal()),
+      ),
+    );
+    final bool? band = lastGeneralOrder.fold((l) => false, (r) => true);
+    if (band == true) {
+      state = state.copyWith(
+        errorMessage: 'Ya se creó una orden general en el día',
+      );
+      return false;
+    }
     state = state.copyWith(isPosting: true);
     final result = await createGeneralOrder(CreateGeneralOrderParams(
       startDate: startTime.format(context),
@@ -64,9 +82,6 @@ class GeneralOrderNotifier extends StateNotifier<GeneralOrderFormState> {
         final response = result.fold(
           (failure) {
             _handleFailure(failure);
-            state = state.copyWith(
-              isPosting: false,
-            );
             return false;
           },
           (success) {

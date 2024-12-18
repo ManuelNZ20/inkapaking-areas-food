@@ -109,4 +109,6 @@ abstract class DiningRoomRepository {
     int generalOrderId,
     List<int> saucerId,
   );
+
+  Future<Either<Failure, GeneralOrder>>? getLastGeneralOrder(String createdAt);
 }

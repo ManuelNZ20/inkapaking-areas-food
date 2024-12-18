@@ -9,6 +9,7 @@ export 'use_cases/get_saucers_by_schedule_id_use_case_provider.dart';
 export 'use_cases/get_general_order_with_saucers_use_case.dart';
 export 'use_cases/create_general_order_use_case_provider.dart';
 export 'use_cases/add_saucer_to_general_order_use_case_provider.dart';
+export 'use_cases/get_last_general_order_use_case_provider.dart';
 // Providers
 export 'list_schedule_provider.dart';
 export 'saucer_provider.dart';

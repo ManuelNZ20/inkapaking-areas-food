@@ -155,7 +155,16 @@ class NewGeneralOrderScreenState extends ConsumerState<NewGeneralOrderScreen> {
                         )
                         .then(
                       (value) {
-                        if (!value) return;
+                        if (!value) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(ref
+                                  .watch(generalOrderFormProvider)
+                                  .errorMessage!),
+                            ),
+                          );
+                          return;
+                        }
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Orden guardada')),
                         );
