@@ -14,3 +14,5 @@ export 'use_cases/create_saucer.dart';
 export 'use_cases/update_saucer.dart';
 export 'use_cases/get_saucers_by_schedule_id.dart';
 export 'use_cases/get_list_general_orders.dart';
+export 'use_cases/add_saucer_to_general_order.dart';
+export 'use_cases/create_general_order.dart';

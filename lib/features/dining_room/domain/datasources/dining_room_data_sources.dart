@@ -103,6 +103,6 @@ abstract class DiningRoomRemoteDataSource {
   /// Si el platillo ya se encuentra en la orden general, se lanza una excepción como [ResourceAlreadyExistException].
   Future<bool>? addSaucerToGeneralOrder(
     int generalOrderId,
-    int saucerId,
+    List<int> saucerId,
   );
 }

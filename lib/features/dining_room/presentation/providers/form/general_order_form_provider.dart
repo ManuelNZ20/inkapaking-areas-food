@@ -1,43 +1,114 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
+import '../../../../../core/core.dart';
 import '../../../domain/domain.dart';
+import '../providers.dart';
+
+final generalOrderFormProvider =
+    StateNotifierProvider<GeneralOrderNotifier, GeneralOrderFormState>((ref) {
+  final addSaucerToGeneralOrder =
+      ref.watch(addSaucerToGeneralOrderUseCaseProvider);
+  final createGeneralOrder = ref.watch(createGeneralOrderUseCaseProvider);
+  return GeneralOrderNotifier(
+    addSaucerToGeneralOrder: addSaucerToGeneralOrder,
+    createGeneralOrder: createGeneralOrder,
+  );
+});
 
 class GeneralOrderNotifier extends StateNotifier<GeneralOrderFormState> {
-  GeneralOrderNotifier() : super(GeneralOrderFormState());
+  AddSaucerToGeneralOrder addSaucerToGeneralOrder;
+  CreateGeneralOrder createGeneralOrder;
+  GeneralOrderNotifier({
+    required this.addSaucerToGeneralOrder,
+    required this.createGeneralOrder,
+  }) : super(GeneralOrderFormState());
 
-  void onStartDateChanged(TimeOfDay value) {
-    final startDate = value;
-    state = state.copyWith(
-      startDate: startDate,
+  Future<bool> onSaucerSubmit(
+    BuildContext context,
+    int breakfast,
+    int lunch,
+    int dinner,
+    TimeOfDay startTime,
+    TimeOfDay endTime,
+  ) async {
+    state = state.copyWith(isPosting: true);
+    final result = await createGeneralOrder(CreateGeneralOrderParams(
+      startDate: startTime.format(context),
+      endDate: endTime.format(context),
+      createdAt:
+          DateFormat('yyyy-MM-dd').format(DateTime.now().toUtc().toLocal()),
+    ));
+
+    final response = result.fold(
+      (failure) {
+        state = state.copyWith(isPosting: false);
+        _handleFailure(failure);
+      },
+      (generalOrder) async {
+        state = state.copyWith(
+          isPosting: false,
+          generalOrderId: generalOrder.generalOrderId,
+        );
+        final result = await addSaucerToGeneralOrder(
+          AddSaucerToGeneralOrderParams(
+            generalOrderId: generalOrder.generalOrderId,
+            saucerId: [
+              breakfast,
+              lunch,
+              dinner,
+            ],
+          ),
+        );
+        final response = result.fold(
+          (failure) {
+            _handleFailure(failure);
+            state = state.copyWith(
+              isPosting: false,
+            );
+            return false;
+          },
+          (success) {
+            state = state.copyWith(
+              isPosting: false,
+            );
+            _resetState();
+            return true;
+          },
+        );
+        return response;
+      },
+    );
+    return await response ?? false;
+  }
+
+  void _resetState() {
+    state = GeneralOrderFormState();
+  }
+
+  void _handleFailure(Failure failure) {
+    if (failure is ServerFailure) {
+      _updateStateWithFailure(
+        errorMessage: 'Server Failure',
+        failure: failure,
+      );
+      return;
+    }
+    _updateStateWithFailure(
+      errorMessage: 'Unexpected Error',
+      failure: failure,
     );
   }
 
-  void onEndDateChanged(TimeOfDay value) {
-    final endDate = value;
+  void _updateStateWithFailure({
+    required String errorMessage,
+    Failure? failure,
+  }) {
     state = state.copyWith(
-      endDate: endDate,
-    );
-  }
-
-  void onBreakfastSaucerSelected(int value) {
-    final breakfastSaucerSelected = value;
-    state = state.copyWith(
-      breakfastSaucerSelected: breakfastSaucerSelected,
-    );
-  }
-
-  void onLunchSaucerSelected(int value) {
-    final lunchSaucerIdSelected = value;
-    state = state.copyWith(
-      lunchSaucerIdSelected: lunchSaucerIdSelected,
-    );
-  }
-
-  void onDinnerSaucerSelected(int value) {
-    final dinnerSaucerIdSelected = value;
-    state = state.copyWith(
-      dinnerSaucerIdSelected: dinnerSaucerIdSelected,
+      isPosting: false,
+      failure: failure,
+      errorMessage: errorMessage,
     );
   }
 }
@@ -46,49 +117,33 @@ class GeneralOrderFormState {
   final bool isFormValid;
   final bool isPosting;
   final int? generalOrderId;
-  final TimeOfDay? startDate;
-  final TimeOfDay? endDate;
   final String createdAt;
-  final int breakfastSaucerSelected;
-  final int lunchSaucerIdSelected;
-  final int dinnerSaucerIdSelected;
-
+  final Failure? failure;
+  final String? errorMessage;
   GeneralOrderFormState({
     this.isFormValid = false,
     this.isPosting = false,
     this.generalOrderId = 0,
-    this.startDate,
-    this.endDate,
     this.createdAt = '',
-    this.breakfastSaucerSelected = 0,
-    this.lunchSaucerIdSelected = 0,
-    this.dinnerSaucerIdSelected = 0,
+    this.failure,
+    this.errorMessage,
   });
 
   GeneralOrderFormState copyWith({
     bool? isFormValid,
     bool? isPosting,
     int? generalOrderId,
-    TimeOfDay? startDate,
-    TimeOfDay? endDate,
     String? createdAt,
-    int? breakfastSaucerSelected,
-    int? lunchSaucerIdSelected,
-    int? dinnerSaucerIdSelected,
+    Failure? failure,
+    String? errorMessage,
   }) {
     return GeneralOrderFormState(
       isFormValid: isFormValid ?? this.isFormValid,
       isPosting: isPosting ?? this.isPosting,
       generalOrderId: generalOrderId ?? this.generalOrderId,
-      startDate: startDate ?? this.startDate,
-      endDate: endDate ?? this.endDate,
       createdAt: createdAt ?? this.createdAt,
-      breakfastSaucerSelected:
-          breakfastSaucerSelected ?? this.breakfastSaucerSelected,
-      lunchSaucerIdSelected:
-          lunchSaucerIdSelected ?? this.lunchSaucerIdSelected,
-      dinnerSaucerIdSelected:
-          dinnerSaucerIdSelected ?? this.dinnerSaucerIdSelected,
+      failure: failure ?? this.failure,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 }

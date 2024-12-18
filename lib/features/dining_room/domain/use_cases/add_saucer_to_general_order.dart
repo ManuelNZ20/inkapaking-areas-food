@@ -21,7 +21,7 @@ class AddSaucerToGeneralOrder
 
 class AddSaucerToGeneralOrderParams {
   final int generalOrderId;
-  final int saucerId;
+  final List<int> saucerId;
 
   AddSaucerToGeneralOrderParams({
     required this.generalOrderId,

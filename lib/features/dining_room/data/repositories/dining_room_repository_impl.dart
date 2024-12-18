@@ -114,7 +114,7 @@ class DiningRoomRepositoryImpl extends DiningRoomRepository {
 
   @override
   Future<Either<Failure, bool>>? addSaucerToGeneralOrder(
-      int generalOrderId, int saucerId) async {
+      int generalOrderId, List<int> saucerId) async {
     return _handleNetworkRequest(() async {
       return await remoteDataSource.addSaucerToGeneralOrder(
         generalOrderId,

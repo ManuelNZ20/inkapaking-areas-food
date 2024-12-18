@@ -100,20 +100,60 @@ class NewGeneralOrderScreenState extends ConsumerState<NewGeneralOrderScreen> {
           ),
           // Botón para guardar la orden
           ElevatedButton(
-            onPressed: () {
-              final selectedSaucerIdBreakfast = ref
+            onPressed: () async {
+              if (startTime == null || endTime == null) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Seleccione fechas válidas')),
+                );
+                return;
+              }
+
+              final breakfast = ref
                   .read(breakfastSaucersByScheduleProvider(3))
                   .selectedSaucerId;
 
-              final selectedSaucerIdLunch =
+              final lunch =
                   ref.read(lunchSaucersByScheduleProvider(4)).selectedSaucerId;
 
-              final selectedSaucerIdDinner =
+              final dinner =
                   ref.read(dinnerSaucersByScheduleProvider(5)).selectedSaucerId;
-
-              print('selectedSaucerIdBreakfast: $selectedSaucerIdBreakfast');
-              print('selectedSaucerIdLunch: $selectedSaucerIdLunch');
-              print('selectedSaucerIdDinner: $selectedSaucerIdDinner');
+              await ref
+                  .read(generalOrderFormProvider.notifier)
+                  .onSaucerSubmit(
+                    context,
+                    breakfast,
+                    lunch,
+                    dinner,
+                    startTime!,
+                    endTime!,
+                  )
+                  .then(
+                (value) {
+                  if (!value) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Orden guardada'),
+                    ),
+                  );
+                },
+              ).onError(
+                (error, stackTrace) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Error al guardar la orden'),
+                    ),
+                  );
+                },
+              ).timeout(
+                const Duration(seconds: 10),
+                onTimeout: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Tiempo de espera agotado'),
+                    ),
+                  );
+                },
+              );
             },
             child: const Text('Guardar orden'),
           ),

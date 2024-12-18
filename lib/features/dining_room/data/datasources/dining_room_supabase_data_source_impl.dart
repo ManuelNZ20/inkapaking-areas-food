@@ -100,13 +100,15 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
 
   @override
   Future<bool>? addSaucerToGeneralOrder(
-      int generalOrderId, int saucerId) async {
+      int generalOrderId, List<int> saucerId) async {
+    final insertData = saucerId
+        .map((e) => {'general_order_id': generalOrderId, 'saucer_id': e})
+        .toList();
     final response = await client
         .from('general_order_saucers')
-        .insert({
-          'general_order_id': generalOrderId,
-          'saucer_id': saucerId,
-        })
+        .insert(
+          insertData,
+        )
         .select()
         .limit(1)
         .single();

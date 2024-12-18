@@ -107,6 +107,6 @@ abstract class DiningRoomRepository {
   /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
   Future<Either<Failure, bool>>? addSaucerToGeneralOrder(
     int generalOrderId,
-    int saucerId,
+    List<int> saucerId,
   );
 }
