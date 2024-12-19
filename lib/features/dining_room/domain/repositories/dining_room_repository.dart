@@ -110,5 +110,28 @@ abstract class DiningRoomRepository {
     List<int> saucerId,
   );
 
-  Future<Either<Failure, GeneralOrder>>? getLastGeneralOrder(String createdAt);
+  /// Obtener la última orden general de la base de datos.
+  /// Este método se encarga de obtener la última orden general de la base de datos.
+  /// Retorna la última orden general.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<Either<Failure, bool>>? getLastGeneralOrder(String createdAt);
+
+  /// Obtener la última orden general de la base de datos.
+  /// Este método se encarga de obtener la última orden general de la base de datos.
+  /// Retorna la última orden general.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<Either<Failure, GeneralOrder>>? getTodayGeneralOrder(String date);
+
+  /// Obtener la última orden general de la base de datos con stream.
+  /// Este método se encarga de obtener la última orden general de la base de datos con stream.
+  /// Retorna la última orden general.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Stream<Either<Failure, GeneralOrder>>? getLastGeneralOrderStream(
+      String createdAt);
 }

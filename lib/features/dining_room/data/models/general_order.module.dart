@@ -11,6 +11,15 @@ class GeneralOrderModel extends GeneralOrder {
   });
 
   factory GeneralOrderModel.fromJson(Map<String, dynamic> json) {
+    if (json.isEmpty) {
+      return const GeneralOrderModel(
+        generalOrderId: 0,
+        startDate: '',
+        endDate: '',
+        createdAt: '',
+        saucers: [],
+      );
+    }
     return GeneralOrderModel(
       generalOrderId: json['id'] ?? 0,
       startDate: json['start_date'] ?? '',

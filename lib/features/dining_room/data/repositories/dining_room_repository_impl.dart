@@ -29,6 +29,25 @@ class DiningRoomRepositoryImpl extends DiningRoomRepository {
     }
   }
 
+  Stream<Either<Failure, T>> _handleNetworkRequestStream<T>(
+    Stream<T> Function() request,
+  ) async* {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = request();
+        await for (final event in result) {
+          yield Right(event);
+        }
+      } on ServerException catch (e) {
+        yield Left(ServerFailure(e.message));
+      } on GenericException catch (e) {
+        yield Left(CustomFailure(e.toString()));
+      }
+    } else {
+      yield Left(ServerFailure("No hay conexión a Internet"));
+    }
+  }
+
   @override
   Future<Either<Failure, Saucer>>? createSaucer(
     String nameSaucer,
@@ -143,10 +162,24 @@ class DiningRoomRepositoryImpl extends DiningRoomRepository {
   }
 
   @override
-  Future<Either<Failure, GeneralOrder>>? getLastGeneralOrder(
-      String createdAt) async {
+  Future<Either<Failure, bool>>? getLastGeneralOrder(String createdAt) async {
     return _handleNetworkRequest(() async {
       return await remoteDataSource.getLastGeneralOrder(createdAt)!;
     });
+  }
+
+  @override
+  Future<Either<Failure, GeneralOrder>>? getTodayGeneralOrder(
+      String date) async {
+    return _handleNetworkRequest(() async {
+      return await remoteDataSource.getTodayGeneralOrder(date)!;
+    });
+  }
+
+  @override
+  Stream<Either<Failure, GeneralOrder>>? getLastGeneralOrderStream(
+      String createdAt) {
+    return _handleNetworkRequestStream(
+        () => remoteDataSource.getLastGeneralOrderStream(createdAt)!);
   }
 }

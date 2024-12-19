@@ -172,8 +172,9 @@ class NewGeneralOrderScreenState extends ConsumerState<NewGeneralOrderScreen> {
                     ).onError(
                       (error, stackTrace) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Error al guardar la orden')),
+                          SnackBar(
+                              content: Text(
+                                  'Error al guardar la orden ${error!.toString()}')),
                         );
                       },
                     ).timeout(

@@ -3,15 +3,13 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/core.dart';
 import '../domain.dart';
 
-class GetLastGeneralOrder
-    extends UseCases<GeneralOrder, GetLastGeneralOrderParams> {
+class GetLastGeneralOrder extends UseCases<bool, GetLastGeneralOrderParams> {
   final DiningRoomRepository repository;
 
   GetLastGeneralOrder(this.repository);
 
   @override
-  Future<Either<Failure, GeneralOrder>> call(
-      GetLastGeneralOrderParams params) async {
+  Future<Either<Failure, bool>> call(GetLastGeneralOrderParams params) async {
     return await repository.getLastGeneralOrder(
       params.createdAt,
     )!;

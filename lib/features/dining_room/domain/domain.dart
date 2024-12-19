@@ -17,3 +17,5 @@ export 'use_cases/get_list_general_orders.dart';
 export 'use_cases/add_saucer_to_general_order.dart';
 export 'use_cases/create_general_order.dart';
 export 'use_cases/get_last_general_order.dart';
+export 'use_cases/get_today_general_order.dart';
+export 'use_cases/get_last_general_order_stream.dart';

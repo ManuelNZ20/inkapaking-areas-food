@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inkapaking/core/core.dart';
-import 'package:inkapaking/features/rrhh/presentation/widgets/card_area_work.dart';
 
+import '../../../dining_room/presentation/providers/providers.dart';
 import '../../../home/presentation/screens/screens.dart';
 import '../screens/screens.dart';
 
@@ -14,6 +14,7 @@ class HomeViewRRHH extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final generalOrderToday = ref.watch(todayStreamProvider);
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -22,6 +23,41 @@ class HomeViewRRHH extends ConsumerWidget {
           icon: Icons.groups,
         ),
         const SizedBox(height: 20),
+        generalOrderToday.when(
+          data: (data) {
+            if (data == null) {
+              return const Text('No hay ordenes para hoy');
+            }
+            return Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+              ),
+              child: SizedBox(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.09,
+                child: ListTile(
+                  title: Text('Orden de hoy: ${data.createdAt}'),
+                  subtitle:
+                      Text('Inicio: ${data.startDate} - Fin: ${data.endDate}'),
+                  leading: const Icon(FontAwesomeIcons.bullhorn),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    side: BorderSide(
+                      color: Colors.grey.shade300,
+                      width: 1,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+          error: (error, stack) {
+            return Text('Error: $error');
+          },
+          loading: () => const CircularProgressIndicator(),
+        ),
+        const SizedBox(height: 10),
+
         CardDsh(
           icon: FontAwesomeIcons.bowlFood,
           titleCard: 'Mis Ordenes',
@@ -55,32 +91,6 @@ class HomeViewRRHH extends ConsumerWidget {
               icon: Icons.history,
             ),
           ],
-        ),
-        // Ordenes por área
-        DividerSection(
-          titleSection: 'Ordenes por Área',
-          routeOfSection: OrdersAllAreasScreen.routeName,
-          iconButton: IconButton(
-            onPressed: () async {},
-            icon: const Icon(Icons.picture_as_pdf),
-          ),
-        ),
-        SizedBox(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height * 0.3,
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return CardAreaWork(
-                idArea: 'idAre$index',
-                nameArea: 'nameArea',
-                statusArea: 'pendiente',
-                numberArea: 1,
-                notificationsArea: 10,
-              );
-            },
-          ),
         ),
         const SizedBox(height: 10),
         // Lista de usuarios

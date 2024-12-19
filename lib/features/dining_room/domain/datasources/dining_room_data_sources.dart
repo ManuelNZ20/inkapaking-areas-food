@@ -106,5 +106,26 @@ abstract class DiningRoomRemoteDataSource {
     List<int> saucerId,
   );
 
-  Future<GeneralOrderModel>? getLastGeneralOrder(String createdAt);
+  /// Obtener la última orden general de la base de datos.
+  /// Este método se encarga de obtener la última orden general de la base de datos.
+  /// Retorna la última orden general obtenida.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<bool>? getLastGeneralOrder(String createdAt);
+
+  /// Obtener orden general del día de la base de datos.
+  /// Este método se encarga de obtener la orden general del día de la base de datos.
+  /// Retorna la orden general del día obtenida.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  /// Si no se encuentra el recurso, se lanza una excepción como [ResourceNotFoundException].
+  Future<GeneralOrderModel>? getTodayGeneralOrder(String date);
+
+  /// Obtener orden general del día de la base de datos usando stream.
+  /// Este método se encarga de obtener la orden general del día de la base de datos usando stream.
+  /// Retorna la orden general del día obtenida.
+  /// Si ocurre un error, se lanza una excepción como [ServerException].
+  /// Si no hay conexión a internet, se lanza una excepción como [NoInternetException].
+  Stream<GeneralOrderModel>? getLastGeneralOrderStream(String date);
 }

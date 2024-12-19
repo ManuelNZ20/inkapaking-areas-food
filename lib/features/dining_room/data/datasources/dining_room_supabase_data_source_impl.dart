@@ -140,11 +140,30 @@ class DiningRoomSupabaseDataSourceImpl extends DiningRoomRemoteDataSource {
   }
 
   @override
-  Future<GeneralOrderModel>? getLastGeneralOrder(String createdAt) async {
+  Future<bool>? getLastGeneralOrder(String createdAt) async {
     final response = await client
         .from('general_order')
         .select('''*,saucers:general_order_saucers!inner(saucer(*,schedule(*)))''').eq(
             'created_at', createdAt);
+    return response.isNotEmpty;
+  }
+
+  @override
+  Future<GeneralOrderModel>? getTodayGeneralOrder(String date) async {
+    final response = await client
+        .from('general_order')
+        .select('''*,saucers:general_order_saucers!inner(saucer(*,schedule(*)))''').eq(
+            'created_at', date);
     return GeneralOrderModel.fromJson(response.first);
+  }
+
+  @override
+  Stream<GeneralOrderModel>? getLastGeneralOrderStream(String date) {
+    final response = client
+        .from('general_order')
+        .stream(primaryKey: ['id']).eq('created_at', date);
+    return response.map((event) {
+      return GeneralOrderModel.fromJson(event.first);
+    });
   }
 }

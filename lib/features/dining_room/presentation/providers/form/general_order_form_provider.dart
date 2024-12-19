@@ -38,19 +38,30 @@ class GeneralOrderNotifier extends StateNotifier<GeneralOrderFormState> {
     TimeOfDay endTime,
   ) async {
     // Determinar si ya se creó una orden general en el día
+
     final lastGeneralOrder = await getLastGeneralOrder(
       GetLastGeneralOrderParams(
         createdAt:
             DateFormat('yyyy-MM-dd').format(DateTime.now().toUtc().toLocal()),
       ),
     );
-    final bool? band = lastGeneralOrder.fold((l) => false, (r) => true);
-    if (band == true) {
-      state = state.copyWith(
-        errorMessage: 'Ya se creó una orden general en el día',
-      );
-      return false;
-    }
+    final band = lastGeneralOrder.fold(
+      (failure) {
+        _handleFailure(failure);
+        return false;
+      },
+      (generalOrder) {
+        if (generalOrder) {
+          _updateStateWithFailure(
+            errorMessage: 'Ya se ha creado una orden general el día de hoy',
+          );
+          return false;
+        }
+        return true;
+      },
+    );
+    if (!band) return false;
+
     state = state.copyWith(isPosting: true);
     final result = await createGeneralOrder(CreateGeneralOrderParams(
       startDate: startTime.format(context),
