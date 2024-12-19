@@ -187,6 +187,28 @@ final appRouterProvider = Provider<GoRouter>((ref) {
               return const HistorialGeneralOrderScreen();
             },
           ),
+          // Mi orden
+          GoRoute(
+            path: 'my_order/:my_order_user_id',
+            name: MyOrderScreen.routeName,
+            builder: (context, state) {
+              final userId = state.pathParameters['my_order_user_id'] ?? '0';
+              return MyOrderScreen(
+                userId: int.parse(userId),
+              );
+            },
+          ),
+          GoRoute(
+            path: 'historial_my_orders/:historial_my_order_user_id',
+            name: HistorialMyOrdersScreen.routeName,
+            builder: (context, state) {
+              final userId =
+                  state.pathParameters['historial_my_order_user_id'] ?? '0';
+              return HistorialMyOrdersScreen(
+                userId: int.parse(userId),
+              );
+            },
+          ),
         ],
       ),
       GoRoute(

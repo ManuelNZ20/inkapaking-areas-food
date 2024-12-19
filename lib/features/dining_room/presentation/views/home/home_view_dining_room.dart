@@ -3,15 +3,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../../../core/core.dart';
+import '../../../../all_areas/presentation/screens/screens.dart';
+import '../../../../auth/domain/domain.dart';
 import '../../../../home/presentation/screens/views/views.dart';
 import '../../providers/providers.dart';
 import '../../screens/screens.dart';
 
 class HomeViewDiningRoom extends ConsumerWidget {
   static const String routeName = 'home_view_dining_room';
-  final String typeUserId = '5';
-  const HomeViewDiningRoom({super.key});
+  const HomeViewDiningRoom({
+    super.key,
+    required this.user,
+  });
 
+  final User user;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final generalOrderToday = ref.watch(todayStreamProvider);
@@ -101,22 +106,28 @@ class HomeViewDiningRoom extends ConsumerWidget {
           buttonsDirection: [
             DirectionButtonToAScreen(
               title: 'Crear',
-              routeName: '',
+              routeName: MyOrderScreen.routeName,
+              pathParameters: {
+                'my_order_user_id': user.userId.toString(),
+              },
               icon: Icons.create,
             ),
             DirectionButtonToAScreen(
               title: 'Mi historial',
-              routeName: '',
+              routeName: HistorialMyOrdersScreen.routeName,
               icon: Icons.history,
+              pathParameters: {
+                'historial_my_order_user_id': user.userId.toString(),
+              },
             ),
           ],
         ),
-        MyAreaPrintPdfDivider(typeUserId: typeUserId),
+        MyAreaPrintPdfDivider(typeUserId: '${user.typeUser.id}'),
         SizedBox(
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.3,
           child: MyAreaView(
-            typeUserId: int.parse(typeUserId),
+            typeUserId: int.parse('${user.typeUser.id}'),
           ),
         ),
         const SizedBox(height: 30),

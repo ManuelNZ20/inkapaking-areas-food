@@ -22,9 +22,13 @@ class HomeViewSelector extends StatelessWidget {
 
     switch (user!.typeUser.id) {
       case 5: // Usuario RRHH
-        return const HomeViewRRHH();
+        return HomeViewRRHH(
+          user: user!,
+        );
       case 6: // Usuario Comedor
-        return const HomeViewDiningRoom();
+        return HomeViewDiningRoom(
+          user: user!,
+        );
       case 1: // Usuario no registrado
         return const UnLoggedView();
       default:

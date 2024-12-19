@@ -6,6 +6,7 @@ import '../../../../../core/core.dart';
 import '../../../../auth/domain/domain.dart';
 import '../../../../dining_room/presentation/providers/providers.dart';
 import '../../../../home/presentation/screens/views/views.dart';
+import '../../screens/screens.dart';
 
 class HomeViewAllAreas extends ConsumerWidget {
   const HomeViewAllAreas({
@@ -65,13 +66,19 @@ class HomeViewAllAreas extends ConsumerWidget {
           buttonsDirection: [
             DirectionButtonToAScreen(
               title: 'Crear',
-              routeName: '',
+              routeName: MyOrderScreen.routeName,
+              pathParameters: {
+                'my_order_user_id': user.userId.toString(),
+              },
               icon: Icons.create,
             ),
             DirectionButtonToAScreen(
               title: 'Mi historial',
-              routeName: '',
+              routeName: HistorialMyOrdersScreen.routeName,
               icon: Icons.history,
+              pathParameters: {
+                'historial_my_order_user_id': user.userId.toString(),
+              },
             ),
           ],
         ),

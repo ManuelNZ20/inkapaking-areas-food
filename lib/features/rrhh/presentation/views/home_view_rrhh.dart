@@ -3,15 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inkapaking/core/core.dart';
 
+import '../../../auth/domain/domain.dart';
 import '../../../dining_room/presentation/providers/providers.dart';
+import '../../../all_areas/presentation/screens/screens.dart';
 import '../../../home/presentation/screens/screens.dart';
 import '../screens/screens.dart';
 
 class HomeViewRRHH extends ConsumerWidget {
   static const String routeName = 'home_view_rrhh';
   final String typeUserId = '5';
-  const HomeViewRRHH({super.key});
+  const HomeViewRRHH({
+    super.key,
+    required this.user,
+  });
 
+  final User user;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final generalOrderToday = ref.watch(todayStreamProvider);
@@ -65,13 +71,19 @@ class HomeViewRRHH extends ConsumerWidget {
           buttonsDirection: [
             DirectionButtonToAScreen(
               title: 'Crear',
-              routeName: '',
+              routeName: MyOrderScreen.routeName,
+              pathParameters: {
+                'my_order_user_id': user.userId.toString(),
+              },
               icon: Icons.create,
             ),
             DirectionButtonToAScreen(
               title: 'Mi historial',
-              routeName: '',
+              routeName: HistorialMyOrdersScreen.routeName,
               icon: Icons.history,
+              pathParameters: {
+                'historial_my_order_user_id': user.userId.toString(),
+              },
             ),
           ],
         ),
